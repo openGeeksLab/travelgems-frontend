@@ -19,13 +19,7 @@ const datas = [
     icon: "",
     bg: "#00BFFF",
     types: 5
-  },
-	{
-		name: "TabPage",
-		route: "TabPage",
-		icon: "",
-		bg: "#C5F412",
-	},
+  }
 ];
 
 class SideBar extends Component {

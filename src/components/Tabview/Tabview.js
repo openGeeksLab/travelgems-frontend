@@ -37,7 +37,7 @@ class SettingsScreen extends React.Component {
 }
 
 
-var TabPage = TabNavigator({
+var Tabview = TabNavigator({
   Tab1:{screen: HomeScreen},
   Tab2:{screen: SettingsScreen}
   },
@@ -56,7 +56,7 @@ var TabPage = TabNavigator({
     }
   }
 );
-TabPage.navigationOptions = {
+Tabview.navigationOptions = {
   title: "tab example"
 }
-export default TabPage;
+export default Tabview;
