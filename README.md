@@ -47,10 +47,9 @@ See [Getting Started](https://facebook.github.io/react-native/docs/getting-start
 - [React-Native-Config](https://github.com/luggit/react-native-config)
 
 ## HOW DO I INSTALL A LIBRARY?
-- ```sh
-npm install --save <package_name>```
+- ```npm install --save <package_name>```
 - ```npm link <package_name>```
-To install all the packages included in package.json file simple run:
+- To install all the packages included in package.json file simple run:
 - ```npm install```
 - ```npm link```
 
