@@ -27,6 +27,10 @@
     ```sh
     npm install -g react-native-cli
     ```
+- Install watchman
+    ```sh
+    brew install watchman
+    ```
 
 
 
@@ -43,11 +47,15 @@ See [Getting Started](https://facebook.github.io/react-native/docs/getting-start
 - [React-Native-Config](https://github.com/luggit/react-native-config)
 
 ## HOW DO I INSTALL A LIBRARY?
-- npm install --save <package_name>
-- npm link <package_name>
+- ```sh
+npm install --save <package_name>```
+- ```sh
+npm link <package_name>```
 To install all the packages included in package.json file simple run:
-- npm install
-- npm link
+- ```sh
+npm install```
+- ```sh
+npm link```
 
 
 ## DEVELOPERS TOOLS
@@ -69,7 +77,7 @@ To install all the packages included in package.json file simple run:
 - create a new app : react-native init <project_name>
 - run on ios simulator : react-native run-ios
 - run on android simulator or device: react-native run-android
-
+- open android emulator (Mac): ```/Users/<user>/Library/Android/sdk/tools/emulator -avd <emulator_name (e.g. Nexus_5X_API_24)> -port 5554```
 
 ## Reading Materials
 - [Learn ES2015] https://babeljs.io/learn-es2015/
