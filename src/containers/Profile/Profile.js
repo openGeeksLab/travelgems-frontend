@@ -8,28 +8,25 @@ import { Header,Button } from "react-native-elements";
 import styles from "./styles";
 import Tabview from "../../components/Tabview/Tabview"
 
-const launchscreenBg = require("../../../assets/img/launchscreen-bg.png");
-class Home extends Component {
+class Profile extends Component {
   constructor (props) {
     super(props)
     this.state = {
     }
   }
-
+  static navigationOptions = {
+    tabBarLabel:'Profile',
+    tabBarIcon:({tintColor}) =>(
+      <Icon name='home' type='home' color='#fff' />
+    )
+  }
   render() {
     return (
       <Container>
-        <Header
-        leftComponent={<TouchableOpacity transparent onPress={() => this.props.navigation.navigate("DrawerOpen")}>
-                      <Icon name="menu" color="#fff"/>
-                    </TouchableOpacity>}
-        centerComponent={<Title>travelgems</Title>}
-        rightComponent={<Icon name='home' type='home' color='#fff' onPress={() => this.props.navigation.navigate("DrawerOpen")} /> }
-      />
-      <Tabview />
+            <Text>Profile!</Text>
       </Container>
     );
   }
 }
 
-export default Home;
+export default Profile;

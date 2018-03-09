@@ -6,40 +6,18 @@ import { Header, Icon,Button } from "react-native-elements";
 import styles from "./styles";
 const launchscreenBg = require("../../../assets/img/launchscreen-bg.png");
 import { TabNavigator } from 'react-navigation';
-
-class HomeScreen extends React.Component {
-  static navigationOptions = {
-    tabBarLabel:'mytab1',
-    tabBarIcon:({tintColor}) =>(
-      <Icon name='home' type='home' color='#fff' />
-    )
-  }
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Home!</Text>
-      </View>
-    );
-  }
-}
-
-class SettingsScreen extends React.Component {
-  static navigationOptions = {
-    tabBarLabel:'mytab2'
-  }
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Settings!</Text>
-      </View>
-    );
-  }
-}
-
+import Discover from '../../containers/Discover/Discover';
+import Activities from '../../containers/Activities/Activities'
+import Orders from '../../containers/Orders/Orders';
+import Profile from '../../containers/Profile/Profile';
+import Cart from '../../containers/Cart/Cart';
 
 var Tabview = TabNavigator({
-  Tab1:{screen: HomeScreen},
-  Tab2:{screen: SettingsScreen}
+  Tab1:{screen: Discover},
+  Tab2:{screen: Activities},
+  Tab3:{screen: Orders},
+  Tab4:{screen: Profile},
+  Tab5:{screen: Cart}
   },
   {
     tabBarPosition: 'bottom',
@@ -51,7 +29,7 @@ var Tabview = TabNavigator({
       inactiveTintColor:'black',
       labelStyle:{
         fontSize:16,
-        padding:10
+        paddingTop:10
       }
     }
   }
