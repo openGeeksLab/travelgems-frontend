@@ -49,13 +49,10 @@ See [Getting Started](https://facebook.github.io/react-native/docs/getting-start
 ## HOW DO I INSTALL A LIBRARY?
 - ```sh
 npm install --save <package_name>```
-- ```sh
-npm link <package_name>```
+- ```npm link <package_name>```
 To install all the packages included in package.json file simple run:
-- ```sh
-npm install```
-- ```sh
-npm link```
+- ```npm install```
+- ```npm link```
 
 
 ## DEVELOPERS TOOLS
