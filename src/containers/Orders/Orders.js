@@ -6,7 +6,6 @@ import { List, ListItem, Avatar, Icon } from "react-native-elements"
 import { Container, H3, Text, Title, Body, Left, Right } from "native-base";
 import { Header,Button } from "react-native-elements";
 import styles from "./styles";
-import Tabview from "../../components/Tabview/Tabview"
 
 class Orders extends Component {
   constructor (props) {

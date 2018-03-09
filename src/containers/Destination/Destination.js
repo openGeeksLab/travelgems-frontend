@@ -7,25 +7,19 @@ import { Container, H3, Text, Title, Body, Left, Right } from "native-base";
 import { Header,Button } from "react-native-elements";
 import styles from "./styles";
 
-class Profile extends Component {
+class Destination extends Component {
   constructor (props) {
     super(props)
     this.state = {
     }
   }
-  static navigationOptions = {
-    tabBarLabel:'Profile',
-    tabBarIcon:({tintColor}) =>(
-      <Icon name='home' type='home' color='#fff' />
-    )
-  }
   render() {
     return (
       <Container>
-            <Text>Profile!</Text>
+            <Text>Destination!</Text>
       </Container>
     );
   }
 }
 
-export default Profile;
+export default Destination;
