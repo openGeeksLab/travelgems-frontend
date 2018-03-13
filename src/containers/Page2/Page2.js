@@ -25,7 +25,7 @@ class Page2 extends Component {
                       <Icon name="menu" color="#fff"/>
                     </TouchableOpacity>}
         centerComponent={<Title>Page2</Title>}
-        rightComponent={<Icon name='home' type='home' color='#fff' onPress={() => this.props.navigation.navigate("DrawerOpen")} /> }
+        rightComponent={<Icon name='home' type='home' color='#fff' onPress={() => this.props.navigation.navigate("Home")} /> }
       />
 
         <View padder>
