@@ -49,7 +49,6 @@ export default {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
     paddingLeft: 30,
     paddingRight: 30,
   },
