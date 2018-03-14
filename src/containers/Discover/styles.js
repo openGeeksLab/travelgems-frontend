@@ -19,6 +19,7 @@ export default {
     height: "auto",
     alignSelf: 'center',
     flexDirection: 'column',
-    paddingRight: 30,
+    paddingRight: 10,
+    paddingLeft: 10,
   }
 };
