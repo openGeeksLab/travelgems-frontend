@@ -21,6 +21,7 @@ class Smalltile extends Component {
            resizeMode="contain"
           source={{uri: this.props.img}}
         />
+				<Icon style={styles.heart} name='heart-outlined' />
         <Title style={styles.title}>{this.props.title}</Title>
         <Text style={styles.subtitle}>{this.props.subtitle}</Text>
       </View>
