@@ -15,14 +15,14 @@ class Smalltile extends Component {
 
 	render() {
 		return (
-      <View style={{flex:1,height:200,padding:5}}>
+      <View style={styles.component}>
         <Image
-            style={{flex:1, height: undefined, width: undefined,padding:0,marginTop:5,borderRadius:5}}
+            style={styles.image}
            resizeMode="contain"
           source={{uri: this.props.img}}
         />
-        <Title style={{padding:0,textAlign:"left",color:"black"}}>{this.props.title}</Title>
-        <Text>{this.props.subtitle}</Text>
+        <Title style={styles.title}>{this.props.title}</Title>
+        <Text style={styles.subtitle}>{this.props.subtitle}</Text>
       </View>
 		);
 	}

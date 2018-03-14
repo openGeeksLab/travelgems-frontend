@@ -6,42 +6,25 @@ export default {
   container: {
     flex: 1,
   },
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  component:{
+    flex:1,
+    height:200,
+    padding:5
   },
-  contentModal: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#DCDCDC',
+  title:{
+    padding:0,
+    textAlign:"left",
+    color:"black"
   },
-  modalBasic: {
-    flex: 1,
+  subtitle: {
+    color: 'gray',
   },
-  modalTop: {
-    height: 230,
-  },
-  modalCenter: {
-    height: 300,
-    width: 300,
-  },
-  modalBottom: {
-    height: 300,
-  },
-  text: {
-    color: 'black',
-    fontSize: 22,
-    alignSelf: 'center',
-  },
-  btnClose: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-  },
-  btnShowModal: {
-    marginTop: 10
-  },
-  txtMessage: {
-    color: '#000',
-  },
+  image:{
+    flex:1,
+    height: undefined,
+    width: undefined,
+    padding:0,
+    marginTop:5,
+    borderRadius:5
+  }
 };
