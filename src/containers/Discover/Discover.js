@@ -9,7 +9,30 @@ import { Header,Button } from "react-native-elements";
 import styles from "./styles";
 import ParallaxScroll from '@monterosa/react-native-parallax-scroll';
 
-import Smalltile from '../../components/Smalltile/Smalltile'
+import Smalltile from '../../components/Smalltile/Smalltile';
+const lines = [
+  {
+    id:1,
+    items:[
+      {id:1,img:'https://facebook.github.io/react-native/docs/assets/favicon.png',title:'Kefalonia','subtitle':'Greece'},
+      {id:2,img:'https://facebook.github.io/react-native/docs/assets/favicon.png',title:'Kos','subtitle':'Greece'}
+    ]
+  },
+  {
+    id:2,
+    items:[
+      {id:3,img:'https://facebook.github.io/react-native/docs/assets/favicon.png',title:'Kos','subtitle':'Greece'},
+      {id:4,img:'https://facebook.github.io/react-native/docs/assets/favicon.png',title:'Kos','subtitle':'Greece'}
+    ]
+  },
+  {
+    id:3,
+    items:[
+      {id:5,img:'https://facebook.github.io/react-native/docs/assets/favicon.png',title:'Kos','subtitle':'Greece'},
+      {id:6,img:'https://facebook.github.io/react-native/docs/assets/favicon.png',title:'Kos','subtitle':'Greece'}
+    ]
+  },
+]
 class Discover extends Component {
   constructor (props) {
     super(props)
@@ -26,13 +49,19 @@ class Discover extends Component {
     return (
       <Container>
         <ScrollView>
-          <Grid>
-            <Row>
-              <Col style={{ width:"50%" }}><Smalltile title='Kos' subtitle='Greece' img='https://facebook.github.io/react-native/docs/assets/favicon.png'/></Col>
-              {/* <Col style={{ width:"50%" }}><Smalltile title='Zakynthos' subtitle='Greece '/></Col> */}
-              <Col style={{ width:"50%" }}><Smalltile title='Zakynthos2' subtitle='Greece '/></Col>
-            </Row>
-          </Grid>
+          {
+            lines.map((line,i) =>(
+                <View style={styles.gridRow} key={line.id}>
+                  {
+                    line.items.map((item,j)=>(
+                      <View style={styles.gridItem}>
+                        <Smalltile title={item.title} subtitle={item.subtitle} img={item.img} key={item.id}/>
+                      </View>
+                    ))
+                  }
+                </View>
+            ))
+          }
         </ScrollView>
       </Container>
     );

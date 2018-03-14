@@ -15,7 +15,7 @@ class Smalltile extends Component {
 
 	render() {
 		return (
-      <View style={{flex:1,height:250,padding:5}}>
+      <View style={{flex:1,height:200,padding:5}}>
         <Image
             style={{flex:1, height: undefined, width: undefined,padding:0,marginTop:5,borderRadius:5}}
            resizeMode="contain"
