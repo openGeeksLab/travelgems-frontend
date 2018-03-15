@@ -13,11 +13,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "@monterosa/react-native-parallax-scroll": "^1.5.4",
     "apisauce": "^0.14.3",
     "native-base": "^2.3.3",
     "react": "^16.0.0",
     "react-native": "^0.50.0",
     "react-native-config": "^0.11.5",
+    "react-native-easy-grid": "^0.1.17",
     "react-native-elements": "1.0.0-beta2",
     "react-native-modalbox": "^1.4.2",
     "react-native-vector-icons": "4.5.0",

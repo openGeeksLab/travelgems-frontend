@@ -22,7 +22,7 @@ class Activities extends Component {
   render() {
     return (
       <Container>
-        <ImageBackground source={{ uri: 'http://via.placeholder.com/410x300' }}
+        <ImageBackground source={{ uri: 'https://via.placeholder.com/410x300' }}
           style={styles.imageBackground} >
           <View style={styles.imageText}>
             <Text style={styles.imageTitle}>Jeep Safari in the{'\n'}National Park</Text>
@@ -33,34 +33,34 @@ class Activities extends Component {
           <View>
             <View style={styles.gridRow}>
               <View style={styles.gridItem}>
-                <Image source={{ uri: 'http://via.placeholder.com/31x31' }} style={styles.gridImage}></Image>
+                <Image source={{ uri: 'https://via.placeholder.com/31x31' }} style={styles.gridImage}></Image>
                 <Text style={styles.gridTitle}>TITLE</Text>
                 <Text style={styles.gridSubtitle}>Subtitle</Text>
               </View>
               <View style={styles.gridItem}>
-                <Image source={{ uri: 'http://via.placeholder.com/31x31' }} style={styles.gridImage}></Image>
+                <Image source={{ uri: 'https://via.placeholder.com/31x31' }} style={styles.gridImage}></Image>
                 <Text style={styles.gridTitle}>TITLE</Text>
                 <Text style={styles.gridSubtitle}>Subtitle</Text>
               </View>
               <View style={styles.gridItem}>
-                <Image source={{ uri: 'http://via.placeholder.com/31x31' }} style={styles.gridImage}></Image>
+                <Image source={{ uri: 'https://via.placeholder.com/31x31' }} style={styles.gridImage}></Image>
                 <Text style={styles.gridTitle}>TITLE</Text>
                 <Text style={styles.gridSubtitle}>Subtitle</Text>
               </View>
             </View>
             <View style={styles.gridRow}>
               <View style={styles.gridItem}>
-                <Image source={{ uri: 'http://via.placeholder.com/31x31' }} style={styles.gridImage}></Image>
+                <Image source={{ uri: 'https://via.placeholder.com/31x31' }} style={styles.gridImage}></Image>
                 <Text style={styles.gridTitle}>TITLE</Text>
                 <Text style={styles.gridSubtitle}>Subtitle</Text>
               </View>
               <View style={styles.gridItem}>
-                <Image source={{ uri: 'http://via.placeholder.com/31x31' }} style={styles.gridImage}></Image>
+                <Image source={{ uri: 'https://via.placeholder.com/31x31' }} style={styles.gridImage}></Image>
                 <Text style={styles.gridTitle}>TITLE</Text>
                 <Text style={styles.gridSubtitle}>Subtitle</Text>
               </View>
               <View style={styles.gridItem}>
-                <Image source={{ uri: 'http://via.placeholder.com/31x31' }} style={styles.gridImage}></Image>
+                <Image source={{ uri: 'https://via.placeholder.com/31x31' }} style={styles.gridImage}></Image>
                 <Text style={styles.gridTitle}>TITLE</Text>
                 <Text style={styles.gridSubtitle}>Subtitle</Text>
               </View>
