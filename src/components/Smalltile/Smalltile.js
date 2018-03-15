@@ -23,7 +23,7 @@ class Smalltile extends Component {
            resizeMode="contain"
           source={{uri: this.props.img}}
         />
-				<Favorite style={styles.heart} favorite={this.props.favorite} color="white"/>
+				<Favorite style={styles.heart} favorite={this.props.favorite}/>
         <Title style={styles.title}>{this.props.title}</Title>
         <Text style={styles.subtitle}>{this.props.subtitle}</Text>
       </View>

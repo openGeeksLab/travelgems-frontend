@@ -38,5 +38,5 @@ class Favorite extends Component {
 		);
 	}
 }
-Favorite.defaultProps = {favorite:false};
+Favorite.defaultProps = {favorite:false,color:"white"};
 export default Favorite;

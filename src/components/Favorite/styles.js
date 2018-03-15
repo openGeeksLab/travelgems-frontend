@@ -1,4 +1,5 @@
 const React = require("react-native");
+import { COLOR_TURQUOISE } from '../../constants/Styles';
 
 const { StyleSheet } = React;
 
@@ -38,6 +39,6 @@ export default {
   },
   heartBlue:{
     fontSize:23,
-    color:"#46DFE8"
+    color:COLOR_TURQUOISE
   }
 };
