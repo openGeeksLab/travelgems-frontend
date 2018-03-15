@@ -24,14 +24,11 @@ export default {
     height: undefined,
     width: undefined,
     padding:0,
-    marginTop:5,
-    borderRadius:5
+    marginTop:5
   },
   heart:{
-    fontSize:23,
-    color:"white",
     position:"absolute",
-    right:10,
-    top:10
+    right:15,
+    top:15
   }
 };

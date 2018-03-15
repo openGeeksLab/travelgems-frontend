@@ -20,9 +20,19 @@ class Favorite extends Component {
 				});
   		}}>
           {
-						this.state.favorite
-						? <Icon style={styles.heart} name='heart' />
-						: <Icon style={styles.heart} name='heart-outlined' />
+						this.props.color === 'white'
+						?
+							(
+								this.state.favorite
+								? <Icon style={styles.heart} name='heart' />
+								: <Icon style={styles.heart} name='heart-outlined' />
+							)
+						:
+						(
+							this.state.favorite
+							? <Icon style={styles.heartBlue} name='heart' />
+							: <Icon style={styles.heartBlue} name='heart-outlined' />
+						)
 					}
       </TouchableOpacity>
 		);

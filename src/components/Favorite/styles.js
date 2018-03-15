@@ -35,5 +35,9 @@ export default {
     position:"absolute",
     right:10,
     top:10
+  },
+  heartBlue:{
+    fontSize:23,
+    color:"#46DFE8"
   }
 };

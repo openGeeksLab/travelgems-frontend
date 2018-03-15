@@ -19,10 +19,11 @@ class Smalltile extends Component {
       <View style={styles.component}>
         <Image
             style={styles.image}
+						borderRadius={10}
            resizeMode="contain"
           source={{uri: this.props.img}}
         />
-				<Favorite style={styles.heart} favorite={this.props.favorite} />
+				<Favorite style={styles.heart} favorite={this.props.favorite} color="white"/>
         <Title style={styles.title}>{this.props.title}</Title>
         <Text style={styles.subtitle}>{this.props.subtitle}</Text>
       </View>
