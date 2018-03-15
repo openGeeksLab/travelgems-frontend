@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {View,Image} from "react-native";
+import {View,Image,TouchableOpacity} from "react-native";
 import { Tile } from "react-native-elements"
 import { Container, Header, Content, Thumbnail, Text, Title } from 'native-base';
 import styles from "./styles";
@@ -12,16 +12,19 @@ class Favorite extends Component {
 			favorite: this.props.favorite
 		};
 	}
-
 	render() {
 		return (
-			<View style={styles.heartview}>
+			<TouchableOpacity style={styles.heartview} onPress={() => {
+				this.setState((prevState, props) => {
+				  return {favorite: ! prevState.favorite};
+				});
+  		}}>
           {
 						this.state.favorite
 						? <Icon style={styles.heart} name='heart' />
 						: <Icon style={styles.heart} name='heart-outlined' />
 					}
-      </View>
+      </TouchableOpacity>
 		);
 	}
 }
