@@ -14,7 +14,7 @@ const lines = [
   {
     id:1,
     items:[
-      {id:1,img:'https://facebook.github.io/react-native/docs/assets/favicon.png',title:'Kefalonia','subtitle':'Greece'},
+      {id:1,img:'https://facebook.github.io/react-native/docs/assets/favicon.png',title:'Kefalonia','subtitle':'Greece','favorite':true},
       {id:2,img:'https://facebook.github.io/react-native/docs/assets/favicon.png',title:'Kos','subtitle':'Greece'}
     ]
   },
@@ -51,11 +51,11 @@ class Discover extends Component {
         <ScrollView>
           {
             lines.map((line,i) =>(
-                <View style={styles.gridRow} key={line.id}>
+                <View style={styles.gridRow} key={i}>
                   {
                     line.items.map((item,j)=>(
-                      <View style={styles.gridItem}>
-                        <Smalltile title={item.title} subtitle={item.subtitle} img={item.img} key={item.id}/>
+                      <View style={styles.gridItem} key={item.id}>
+                        <Smalltile title={item.title} subtitle={item.subtitle} img={item.img} favorite={item.favorite}/>
                       </View>
                     ))
                   }

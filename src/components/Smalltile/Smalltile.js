@@ -4,6 +4,7 @@ import { Tile } from "react-native-elements"
 import { Container, Header, Content, Thumbnail, Text, Title } from 'native-base';
 import styles from "./styles";
 import Icon from 'react-native-vector-icons/Entypo';
+import Favorite from '../../components/Favorite/Favorite';
 
 class Smalltile extends Component {
 	constructor(props) {
@@ -21,7 +22,7 @@ class Smalltile extends Component {
            resizeMode="contain"
           source={{uri: this.props.img}}
         />
-				<Icon style={styles.heart} name='heart-outlined' />
+				<Favorite style={styles.heart} favorite={this.props.favorite} />
         <Title style={styles.title}>{this.props.title}</Title>
         <Text style={styles.subtitle}>{this.props.subtitle}</Text>
       </View>

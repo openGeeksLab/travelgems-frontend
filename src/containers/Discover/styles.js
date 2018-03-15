@@ -11,8 +11,8 @@ export default {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   gridItem: {
     width: "50%",
