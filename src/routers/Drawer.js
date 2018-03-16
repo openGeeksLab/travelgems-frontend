@@ -2,7 +2,6 @@ import React from "react";
 import { DrawerNavigator } from "react-navigation";
 
 import SideBar from "../components/sidebar";
-import Home from "../containers/Home/Home";
 import Page2 from "../containers/Page2/Page2";
 import Webview from "../containers/Webview/Webview";
 import Activity from '../containers/Activity/Activity';
