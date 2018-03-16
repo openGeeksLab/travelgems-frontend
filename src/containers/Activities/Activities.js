@@ -1,4 +1,3 @@
-import WarplyMobileSDK from '../../services/WarplyMobileSDK';
 import Config from 'react-native-config';
 import React, { Component } from "react";
 import { Image, View, StatusBar, Linking, TouchableOpacity, ImageBackground, ScrollView } from "react-native";

@@ -1,4 +1,3 @@
-import WarplyMobileSDK from '../../services/WarplyMobileSDK';
 import Config from 'react-native-config';
 import React, { Component } from "react";
 import { Image, View, StatusBar, Linking, TouchableOpacity,ScrollView } from "react-native";
@@ -48,21 +47,28 @@ class Discover extends Component {
   render() {
     return (
       <Container>
-        <ScrollView>
-          {
-            lines.map((line,i) =>(
-                <View style={styles.gridRow} key={i}>
-                  {
-                    line.items.map((item,j)=>(
-                      <View style={styles.gridItem} key={item.id}>
-                        <Smalltile title={item.title} subtitle={item.subtitle} img={item.img} favorite={item.favorite}/>
-                      </View>
-                    ))
-                  }
-                </View>
-            ))
-          }
-        </ScrollView>
+        <Header
+        leftComponent={<TouchableOpacity transparent onPress={() => this.props.navigation.navigate("DrawerOpen")}>
+                      <Icon name="menu" color="#fff"/>
+                    </TouchableOpacity>}
+        centerComponent={<Title>travelgems</Title>}
+        rightComponent={<Icon name='home' type='home' color='#fff' onPress={() => this.props.navigation.navigate("Home")} /> }
+      />
+      <ScrollView>
+        {
+          lines.map((line,i) =>(
+              <View style={styles.gridRow} key={i}>
+                {
+                  line.items.map((item,j)=>(
+                    <View style={styles.gridItem} key={item.id}>
+                      <Smalltile title={item.title} subtitle={item.subtitle} img={item.img} favorite={item.favorite}/>
+                    </View>
+                  ))
+                }
+              </View>
+          ))
+        }
+      </ScrollView>
       </Container>
     );
   }
