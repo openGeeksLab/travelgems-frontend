@@ -16,7 +16,7 @@ class Smalltile extends Component {
 	}
 	onPress(){
 		 console.log('test');
-		 this.props.navigation.navigate("Activity");
+		 this.props.navigation.navigate("Activity",{'name':this.props.title});
 	}
 	render() {
 		return (
