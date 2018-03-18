@@ -1,4 +1,4 @@
-import { WarplyReactSDK } from './WarplyReactSDK';
+import WarplyReactSDK from './WarplyReactSDK';
 import * as WarpUtils from './utils/WarpUtils';
 import Config from 'react-native-config';
 

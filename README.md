@@ -63,6 +63,11 @@ See [Getting Started](https://facebook.github.io/react-native/docs/getting-start
   ```
 - [Redux devtools] (https://github.com/zalmoxisus/redux-devtools-extension)
 
+- React Native Debugger (only Mac)
+  ```
+    brew cask install react-native-debugger
+  ```
+
 - [Reading Time] https://facebook.github.io/react-native/docs/debugging.html
 
 ## First Clone Installation
@@ -74,6 +79,20 @@ See [Getting Started](https://facebook.github.io/react-native/docs/getting-start
 - run on ios simulator : react-native run-ios
 - run on android simulator or device: react-native run-android
 - open android emulator (Mac): ```/Users/<user>/Library/Android/sdk/tools/emulator -avd <emulator_name (e.g. Nexus_5X_API_24)> -port 5554```
+
+## Debugging
+- Open mobile dev tools for Android with CMD + m (on Mac)
+    ```sh
+    adb shell input keyevent 82
+    ```
+- Use React Native Debugger on Mac or check bellow on Windows
+- Inspect DOM with react devtools (enable inspector from dev tools)
+    ```sh
+    react-devtools
+    ```
+- Enable remote debugging by clicking "Remote JS Debugging" from dev tools
+- For network debugging open reactotron
+
 
 ## Reading Materials
 - [Learn ES2015] https://babeljs.io/learn-es2015/

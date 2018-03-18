@@ -1,4 +1,4 @@
-import { store, WarplyReactSDK } from './WarplyReactSDK';
+import WarplyReactSDK from './WarplyReactSDK';
 import * as WarpUtils from './utils/WarpUtils'
 import Config from 'react-native-config';
 
@@ -11,7 +11,7 @@ export default class RequestHandler{
   get(url, callback, addHeaders=true){
     let config = {};
     if (addHeaders){
-      config = {headers:WarpUtils.generateHeaders(store.getState().reducers.WebId, store.getState().reducers.ApiKey)};
+      config = {headers:WarpUtils.generateHeaders(WarplyReactSDK.store.getState().reducers.WebId, WarplyReactSDK.store.getState().reducers.ApiKey)};
     }
     this.HttpApi.get(url, null, config).then(
       (response) => callback(response)
@@ -21,9 +21,9 @@ export default class RequestHandler{
   post(url, data, callback, addHeaders=true){
     let config = {};
     if (addHeaders){
-      config = {headers:WarpUtils.generateHeaders(store.getState().reducers.WebId, store.getState().reducers.ApiKey)};
+      config = {headers:WarpUtils.generateHeaders(WarplyReactSDK.store.getState().reducers.WebId, WarplyReactSDK.store.getState().reducers.ApiKey)};
     }
-    this.HttpApi.post(url,data,{headers:WarpUtils.generateHeaders(store.getState().reducers.WebId, store.getState().reducers.ApiKey)}).then(
+    this.HttpApi.post(url,data,{headers:WarpUtils.generateHeaders(WarplyReactSDK.store.getState().reducers.WebId, WarplyReactSDK.store.getState().reducers.ApiKey)}).then(
       (response) => callback(response)
     );
   }

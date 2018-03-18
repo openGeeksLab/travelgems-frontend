@@ -8,6 +8,7 @@ export const QUEUE_EVENT = 'QUEUE_EVENT';
 export const DEQUEUE_REQUEST = 'DEQUEUE_REQUEST';
 export const EMPTY_EVENT_QUEUE = 'EMPTY_EVENT_QUEUE';
 export const SET_CONTEXT_VARIABLES = 'SET_CONTEXT_VARIABLES';
+export const SET_MICRO_APPS = 'SET_MICRO_APPS';
 
 
 export function setWebId(WebId):Action {
@@ -55,5 +56,12 @@ export function setContextVariables(variables):Action {
   return {
     type: SET_CONTEXT_VARIABLES,
     variables: variables
+  };
+}
+
+export function setMicroApps(mapps):Action {
+  return {
+    type: SET_MICRO_APPS,
+    mapps: mapps
   };
 }

@@ -7,6 +7,7 @@ export type Action =
     | { type: 'DEQUEUE_REQUEST', request: string }
     | { type: 'EMPTY_EVENT_QUEUE' }
     | { type: 'SET_CONTEXT_VARIABLES', variables: json }
+    | { type: 'SET_MICRO_APPS', mapps: json }
 
 export type Dispatch = (action:Action | Array<Action>) => any;
 export type GetState = () => Object;
