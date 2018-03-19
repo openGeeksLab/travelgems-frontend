@@ -35,7 +35,8 @@ export default {
   heartview:{
     position:"absolute",
     right:10,
-    top:10
+    top:10,
+    backgroundColor:"transparent"
   },
   heartBlue:{
     fontSize:23,
