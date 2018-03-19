@@ -19,6 +19,13 @@ const datas = [
     icon: "",
     bg: "#00BFFF",
     types: 5
+  },
+  {
+    name: "Activity",
+    route: "Activity",
+    icon: "",
+    bg: "#00BFFF",
+    types: 5
   }
 ];
 
