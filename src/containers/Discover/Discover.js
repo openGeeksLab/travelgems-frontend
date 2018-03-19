@@ -9,6 +9,7 @@ import styles from "./styles";
 import ParallaxScroll from '@monterosa/react-native-parallax-scroll';
 
 import Smalltile from '../../components/Smalltile/Smalltile';
+import HorizontalScroll from '../../components/HorizontalScroll/HorizontalScroll';
 const lines = [
   {
     id:1,
@@ -54,6 +55,7 @@ class Discover extends Component {
         centerComponent={<Title>travelgems</Title>}
         rightComponent={<Icon name='home' type='home' color='#fff' onPress={() => this.props.navigation.navigate("Home")} /> }
       />
+      <HorizontalScroll />
       <ScrollView>
         {
           lines.map((line,i) =>(
