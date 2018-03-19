@@ -23,7 +23,7 @@ class Smalltile extends Component {
       <View style={styles.component}>
 				<TouchableOpacity style={styles.image}  onPress={() => {this.onPress()}}>
 				<Image
-					style={styles.component}
+					style={styles.image}
 						borderRadius={10}
            resizeMode="contain"
           source={{uri: this.props.img}}

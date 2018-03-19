@@ -9,7 +9,7 @@ export default {
   component:{
     flex:1,
     height:200,
-    padding:5
+    // padding:5
   },
   title:{
     padding:0,
