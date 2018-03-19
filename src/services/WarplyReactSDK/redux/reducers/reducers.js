@@ -1,7 +1,6 @@
 
 import type { Action } from './types';
 import * as actions from '../actions/actions';
-import {REHYDRATE} from 'redux-persist/lib/constants';
 
 
 export type State = {
@@ -71,21 +70,6 @@ export default function (state:State = initialState, action:Action): State {
         ...state,
         MicroApps: action.mapps,
       }
-
-    case REHYDRATE:
-      return { ...state, ...action.payload.reducers} // ? action.payload : initialState
-
-//    case 'persist/REHYDRATE': {
-//      console.log("REHYDRATE");
-//      console.log(action.payload);
-//
-////      return action.payload.reducers;
-//      var new_state = action.payload.reducers.persistedState.reducers;
-//      delete new_state['persistedState'];
-//      return new_state;
-////      return { ...state, persistedState: action.payload};
-////      return state;
-//    }
 
     default:
       return state
