@@ -28,9 +28,9 @@ export default {
     bottom: 6,
     marginTop: 5
   },
-  imageBackground: {
-    width: 410,
-    height: 300,
+  customHeader: {
+    flex: 1,
+    flexDirection: 'row'
   },
   imageText: {
     top: Dimensions.get("window").height - 420,
@@ -51,15 +51,15 @@ export default {
     justifyContent: 'space-between',
     paddingLeft: 30,
     paddingRight: 30,
-    paddingTop: 10,
+    paddingTop: 20,
   },
   gridItem: {
     width: 90,
     height: 90,
   },
   gridImage: {
-    width: 31,
-    height: 31,
+    width: 50,
+    height: 50,
     alignSelf: 'center',
     flexDirection: 'column',
   },

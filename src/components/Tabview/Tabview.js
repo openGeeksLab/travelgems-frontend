@@ -24,12 +24,14 @@ var Tabview = TabNavigator({
     swipeEnabled: true,
     animationEnabled: true,
     tabBarOptions:{
+      showIcon:  Platform.OS === "android" ? true : true,
       activeTintColor: 'white',
       activeBackgroundColor:'grey',
       inactiveTintColor:'black',
       labelStyle:{
         fontSize:Platform.OS === 'android' ? 12 : 16,
-        paddingTop:10
+        paddingTop: Platform.OS === 'android' ? 5 : 10,
+        margin: 0
       }
     }
   }

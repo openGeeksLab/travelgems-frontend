@@ -15,7 +15,7 @@ class Orders extends Component {
   static navigationOptions = {
     tabBarLabel:'Orders',
     tabBarIcon:({tintColor}) =>(
-      <Icon name='home' type='home' color='#fff' />
+      <Icon name='favorite' type='home' color='#fff' />
     )
   }
   render() {
