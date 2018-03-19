@@ -23,10 +23,10 @@ const enhancer = compose(
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
-const SDKStore = () => {
+const SDKStore = (readyCallback) => {
   const store = createStore(persistedReducer, enhancer);
   process.env.NODE_ENV = "production";
-  const persistor = persistStore(store);
+  const persistor = persistStore(store, null, readyCallback);
   process.env.NODE_ENV = "development";
 
   return { store, persistor }

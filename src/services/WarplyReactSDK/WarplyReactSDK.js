@@ -18,15 +18,19 @@ export default class WarplyReactSDK {
   static eventsBatch = 2;
 
   static init(){
-    const { persistor, store } = SDKStore();
+    const { persistor, store } = SDKStore(this.storeReady.bind(this));
     this.store = store;
     this.persistor = persistor;
+  }
 
+  static storeReady(){
     this.requestHandler = new RequestHandler();
+
     var already_registered = this.register();
     this.microapps = {};
 //    this.setMicroApps(false);
     if (already_registered){
+      this.getContext();
       this.initMicroApps();
     }
   }
@@ -42,7 +46,7 @@ export default class WarplyReactSDK {
   static initMicroApps(){
     var receivers = [];
     var permissions = [];
-    this.microApps[DeviceInfo.rootKey] = new DeviceInfo();
+//    this.microApps[DeviceInfo.rootKey] = new DeviceInfo();
 
 //    var default_mapps = ['DeviceInfo'];
 
