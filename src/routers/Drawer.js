@@ -5,6 +5,7 @@ import SideBar from "../components/sidebar";
 import Page2 from "../containers/Page2/Page2";
 import Webview from "../containers/Webview/Webview";
 import Activity from '../containers/Activity/Activity';
+import Destination from '../containers/Destination/Destination';
 import Smalltile from "../components/Smalltile/Smalltile";
 import Tabview from "../components/Tabview/Tabview";
 const MainDrawerRouter = DrawerNavigator(
@@ -13,6 +14,7 @@ const MainDrawerRouter = DrawerNavigator(
     Page2: {screen: Page2},
     Webview: {screen: Webview},
     Activity: {screen: Activity},
+    Destination: {screen: Destination},
     Smalltile: {screen: Smalltile}
   },
   {

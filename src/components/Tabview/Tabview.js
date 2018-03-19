@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View, StatusBar, Linking, TouchableOpacity } from "react-native";
+import { Image, View, StatusBar, Linking, TouchableOpacity, Platform } from "react-native";
 
 import { Container, H3, Text, Title, Body, Left, Right } from "native-base";
 import { Header, Icon,Button } from "react-native-elements";
@@ -28,7 +28,7 @@ var Tabview = TabNavigator({
       activeBackgroundColor:'grey',
       inactiveTintColor:'black',
       labelStyle:{
-        fontSize:16,
+        fontSize:Platform.OS === 'android' ? 12 : 16,
         paddingTop:10
       }
     }

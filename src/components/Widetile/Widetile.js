@@ -6,7 +6,7 @@ import styles from "./styles";
 import Icon from 'react-native-vector-icons/Entypo';
 import Favorite from '../../components/Favorite/Favorite';
 import { withNavigation } from 'react-navigation';
-class Smalltile extends Component {
+class Widetile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -24,8 +24,8 @@ class Smalltile extends Component {
 				<TouchableOpacity style={styles.image}  onPress={() => {this.onPress()}}>
 				<Image
 					style={styles.image}
-						borderRadius={10}
-           resizeMode="contain"
+						borderRadius={5}
+           resizeMode="cover"
           source={{uri: this.props.img}}
         />
 			</TouchableOpacity>
@@ -36,5 +36,5 @@ class Smalltile extends Component {
 		);
 	}
 }
-Smalltile.defaultProps = {img: 'https://facebook.github.io/react-native/docs/assets/favicon.png'};
-export default withNavigation(Smalltile);
+Widetile.defaultProps = {img: 'https://facebook.github.io/react-native/docs/assets/favicon.png'};
+export default withNavigation(Widetile);
