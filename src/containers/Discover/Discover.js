@@ -6,7 +6,6 @@ import { Container, H3, Text, Title, Body, Left, Right } from "native-base";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Header,Button } from "react-native-elements";
 import styles from "./styles";
-import ParallaxScroll from '@monterosa/react-native-parallax-scroll';
 
 import Smalltile from '../../components/Smalltile/Smalltile';
 import HorizontalScroll from '../../components/HorizontalScroll/HorizontalScroll';
