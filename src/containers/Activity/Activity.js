@@ -16,22 +16,6 @@ class Activity extends Component {
   render() {
     return (
       <Container>
-        <ScrollView>
-        <View style={{height:300}}>
-            <Backgroundimage/>
-        </View>
-        <Card title={this.props.navigation.state.params.name}
-          titleStyle ={{textAlign:"left",color:"black"}}
-          style={{margin:0,position:"absolute",top:100}}
-          >
-          <View>
-            <Text>Kefalonia’s natural charms (and turbulent past) have provided inspiration to wordsmiths from Lord Byron to Louis de Bernieres. The great Philhellene... Byron... stayed on the island for 4 months during the Greek War of Independence; his... sojourn is marked by a plaque at his favourite vantage point, inscribed with his quote: “If I am a poet, I owe it to the air of Greece.”</Text>
-            <Collapsed title='lalalal'>
-               <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
-             </Collapsed>
-          </View>
-        </Card>
-      </ScrollView>
       </Container>
     );
   }
