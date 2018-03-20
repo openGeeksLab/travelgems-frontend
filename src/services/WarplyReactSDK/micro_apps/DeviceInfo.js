@@ -7,13 +7,7 @@ export default class DeviceInfo extends MicroApp {
 
   constructor(store, requestMiddleware){
     super(store, requestMiddleware);
-
-    var devInfo = DeviceInfo.getDevInfo();
-    var body = {};
-    body[this.rootKey] = {
-      advertising_id:"abcdefg"
-    };
-    this.postContext(body);
+    this.handleAction('send_info');
   }
 
   static getDevInfo(){
@@ -26,9 +20,14 @@ export default class DeviceInfo extends MicroApp {
     }
   }
 
-  handleAction(action){
-    if (action=='send'){
-      this.postContext({});
+  async handleAction(action){
+    if (action=='send_info'){
+      var devInfo = DeviceInfo.getDevInfo();
+      var body = {};
+      body[this.rootKey] = {
+        advertising_id:"abcdefg"
+      };
+      this.postContext(body);
     }
   }
 

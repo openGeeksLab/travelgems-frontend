@@ -18,12 +18,47 @@ export default class WarplyReactSDK {
   static eventsBatch = 2;
 
   init(){
-    const { persistor, store } = SDKStore(this.storeReady.bind(this));
-    this.store = store;
-    this.persistor = persistor;
+    var self = this;
+    this.microApps = {};
+    this.microAppsObjs = {};
 
     return new Promise((resolve, reject) => {
       try {
+        const store = SDKStore();
+
+        Promise.all([store]).then(
+          function(data){
+            self.store = data[0];
+            self.requestMiddleware = new RequestMiddleware(self.store);
+
+            const registerComplete = self.requestMiddleware.register(self.handleRegister.bind(self));
+            const contextComplete = self.requestMiddleware.getContext(self.handleGetContext.bind(self));
+
+            Promise.all([registerComplete, contextComplete]).then(
+              function(){
+                self.microAppsComplete = self.setMicroApps(true);
+                resolve(true);
+              }
+            );
+          }
+        );
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+
+
+  // add listener on ContextVariables
+  setMicroApps(persist=true){
+    return new Promise((resolve, reject) => {
+      try {
+        this.microApps = this.store.getState().reducers.MicroApps || this.store.getState().reducers.ContextVariables.microApps || ['DeviceInfo'];
+        if (persist){
+          this.storeMicroApps();
+        }
+        this.initMicroApps();
         resolve(true);
       } catch (e) {
         reject(e);
@@ -31,49 +66,18 @@ export default class WarplyReactSDK {
     });
   }
 
-  storeReady(){
-    this.requestMiddleware = new RequestMiddleware(this.store);
-
-    var already_registered = this.requestMiddleware.register(this.handleRegister.bind(this));
-    this.microapps = {};
-//    this.setMicroApps(false);
-    if (already_registered){
-      this.requestMiddleware.getContext(this.handleGetContext.bind(this));
-//      this.initMicroApps();
-    }
-  }
-
-
-  initMicroApps(){
-//    this.microApps[DeviceInfo.rootKey] = new DeviceInfo(this.store, this.requestMiddleware);
-
-//    var default_mapps = ['DeviceInfo'];
-
-//    var microapps = this.store.getState().reducers.ContextVariables.microapps || default_mapps;
-//    var mapp = null;
-//    for (var i=0;i<microapps.length;i++){
-//      mapp = microapps[i];
-
-      // get mapp class
-      // get receivers and append
-      // get required permissions and append
-      // call init on class
-//    }
-  }
-
-
-
-  // add listener on ContextVariables
-  setMicroApps(persist=true){
-    this.microapps = this.store.getState().reducers.MicroApps || {};
-    if (persist){
-      this.storeMicroApps();
-    }
-    this.initMicroApps();
-  }
-
   storeMicroApps(){
     this.store.dispatch(actions.setMicroApps(this.microApps));
+  }
+
+  initMicroApps(){
+    this.microAppsObjs[DeviceInfo.rootKey] = new DeviceInfo(this.store, this.requestMiddleware);
+    console.log("microapps finished");
+//    var mapp = null;
+//    for (var i=0;i<this.microApps.length;i++){
+//      mapp = this.microApps[i];
+//      this.microAppsObjs[mapp.rootKey] = new mapp(this.store, this.requestMiddleware);
+//    }
   }
 
 
@@ -83,13 +87,14 @@ export default class WarplyReactSDK {
   handleRegister(response){
     this.store.dispatch(actions.setWebId(response.data.context.web_id));
     this.store.dispatch(actions.setApiKey(response.data.context.api_key));
-    this.requestMiddleware.getContext(this.handleGetContext.bind(this));
+    // to remove and add as listener on webid changed
+//    this.requestMiddleware.getContext(this.handleGetContext.bind(this));
   };
 
   handleGetContext(response){
     this.store.dispatch(actions.setContextVariables(response.data.context));
-    // to remove
-    this.initMicroApps();
+    // to remove and add as listener on variables changed
+//    this.initMicroApps();
   }
 
   handlePostContext(response){}

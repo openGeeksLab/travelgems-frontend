@@ -31,40 +31,50 @@ export default class RequestMiddleware{
   }
 
 
+
   register(callback){
-    if (!this.isRegistered(false)){
-      this.get(WarpConfig.MOBILE_API_PATH + '/register/', callback);
-      return false;
+    if (!this.isRegistered()){
+      return new Promise((resolve, reject) => {
+        this.get(WarpConfig.MOBILE_API_PATH + '/register/', (response)=>{
+          callback(response);
+          resolve(true);
+        });
+      })
     }
     else {
       return true;
     }
   }
 
-
   getContext(callback){
-    if (!this.isRegistered(true)){
+    if (!this.isRegistered()){
       return;
     }
 
-    this.get(WarpConfig.MOBILE_API_PATH + '/context/', callback);
+    return new Promise((resolve, reject) => {
+      this.get(WarpConfig.MOBILE_API_PATH + '/context/', (response)=>{
+        callback(response);
+        resolve(true);
+      });
+    })
   }
-
 
   postContext(data, callback){
-    if (!this.isRegistered(true)){
+    if (!this.isRegistered()){
       return;
     }
 
-    this.post(WarpConfig.MOBILE_API_PATH + '/context/', data, callback);
+    return new Promise((resolve, reject) => {
+      this.post(WarpConfig.MOBILE_API_PATH + '/context/', data, (response)=>{
+        callback(response);
+        resolve(true);
+      });
+    })
   }
 
 
-  isRegistered(performRegister=true){
-    var registered = this.store.getState().reducers.WebId && this.store.getState().reducers.ApiKey;
-    if (!registered && performRegister){
-      this.register();
-    }
-    return registered;
+
+  isRegistered(){
+    return this.store.getState().reducers.WebId && this.store.getState().reducers.ApiKey;
   }
 }

@@ -18,19 +18,19 @@ export default function configureStore(onCompletion:()=>void):any {
 
   return new Promise((resolve, reject) => {
     try {
-        const enhancer = compose(
-          applyMiddleware(thunk, promise),
-          devTools({
-            name: App.name, realtime: true,
-          }),
-        );
+      const enhancer = compose(
+        applyMiddleware(thunk, promise),
+        devTools({
+          name: App.name, realtime: true,
+        }),
+      );
 
-        const persistedReducer = persistReducer(persistConfig, reducer);
+      const persistedReducer = persistReducer(persistConfig, reducer);
 
-        const store = createStore(persistedReducer, enhancer);
-        process.env.NODE_ENV = "production";
-        persistStore(store, null, () => resolve(store));
-        process.env.NODE_ENV = "development";
+      const store = createStore(persistedReducer, enhancer);
+      process.env.NODE_ENV = "production";
+      persistStore(store, null, () => resolve(store));
+      process.env.NODE_ENV = "development";
     } catch (e) {
      reject(e);
     }

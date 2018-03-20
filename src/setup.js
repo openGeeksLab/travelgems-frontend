@@ -20,11 +20,12 @@ export default class Root extends Component {
 
     var self = this;
 
-    Promise.all([store, SDKComplete]).then(
-      function(){
+    Promise.all([store, SDKComplete, this.warplyReactSDK.microAppsComplete]).then(
+      function(data){
+        console.log("FINISHED ALL");
         self.setState({
           isLoading: false,
-          store: store
+          store: data[0]
         });
       }
     );
