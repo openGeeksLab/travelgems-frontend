@@ -45,7 +45,7 @@ export default class WarplyReactSDK {
 
 
   initMicroApps(){
-    this.microApps[DeviceInfo.rootKey] = new DeviceInfo(this.store, this.requestMiddleware);
+//    this.microApps[DeviceInfo.rootKey] = new DeviceInfo(this.store, this.requestMiddleware);
 
 //    var default_mapps = ['DeviceInfo'];
 
