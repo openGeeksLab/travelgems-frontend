@@ -1,7 +1,7 @@
 // a library to wrap and simplify api calls
-import Config from 'react-native-config';
+import * as WarpConfig from './config.js';
 import * as WarpUtils from './utils/WarpUtils';
-import RequestHandler from './RequestHandler';
+import RequestMiddleware from './RequestMiddleware';
 import * as actions from './redux/actions/actions';
 import SDKStore from './redux/stores/SDKStore';
 import DeviceInfo from './micro_apps/DeviceInfo';
@@ -17,36 +17,35 @@ export default class WarplyReactSDK {
 
   static eventsBatch = 2;
 
-  static init(){
+  init(){
     const { persistor, store } = SDKStore(this.storeReady.bind(this));
     this.store = store;
     this.persistor = persistor;
+
+    return new Promise((resolve, reject) => {
+      try {
+        resolve(true);
+      } catch (e) {
+        reject(e);
+      }
+    });
   }
 
-  static storeReady(){
-    this.requestHandler = new RequestHandler();
+  storeReady(){
+    this.requestMiddleware = new RequestMiddleware(this.store);
 
-    var already_registered = this.register();
+    var already_registered = this.requestMiddleware.register(this.handleRegister.bind(this));
     this.microapps = {};
 //    this.setMicroApps(false);
     if (already_registered){
-      this.getContext();
-      this.initMicroApps();
+      this.requestMiddleware.getContext(this.handleGetContext.bind(this));
+//      this.initMicroApps();
     }
   }
 
-  static handlePermissions(permissions){
 
-  }
-
-  static handleReceivers(receivers){
-
-  }
-
-  static initMicroApps(){
-    var receivers = [];
-    var permissions = [];
-//    this.microApps[DeviceInfo.rootKey] = new DeviceInfo();
+  initMicroApps(){
+    this.microApps[DeviceInfo.rootKey] = new DeviceInfo(this.store, this.requestMiddleware);
 
 //    var default_mapps = ['DeviceInfo'];
 
@@ -60,15 +59,12 @@ export default class WarplyReactSDK {
       // get required permissions and append
       // call init on class
 //    }
-
-//    this.handleReceivers(receivers);
-//    this.handlePermissions(permissions);
   }
 
 
 
   // add listener on ContextVariables
-  static setMicroApps(persist=true){
+  setMicroApps(persist=true){
     this.microapps = this.store.getState().reducers.MicroApps || {};
     if (persist){
       this.storeMicroApps();
@@ -76,7 +72,7 @@ export default class WarplyReactSDK {
     this.initMicroApps();
   }
 
-  static storeMicroApps(){
+  storeMicroApps(){
     this.store.dispatch(actions.setMicroApps(this.microApps));
   }
 
@@ -84,49 +80,17 @@ export default class WarplyReactSDK {
 
 
 
-
-  static register(){
-    if (!this.isRegistered(false)){
-      this.requestHandler.get(Config.MOBILE_API_PATH + Config.APP_UUID + '/register/', this.handleRegister.bind(this));
-      return false;
-    }
-    else {
-      return true;
-    }
-  }
-
-  static getContext(){
-    if (!this.isRegistered(true)){
-      return;
-    }
-
-    this.requestHandler.get(Config.MOBILE_API_PATH + Config.APP_UUID + '/context/', this.handleGetContext.bind(this));
-  }
-
-  static handleRegister(response){
+  handleRegister(response){
     this.store.dispatch(actions.setWebId(response.data.context.web_id));
     this.store.dispatch(actions.setApiKey(response.data.context.api_key));
-    this.getContext();
+    this.requestMiddleware.getContext(this.handleGetContext.bind(this));
   };
 
-  static handleGetContext(response){
+  handleGetContext(response){
     this.store.dispatch(actions.setContextVariables(response.data.context));
     // to remove
     this.initMicroApps();
   }
 
-  static handlePostContext(response){}
-
-
-
-
-
-
-  static isRegistered(performRegister=true){
-    var registered = this.store.getState().reducers.WebId && this.store.getState().reducers.ApiKey;
-    if (!registered && performRegister){
-      this.register();
-    }
-    return registered;
-  }
+  handlePostContext(response){}
 }

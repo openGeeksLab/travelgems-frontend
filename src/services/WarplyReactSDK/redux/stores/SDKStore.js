@@ -9,7 +9,7 @@ import reducer from '../reducers';
 import promise from './promise';
 
 const persistConfig = {
- key: 'root',
+ key: 'WarplyReactSDK',
  storage: storage,
  stateReconciler: autoMergeLevel2 // see "Merge Process" section for details.
 };
