@@ -91,10 +91,8 @@ class Activities extends Component {
               placeholder="Search"
               underlineColorAndroid="transparent"
           />
+          <Icon name='menu' style={styles.FilterIcon} onPress={this._toggleModal} />
       </View>
-      <Button block style={styles.btnShowModal} onPress={this._toggleModal}>
-        <Text>Basic Modal</Text>
-      </Button>
       <ScrollView style={{}}>
         <List>
           <ListItem style={{margin:0,padding:0,marginLeft:0,paddingLeft:15,paddingRight:15,borderBottomWidth:0}}>
