@@ -19,7 +19,7 @@ class Activities extends Component {
   static navigationOptions = {
     tabBarLabel: 'Activities',
     tabBarIcon: ({ tintColor }) => (
-      <Icon name='home' type='home' color='#fff' />
+      <Icon name='flash-on' type='home' color='#fff' />
     )
   }
   render() {

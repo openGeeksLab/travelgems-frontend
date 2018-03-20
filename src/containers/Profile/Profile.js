@@ -15,7 +15,7 @@ class Profile extends Component {
   static navigationOptions = {
     tabBarLabel:'Profile',
     tabBarIcon:({tintColor}) =>(
-      <Icon name='home' type='home' color='#fff' />
+      <Icon name='person' type='home' color='#fff' />
     )
   }
   render() {

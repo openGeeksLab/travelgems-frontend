@@ -18,7 +18,7 @@ const MainDrawerRouter = DrawerNavigator(
     Smalltile: {screen: Smalltile}
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Activity",
     contentOptions: {
       activeTintColor: "#e91e63"
     },

@@ -15,7 +15,7 @@ class Cart extends Component {
   static navigationOptions = {
     tabBarLabel:'Cart',
     tabBarIcon:({tintColor}) =>(
-      <Icon name='home' type='home' color='#fff' />
+      <Icon name='shopping-cart' type='home' color='#fff' />
     )
   }
   render() {

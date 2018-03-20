@@ -6,6 +6,7 @@ import { Container, H3, Text, Title, Body, Left, Right } from "native-base";
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Header,Button } from "react-native-elements";
 import styles from "./styles";
+import { MaterialIcons } from 'react-native-vector-icons/MaterialIcons';
 
 import Smalltile from '../../components/Smalltile/Smalltile';
 import HorizontalScroll from '../../components/HorizontalScroll/HorizontalScroll';
@@ -40,9 +41,9 @@ class Discover extends Component {
   }
   static navigationOptions = {
     tabBarLabel:'Discover',
-    tabBarIcon:({tintColor}) =>(
-      <Icon name='home' type='home' color='#fff' />
-    )
+    tabBarIcon:({tintColor}) =>{
+      return <Icon name='place' type='home' color='#fff' />
+  }
   }
   render() {
     return (
