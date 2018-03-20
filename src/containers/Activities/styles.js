@@ -8,24 +8,26 @@ export default {
   content: {
     flex: 1
   },
-  imageContainer: {
-    position: "absolute",
+  container:{
+    backgroundColor:"white"
   },
-  logoContainer: {
-    flex: 1,
-    marginTop: Dimensions.get("window").height / 8,
-    marginBottom: 30,
+  SearchStyle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    borderWidth: .5,
+    borderColor: '#000',
+    height: 40,
+    borderRadius: 5 ,
+    margin: 10
   },
-  logo: {
-    position: "absolute",
-    left: Platform.OS === "android" ? 40 : 50,
-    top: Platform.OS === "android" ? 35 : 60,
-    width: 280,
-    height: 100,
-  },
-  text: {
-    color: "#D8D8D8",
-    bottom: 6,
-    marginTop: 5
-  },
+  SearchIcon: {
+      padding: 10,
+      margin: 5,
+      height: 25,
+      width: 25,
+      resizeMode : 'stretch',
+      alignItems: 'center'
+  }
 };

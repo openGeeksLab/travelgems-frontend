@@ -8,7 +8,6 @@ import { Header, Icon } from "react-native-elements";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { show } from 'redux-modal';
-import ListModal from '../../components/modalbox/listModal';
 
 class Webview extends Component {
 

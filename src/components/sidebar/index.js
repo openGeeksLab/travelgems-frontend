@@ -14,13 +14,6 @@ const datas = [
 		bg: "#C5F442",
 	},
   {
-    name: "ModalBox",
-    route: "Page2",
-    icon: "",
-    bg: "#00BFFF",
-    types: 5
-  },
-  {
     name: "Activity",
     route: "Activity",
     icon: "",
