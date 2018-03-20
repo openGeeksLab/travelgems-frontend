@@ -7,10 +7,7 @@ import { Header } from "react-native-elements";
 import Backgroundimage from '../../components/Backgroundimage/Backgroundimage';
 import styles from "./styles";
 import Widetile from '../../components/Widetile/Widetile';
-import { show } from 'redux-modal';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
+import CheckBox from 'react-native-check-box'
 const gridImage = 'https://www.olympicholidays.com/media/20570/fiskardo_kefalonia_greece.jpg?center=0.37948717948717947,0.51&mode=crop&quality=70&width=550&height=358&rnd=131302560700000000';
 
 
@@ -54,12 +51,28 @@ class Activities extends Component {
         backdropTransitionOutTiming={1000}
         >
                 <View style={{backgroundColor: 'white',
-                      padding: 22,
+                      padding: 10,
                       justifyContent: 'center',
-                      alignItems: 'center',
                       borderRadius: 4,
                       borderColor: 'rgba(0, 0, 0, 0.1)' }}>
-                  <Text>Hello!</Text>
+                        <CheckBox
+                          style={{flex: 1, padding: 10}}
+                          onClick={()=>null}
+                          isChecked={true}
+                          leftText="TEST"
+                        />
+                        <CheckBox
+                          style={{flex: 1, padding: 10}}
+                          onClick={()=>null}
+                          isChecked={true}
+                          leftText="TEST"
+                        />
+                        <CheckBox
+                          style={{flex: 1, padding: 10}}
+                          onClick={()=>null}
+                          isChecked={true}
+                          leftText="TEST"
+                        />
                   <TouchableOpacity onPress={this._toggleModal}>
                     <Text>Hide me!</Text>
                   </TouchableOpacity>
@@ -92,4 +105,5 @@ class Activities extends Component {
   }
 }
 
-export default connect(null, dispatch => bindActionCreators({ show }, dispatch))(Activities)
+
+export default Activities;
