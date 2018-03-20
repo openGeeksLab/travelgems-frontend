@@ -15,10 +15,10 @@ export default class MicroApp {
   }
 
   handlePostContext(response){
-    response = response.data.context;
-    response = {
-      "data":response[this.mappName],
-      "status":response[this.mappName + '-status']
+    var response = response.data.context;
+    var response = {
+      data: response[this.mappName],
+      status: response[this.mappName + '-status']
     };
     return response;
   }

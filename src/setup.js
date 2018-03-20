@@ -39,10 +39,12 @@ export default class Root extends Component {
       );
     }
 
+    process.env.NODE_ENV = "production";
     return (
       <Provider store={this.state.store}>
         <App />
       </Provider>
     );
+    process.env.NODE_ENV = "development";
   }
 }

@@ -33,6 +33,6 @@ export default class DeviceInfo extends MicroApp {
   }
 
   handlePostContext(response){
-    response = super.handlePostContext(response);
+    var response = super.handlePostContext(response);
   }
 }

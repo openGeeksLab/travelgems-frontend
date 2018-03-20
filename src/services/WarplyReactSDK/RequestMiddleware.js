@@ -25,7 +25,7 @@ export default class RequestMiddleware{
     if (addHeaders){
       config = {headers:WarpUtils.generateHeaders(this.store.getState().reducers.WebId, this.store.getState().reducers.ApiKey)};
     }
-    this.HttpApi.post(url,data,{headers:WarpUtils.generateHeaders(this.store.getState().reducers.WebId, this.store.getState().reducers.ApiKey)}).then(
+    this.HttpApi.post(url, data, config).then(
       (response) => callback(response)
     );
   }
