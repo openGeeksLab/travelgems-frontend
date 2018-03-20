@@ -1,4 +1,4 @@
-import Config from 'react-native-config';
+import * as WarpConfig from '../config.js';
 import sha256 from 'sha256';
 import apisauce from 'apisauce';
 
@@ -17,7 +17,7 @@ export function generateHeaders(web_id, api_key){
   return headers;
 };
 
-export function createHttpAPI(baseURL = Config.MOBILE_API){
+export function createHttpAPI(baseURL = WarpConfig.MOBILE_API){
   return apisauce.create({
     baseURL,
     headers: {

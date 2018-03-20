@@ -1,7 +1,7 @@
 // a library to wrap and simplify api calls
-import Config from 'react-native-config';
+import * as WarpConfig from './config.js';
 import * as WarpUtils from './utils/WarpUtils';
-import RequestHandler from './RequestHandler';
+import RequestMiddleware from './RequestMiddleware';
 import * as actions from './redux/actions/actions';
 import SDKStore from './redux/stores/SDKStore';
 import DeviceInfo from './micro_apps/DeviceInfo';
@@ -17,116 +17,85 @@ export default class WarplyReactSDK {
 
   static eventsBatch = 2;
 
-  static init(){
-    const { persistor, store } = SDKStore(this.storeReady.bind(this));
-    this.store = store;
-    this.persistor = persistor;
-  }
+  init(){
+    var self = this;
+    this.microApps = {};
+    this.microAppsObjs = {};
 
-  static storeReady(){
-    this.requestHandler = new RequestHandler();
+    return new Promise((resolve, reject) => {
+      try {
+        const store = SDKStore();
 
-    var already_registered = this.register();
-    this.microapps = {};
-//    this.setMicroApps(false);
-    if (already_registered){
-      this.getContext();
-      this.initMicroApps();
-    }
-  }
+        Promise.all([store]).then(
+          function(data){
+            self.store = data[0];
+            self.requestMiddleware = new RequestMiddleware(self.store);
 
-  static handlePermissions(permissions){
+            const registerComplete = self.requestMiddleware.register(self.handleRegister.bind(self));
+            const contextComplete = self.requestMiddleware.getContext(self.handleGetContext.bind(self));
 
-  }
-
-  static handleReceivers(receivers){
-
-  }
-
-  static initMicroApps(){
-    var receivers = [];
-    var permissions = [];
-//    this.microApps[DeviceInfo.rootKey] = new DeviceInfo();
-
-//    var default_mapps = ['DeviceInfo'];
-
-//    var microapps = this.store.getState().reducers.ContextVariables.microapps || default_mapps;
-//    var mapp = null;
-//    for (var i=0;i<microapps.length;i++){
-//      mapp = microapps[i];
-
-      // get mapp class
-      // get receivers and append
-      // get required permissions and append
-      // call init on class
-//    }
-
-//    this.handleReceivers(receivers);
-//    this.handlePermissions(permissions);
+            Promise.all([registerComplete, contextComplete]).then(
+              function(){
+                self.microAppsComplete = self.setMicroApps(true);
+                resolve(true);
+              }
+            );
+          }
+        );
+      } catch (e) {
+        reject(e);
+      }
+    });
   }
 
 
 
   // add listener on ContextVariables
-  static setMicroApps(persist=true){
-    this.microapps = this.store.getState().reducers.MicroApps || {};
-    if (persist){
-      this.storeMicroApps();
-    }
-    this.initMicroApps();
+  setMicroApps(persist=true){
+    return new Promise((resolve, reject) => {
+      try {
+        this.microApps = this.store.getState().reducers.MicroApps || this.store.getState().reducers.ContextVariables.microApps || ['DeviceInfo'];
+        if (persist){
+          this.storeMicroApps();
+        }
+        this.initMicroApps();
+        resolve(true);
+      } catch (e) {
+        reject(e);
+      }
+    });
   }
 
-  static storeMicroApps(){
+  storeMicroApps(){
     this.store.dispatch(actions.setMicroApps(this.microApps));
   }
 
-
-
-
-
-
-  static register(){
-    if (!this.isRegistered(false)){
-      this.requestHandler.get(Config.MOBILE_API_PATH + Config.APP_UUID + '/register/', this.handleRegister.bind(this));
-      return false;
-    }
-    else {
-      return true;
-    }
+  initMicroApps(){
+    this.microAppsObjs[DeviceInfo.rootKey] = new DeviceInfo(this.store, this.requestMiddleware);
+    console.log("microapps finished");
+//    var mapp = null;
+//    for (var i=0;i<this.microApps.length;i++){
+//      mapp = this.microApps[i];
+//      this.microAppsObjs[mapp.rootKey] = new mapp(this.store, this.requestMiddleware);
+//    }
   }
 
-  static getContext(){
-    if (!this.isRegistered(true)){
-      return;
-    }
 
-    this.requestHandler.get(Config.MOBILE_API_PATH + Config.APP_UUID + '/context/', this.handleGetContext.bind(this));
-  }
 
-  static handleRegister(response){
+
+
+  handleRegister(response){
     this.store.dispatch(actions.setWebId(response.data.context.web_id));
     this.store.dispatch(actions.setApiKey(response.data.context.api_key));
-    this.getContext();
+    // to remove and add as listener on webid changed
+//    this.requestMiddleware.getContext(this.handleGetContext.bind(this));
   };
 
-  static handleGetContext(response){
+  handleGetContext(response){
     this.store.dispatch(actions.setContextVariables(response.data.context));
-    // to remove
-    this.initMicroApps();
+    // to remove and add as listener on variables changed
+//    this.initMicroApps();
   }
 
-  static handlePostContext(response){}
-
-
-
-
-
-
-  static isRegistered(performRegister=true){
-    var registered = this.store.getState().reducers.WebId && this.store.getState().reducers.ApiKey;
-    if (!registered && performRegister){
-      this.register();
-    }
-    return registered;
-  }
+  handlePostContext(response){}
 }
