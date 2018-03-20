@@ -29,5 +29,14 @@ export default {
       width: 25,
       resizeMode : 'stretch',
       alignItems: 'center'
+  },
+  FilterIcon:{
+    padding: 10,
+    margin: 5,
+    height: 25,
+    width: 25,
+    resizeMode : 'stretch',
+    alignItems: 'center',
+    position: "absolute"
   }
 };
