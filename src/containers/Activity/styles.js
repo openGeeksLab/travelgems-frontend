@@ -28,14 +28,8 @@ export default {
     bottom: 6,
     marginTop: 5
   },
-  customHeader: {
-    flex: 0.1,
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    height: 20,
-  },
   imageText: {
-    top: Dimensions.get("window").height - 420,
+    top: Dimensions.get("window").height - 450,
     position: 'absolute',
   },
   imageTitle: {
