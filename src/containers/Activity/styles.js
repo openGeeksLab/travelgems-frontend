@@ -29,8 +29,10 @@ export default {
     marginTop: 5
   },
   customHeader: {
-    flex: 1,
-    flexDirection: 'row'
+    flex: 0.1,
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    height: 20,
   },
   imageText: {
     top: Dimensions.get("window").height - 420,

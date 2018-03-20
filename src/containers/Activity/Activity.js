@@ -17,7 +17,7 @@ class Activity extends Component {
   render() {
     return (
       <Container>
-        <View>
+        <View style={styles.customHeader}>
           <Icon name="keyboard-arrow-left" color="#FFFFFF" />
           <Icon name="schedule" color="#FFFFFF" />
           <Icon name="favorite-border" color="#FFFFFF" />
