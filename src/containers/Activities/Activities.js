@@ -18,7 +18,13 @@ class Activities extends Component {
     super(props)
     this.state = {
       text:'',
-      isModalVisible: false
+      isModalVisible: false,
+      filters:[
+        {id:1,label:'value1',checked:true},
+        {id:2,label:'value2',checked:false},
+        {id:3,label:'value3',checked:false},
+        {id:4,label:'value4',checked:true}
+      ]
     }
   }
   _toggleModal = () =>
@@ -32,6 +38,10 @@ class Activities extends Component {
   onSearchChange(text){
     this.setState({text})
     console.log(this.state)
+  }
+  changeSelection(id){
+    this.setState({filters:this.state.filters.map(function(item,i){if(item.id===id){item.checked=!item.checked}return item;})});
+    console.log(this.state.filters);
   }
   render() {
     return (
@@ -55,24 +65,19 @@ class Activities extends Component {
                       justifyContent: 'center',
                       borderRadius: 4,
                       borderColor: 'rgba(0, 0, 0, 0.1)' }}>
-                        <CheckBox
-                          style={{flex: 1, padding: 10}}
-                          onClick={()=>null}
-                          isChecked={true}
-                          leftText="TEST"
-                        />
-                        <CheckBox
-                          style={{flex: 1, padding: 10}}
-                          onClick={()=>null}
-                          isChecked={true}
-                          leftText="TEST"
-                        />
-                        <CheckBox
-                          style={{flex: 1, padding: 10}}
-                          onClick={()=>null}
-                          isChecked={true}
-                          leftText="TEST"
-                        />
+                      {
+                        this.state.filters.map((item,i) =>(
+                          <CheckBox
+                            key={item.id}
+                            style={{flex: 1, padding: 10}}
+                            onClick={()=>this.changeSelection(item.id)}
+                            isChecked={item.checked}
+                            leftText={item.label}
+                            // checkedImage={<Image source={require('../../page/my/img/ic_check_box.png')} style={this.props.theme.styles.tabBarSelectedIcon}/>}
+                            // unCheckedImage={<Image source={require('../../page/my/img/ic_check_box_outline_blank.png')} style={this.props.theme.styles.tabBarSelectedIcon}/>}
+                          />
+                        ))
+                      }
                   <TouchableOpacity onPress={this._toggleModal}>
                     <Text>Hide me!</Text>
                   </TouchableOpacity>
