@@ -18,7 +18,7 @@ class Activity extends Component {
   }
   render() {
     return (
-      <Container>
+      <Container style={{backgroundColor: 'white'}}>
         <Backgroundimage />
         <CustomHeader />
         <View style={styles.imageText}>

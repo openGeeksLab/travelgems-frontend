@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import {AppRegistry, View } from 'react-native';
+import {AppRegistry, View, TouchableOpacity } from 'react-native';
 import { Icon } from "react-native-elements"
 import { MaterialIcons } from 'react-native-vector-icons/MaterialIcons';
 import Favorite from '../../components/Favorite/Favorite';
 import styles from "./styles";
+import { withNavigation } from 'react-navigation';
 
-export default class CustomHeader extends Component {
+class CustomHeader extends Component {
   render() {
 
     return (
       <View style={styles.customHeader}>
-          <View style={styles.headerIcon1}><Icon name="arrow-back" color="#FFFFFF" /></View>
+          <TouchableOpacity style={styles.headerIcon1}><Icon name="arrow-back" color="#FFFFFF"  onPress={() => this.props.navigation.goBack()} /></TouchableOpacity>
           <View style={styles.headerIcon2}><Icon name="launch" color="#FFFFFF" /></View>
           {/* <View style={styles.headerIcon3}><Icon name="favorite-border" color="#FFFFFF" /></View> */}
           <View style={styles.headerIcon3}><Favorite /></View>
@@ -18,3 +19,4 @@ export default class CustomHeader extends Component {
     );
   }
 }
+export default withNavigation(CustomHeader);
