@@ -5,6 +5,7 @@ import RequestMiddleware from './RequestMiddleware';
 import * as actions from './redux/actions/actions';
 import SDKStore from './redux/stores/SDKStore';
 import DeviceInfo from './micro_apps/DeviceInfo';
+import Content from './micro_apps/Content';
 
 
 export default class WarplyReactSDK {
@@ -18,11 +19,13 @@ export default class WarplyReactSDK {
   static eventsBatch = 2;
 
   init(){
-    var self = this;
+    const self = this;
+    this.microAppNames = {};
     this.microApps = {};
-    this.microAppsObjs = {};
 
-    return new Promise((resolve, reject) => {
+    this.tries = 3;
+
+    return new Promise(function cb(resolve, reject){
       try {
         const store = SDKStore();
 
@@ -32,14 +35,22 @@ export default class WarplyReactSDK {
             self.requestMiddleware = new RequestMiddleware(self.store);
 
             const registerComplete = self.requestMiddleware.register(self.handleRegister.bind(self));
-            const contextComplete = self.requestMiddleware.getContext(self.handleGetContext.bind(self));
 
-            Promise.all([registerComplete, contextComplete]).then(
-              function(){
-                self.microAppsComplete = self.setMicroApps(true);
-                resolve(true);
-              }
-            );
+            Promise.all([registerComplete]).then(function(){
+              const contextComplete = self.requestMiddleware.getContext(self.handleGetContext.bind(self));
+
+              Promise.all([contextComplete]).then(
+                function(){
+                  self.microAppsComplete = self.setMicroApps(true);
+                  resolve(true);
+                }
+              ).catch(function () {
+                self.handlePromiseExc(resolve, reject, cb);
+              });
+
+            }).catch(function () {
+              self.handlePromiseExc(resolve, reject, cb);
+            });
           }
         );
       } catch (e) {
@@ -48,17 +59,28 @@ export default class WarplyReactSDK {
     });
   }
 
+  handlePromiseExc(resolve, reject, cb){
+    if (--this.tries>0){
+      self.store.dispatch({type: 'RESET'});
+      cb(resolve, reject);
+    }
+    else{
+      reject(false);
+    }
+  }
+
 
 
   // add listener on ContextVariables
   setMicroApps(persist=true){
+    const self = this;
     return new Promise((resolve, reject) => {
       try {
-        this.microApps = this.store.getState().reducers.MicroApps || this.store.getState().reducers.ContextVariables.microApps || ['DeviceInfo'];
+        this.microAppNames = self.store.getState().reducers.MicroApps || self.store.getState().reducers.ContextVariables.enabled_microapps || ['MAPP_DEVICE_INFO','CONTENT'];
         if (persist){
-          this.storeMicroApps();
+          self.storeMicroApps();
         }
-        this.initMicroApps();
+        self.initMicroApps();
         resolve(true);
       } catch (e) {
         reject(e);
@@ -67,11 +89,15 @@ export default class WarplyReactSDK {
   }
 
   storeMicroApps(){
-    this.store.dispatch(actions.setMicroApps(this.microApps));
+    this.store.dispatch(actions.setMicroApps(this.microAppNames));
   }
 
   initMicroApps(){
-    this.microAppsObjs[DeviceInfo.rootKey] = new DeviceInfo(this.store, this.requestMiddleware);
+    const devInfoMapp = new DeviceInfo(this.store, this.requestMiddleware);
+    const contentMapp = new Content(this.store, this.requestMiddleware);
+
+    this.microApps[devInfoMapp.rootKey] = devInfoMapp;
+    this.microApps[contentMapp.rootKey] = contentMapp;
     console.log("microapps finished");
 //    var mapp = null;
 //    for (var i=0;i<this.microApps.length;i++){

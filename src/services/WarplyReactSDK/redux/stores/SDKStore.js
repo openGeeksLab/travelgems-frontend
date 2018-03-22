@@ -7,6 +7,7 @@ import storage from 'redux-persist/lib/storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import reducer from '../reducers';
 import promise from './promise';
+import reduxReset from 'redux-reset';
 
 
 export default function SDKStore(onCompletion:()=>void):any {
@@ -23,6 +24,7 @@ export default function SDKStore(onCompletion:()=>void):any {
         devTools({
           name: "WarplyReactSDK", realtime: true,
         }),
+        reduxReset()
       );
 
       const persistedReducer = persistReducer(persistConfig, reducer);

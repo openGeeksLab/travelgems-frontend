@@ -9,7 +9,7 @@ export type State = {
     RequestQueue: array,
     EventQueue: array,
     ContextVariables: json,
-    MicroApps: json
+    MicroApps: array
 }
 
 const initialState = {
@@ -18,7 +18,7 @@ const initialState = {
   RequestQueue: [],
   EventQueue: [],
   ContextVariables: {},
-  MicroApps: {}
+  MicroApps: []
 };
 
 export default function (state:State = initialState, action:Action): State {
@@ -69,6 +69,18 @@ export default function (state:State = initialState, action:Action): State {
       return {
         ...state,
         MicroApps: action.mapps,
+      }
+
+    case 'RESET':
+//      return initialState
+      return {
+        ...state,
+        WebId: null,
+        ApiKey: null,
+        RequestQueue: [],
+        EventQueue: [],
+        ContextVariables: {},
+        MicroApps: []
       }
 
     default:

@@ -1,12 +1,13 @@
 import MicroApp from '../MicroApp';
 
 export default class DeviceInfo extends MicroApp {
-  mappName = 'MAPP_DEVICE_INFO';
+  static mappName = 'MAPP_DEVICE_INFO';
   rootKey = 'device_info';
   static allowedActions = [];
 
   constructor(store, requestMiddleware){
     super(store, requestMiddleware);
+    this.setDefaultBody();
     this.handleAction('send_info');
   }
 
@@ -15,7 +16,7 @@ export default class DeviceInfo extends MicroApp {
   }
 
   dispatchAction(action){
-    if (allowedActions.indexOf(action)>-1){
+    if (DeviceInfo.allowedActions.indexOf(action)>-1){
       this.handleAction(action)
     }
   }

@@ -36,8 +36,17 @@ export default class RequestMiddleware{
     if (!this.isRegistered()){
       return new Promise((resolve, reject) => {
         this.get(WarpConfig.MOBILE_API_PATH + '/register/', (response)=>{
-          callback(response);
-          resolve(true);
+          try{
+            if (response.data.status != "1"){
+              reject(false);
+            }
+            else{
+              callback(response);
+              resolve(true);
+            }
+          } catch (e) {
+            reject(e);
+          }
         });
       })
     }
@@ -53,8 +62,17 @@ export default class RequestMiddleware{
 
     return new Promise((resolve, reject) => {
       this.get(WarpConfig.MOBILE_API_PATH + '/context/', (response)=>{
-        callback(response);
-        resolve(true);
+        try{
+          if (response.data.status != "1"){
+            reject(false);
+          }
+          else{
+            callback(response);
+            resolve(true);
+          }
+        } catch (e) {
+          reject(e);
+        }
       });
     })
   }
@@ -66,8 +84,17 @@ export default class RequestMiddleware{
 
     return new Promise((resolve, reject) => {
       this.post(WarpConfig.MOBILE_API_PATH + '/context/', data, (response)=>{
-        callback(response);
-        resolve(true);
+        try{
+          if (response.data.status != "1"){
+            reject(false);
+          }
+          else{
+            callback(response);
+            resolve(true);
+          }
+        } catch (e) {
+          reject(e);
+        }
       });
     })
   }

@@ -1,9 +1,10 @@
-import WarplyReactSDK from '../src/services/WarplyReactSDK/WarplyReactSDK';
 import React, { Component } from 'react';
 import { Text } from "native-base";
 import { Provider } from 'react-redux';
 import App from './containers/App';
 import configureStore from './stores/configureStore';
+import WarplyReactSDK from '../src/services/WarplyReactSDK/WarplyReactSDK';
+import * as actions from './actions/destinations';
 
 export default class Root extends Component {
   constructor() {
@@ -27,8 +28,15 @@ export default class Root extends Component {
           isLoading: false,
           store: data[0]
         });
+
+        self.warplyReactSDK.microApps['content'].dispatchAction('retrieve',self.handleContent.bind(self));
+
       }
     );
+  }
+
+  handleContent(response){
+    this.state.store.dispatch(actions.setDestinations(response.data));
   }
 
   render() {
