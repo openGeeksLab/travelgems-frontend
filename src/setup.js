@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import App from './containers/App';
 import configureStore from './stores/configureStore';
 import WarplyReactSDK from '../src/services/warply-react-sdk/WarplyReactSDK';
+//import WarplyReactAuthSDK from '../src/services/warply-react-auth-sdk/WarplyReactAuthSDK';
 import * as actions from './actions/content';
 
 export default class Root extends Component {
@@ -13,20 +14,23 @@ export default class Root extends Component {
       isLoading: true,
     };
     this.warplyReactSDK = new WarplyReactSDK();
+//    this.warplyReactAuthSDK = new WarplyReactAuthSDK();
   }
 
   setupData(){
     const SDKComplete = this.warplyReactSDK.init();
+//    const authSDKComplete = this.warplyReactAuthSDK.init();
     const store = configureStore();
 
     var self = this;
 
+//    Promise.all([store, SDKComplete, authSDKComplete, this.warplyReactSDK.microAppsComplete]).then(
     Promise.all([store, SDKComplete, this.warplyReactSDK.microAppsComplete]).then(
       function(data){
         console.log("FINISHED ALL");
         self.setState({store: data[0]});
 
-        self.warplyReactSDK.microApps['content'].dispatchAction('retrieve',self.handleContent.bind(self));
+        self.warplyReactSDK.request('content', 'retrieve', null, self.handleContent.bind(self));
 
       }
     );
@@ -45,7 +49,7 @@ export default class Root extends Component {
     if (this.state.isLoading) {
       this.setState({isLoading: false});
     }
-    this.warplyReactSDK.microApps['products'].dispatchAction('get_all_raw',this.handleActivies.bind(this));
+    this.warplyReactSDK.request('products', 'get_all_raw', null, this.handleActivies.bind(this));
   }
 
   handleActivies(response){

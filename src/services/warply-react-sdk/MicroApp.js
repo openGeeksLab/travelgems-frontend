@@ -1,4 +1,3 @@
-import WarplyReactSDK from './WarplyReactSDK';
 import * as WarpUtils from './utils/WarpUtils';
 import RequestMiddleware from './RequestMiddleware';
 import * as WarpConfig from './config.js';

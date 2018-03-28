@@ -65,7 +65,7 @@ export default function (state:State = initialState, action:Action): State {
         ContextVariables: action.variables,
       }
 
-    case actions.ADD_MICRO_APP:
+    case actions.SET_MICRO_APP:
       return {
         ...state,
         MicroApps: action.mapps,

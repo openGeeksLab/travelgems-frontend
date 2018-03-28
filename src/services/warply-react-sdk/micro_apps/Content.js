@@ -10,7 +10,7 @@ export default class Content extends MicroApp {
     this.setDefaultBody();
   }
 
-  dispatchAction(action, callback){
+  dispatchAction(action, data, callback){
     if (this.constructor.allowedActions.indexOf(action)>-1){
       return this.handleAction(action, callback);
     }

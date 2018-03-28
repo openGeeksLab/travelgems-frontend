@@ -15,7 +15,7 @@ export default class DeviceInfo extends MicroApp {
     return {};
   }
 
-  dispatchAction(action){
+  dispatchAction(action, data){
     if (DeviceInfo.allowedActions.indexOf(action)>-1){
       this.handleAction(action)
     }

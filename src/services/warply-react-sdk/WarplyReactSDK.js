@@ -58,6 +58,12 @@ export default class WarplyReactSDK {
     });
   }
 
+  request(microApp, action, data, callback){
+    this.microApps[microApp].dispatchAction(action, data, callback);
+  }
+
+
+
   handlePromiseExc(resolve, reject, cb){
     if (--this.tries>0){
       self.store.dispatch({type: 'RESET'});
