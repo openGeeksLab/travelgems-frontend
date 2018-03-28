@@ -11,7 +11,7 @@ export default class Content extends MicroApp {
   }
 
   dispatchAction(action, callback){
-    if (Content.allowedActions.indexOf(action)>-1){
+    if (this.constructor.allowedActions.indexOf(action)>-1){
       return this.handleAction(action, callback);
     }
     return false;

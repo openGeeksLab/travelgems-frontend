@@ -4,8 +4,7 @@ import * as WarpUtils from './utils/WarpUtils';
 import RequestMiddleware from './RequestMiddleware';
 import * as actions from './redux/actions/actions';
 import SDKStore from './redux/stores/SDKStore';
-import DeviceInfo from './micro_apps/DeviceInfo';
-import Content from './micro_apps/Content';
+import micro_apps from './micro_apps';
 
 
 export default class WarplyReactSDK {
@@ -76,7 +75,7 @@ export default class WarplyReactSDK {
     const self = this;
     return new Promise((resolve, reject) => {
       try {
-        this.microAppNames = self.store.getState().reducers.MicroApps || self.store.getState().reducers.ContextVariables.enabled_microapps || ['MAPP_DEVICE_INFO','CONTENT'];
+        self.microAppNames = self.store.getState().reducers.ContextVariables.enabled_microapps;
         if (persist){
           self.storeMicroApps();
         }
@@ -93,17 +92,16 @@ export default class WarplyReactSDK {
   }
 
   initMicroApps(){
-    const devInfoMapp = new DeviceInfo(this.store, this.requestMiddleware);
-    const contentMapp = new Content(this.store, this.requestMiddleware);
+    var MappClasses = micro_apps();
+    for (var i = 0; i < MappClasses.length; i++){
+      console.log(MappClasses[i]);
+      const classObj = new MappClasses[i](this.store, this.requestMiddleware);
+      if (this.microAppNames.indexOf(classObj.constructor.mappName) > -1){
+        this.microApps[classObj.rootKey] = classObj;
+      }
+    }
 
-    this.microApps[devInfoMapp.rootKey] = devInfoMapp;
-    this.microApps[contentMapp.rootKey] = contentMapp;
     console.log("microapps finished");
-//    var mapp = null;
-//    for (var i=0;i<this.microApps.length;i++){
-//      mapp = this.microApps[i];
-//      this.microAppsObjs[mapp.rootKey] = new mapp(this.store, this.requestMiddleware);
-//    }
   }
 
 

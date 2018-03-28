@@ -3,8 +3,8 @@ import { Text } from "native-base";
 import { Provider } from 'react-redux';
 import App from './containers/App';
 import configureStore from './stores/configureStore';
-import WarplyReactSDK from '../src/services/WarplyReactSDK/WarplyReactSDK';
-import * as actions from './actions/destinations';
+import WarplyReactSDK from '../src/services/warply-react-sdk/WarplyReactSDK';
+import * as actions from './actions/content';
 
 export default class Root extends Component {
   constructor() {
@@ -15,7 +15,7 @@ export default class Root extends Component {
     this.warplyReactSDK = new WarplyReactSDK();
   }
 
-  async componentWillMount () {
+  setupData(){
     const SDKComplete = this.warplyReactSDK.init();
     const store = configureStore();
 
@@ -24,10 +24,7 @@ export default class Root extends Component {
     Promise.all([store, SDKComplete, this.warplyReactSDK.microAppsComplete]).then(
       function(data){
         console.log("FINISHED ALL");
-        self.setState({
-          isLoading: false,
-          store: data[0]
-        });
+        self.setState({store: data[0]});
 
         self.warplyReactSDK.microApps['content'].dispatchAction('retrieve',self.handleContent.bind(self));
 
@@ -35,8 +32,24 @@ export default class Root extends Component {
     );
   }
 
+  async componentWillMount() {
+    this.setupData();
+  }
+
+  async componentWillUpdate() {
+//    this.setupData();
+  }
+
   handleContent(response){
     this.state.store.dispatch(actions.setDestinations(response.data));
+    if (this.state.isLoading) {
+      this.setState({isLoading: false});
+    }
+    this.warplyReactSDK.microApps['products'].dispatchAction('get_all_raw',this.handleActivies.bind(this));
+  }
+
+  handleActivies(response){
+    this.state.store.dispatch(actions.setActivities(response.data));
   }
 
   render() {
