@@ -21,7 +21,7 @@ class Destination extends Component {
         <View style={{height:300}}>
             <Backgroundimage/>
         </View>
-        <Card title={this.props.navigation.state.params.name}
+        <Card title=""
           titleStyle ={{textAlign:"left",color:"black"}}
           style={{margin:0,position:"absolute",top:100}}
           >

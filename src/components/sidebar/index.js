@@ -19,7 +19,14 @@ const datas = [
     icon: "",
     bg: "#00BFFF",
     types: 5
-  }
+  },
+	{
+		name: "Destination",
+		route: "Destination",
+		icon: "",
+		bg: "#00BFFF",
+		types: 5
+	}
 ];
 
 class SideBar extends Component {
