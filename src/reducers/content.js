@@ -10,6 +10,7 @@ export type State = {
 
     destinationsById: json,  // uuids to objects
     placesById: json,  // uuids to objects
+    activitiesById: json,  // uuids to objects
 
     destinationsCustomIds: json, // custom ids to uuids
     destinationsPlaces: json, // destination uuids to place uuids
@@ -24,6 +25,7 @@ const initialState = {
 
   destinationsById: {},
   placesById: {},
+  activitiesById: {},
 
   destinationsCustomIds: {},
   destinationsPlaces: {},
@@ -62,6 +64,7 @@ function parseProducts(data){
   var activitiesArray = [];
   var destinationsActivities = {};
   var destinationsTrips = {};
+  var activitiesById = {};
 
   var productJson = {};
   for (var i = 0; i < data.length; i++){
@@ -73,7 +76,7 @@ function parseProducts(data){
     }
     else{
       activitiesArray.push(productJson);
-      activitiesArray[productJson["uuid"]] = productJson;
+      activitiesById[productJson["uuid"]] = productJson;
 
       if (!destinationsActivities.hasOwnProperty(productJson["category_custom_id"].toString())){
         destinationsActivities[productJson["category_custom_id"].toString()] = [];
@@ -82,7 +85,7 @@ function parseProducts(data){
     }
   }
 
-  return [activitiesArray, destinationsActivities, destinationsTrips];
+  return [activitiesArray, activitiesById, destinationsActivities, destinationsTrips];
 }
 
 export default function (state:State = initialState, action:Action): State {
@@ -107,8 +110,9 @@ export default function (state:State = initialState, action:Action): State {
       return {
         ...state,
         activitiesArray: parsedValues[0],
-        destinationsActivities: parsedValues[1],
-        destinationsTrips: parsedValues[2],
+        activitiesById: parsedValues[1],
+        destinationsActivities: parsedValues[2],
+        destinationsTrips: parsedValues[3],
       };
     }
 
