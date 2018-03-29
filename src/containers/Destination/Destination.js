@@ -12,6 +12,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Backgroundimage from '../../components/Backgroundimage/Backgroundimage';
 import styles from './styles';
 import Favorite from '../../components/Favorite/Favorite';
+import MapView, { Marker } from 'react-native-maps';
 
 const horizontalMargin = 0;
 const sliderWidth = Dimensions.get('window').width;
@@ -75,6 +76,7 @@ const InfoRowView = ({ title }) => (
         justifyContent: 'space-between',
         borderBottomColor: 'rgba(112, 112, 112, 0.2)',
         borderBottomWidth: 1,
+        marginLeft: 20,
       }}
     >
       <Text
@@ -82,7 +84,6 @@ const InfoRowView = ({ title }) => (
           color: '#A1A1A1',
           fontWeight: 'normal',
           fontSize: 13,
-          marginLeft: 20,
         }}
       >
         {title}
@@ -240,20 +241,34 @@ const Destination = () => (
         {['Climate', 'Where to stay', 'Getting there', 'Getting around', 'Handy details'].map((text, index) => <RowView key={index} title={text} />)}
       </View>
 
-      <View
+      <MapView
         style={{
           height: 245,
           backgroundColor: 'lightgray',
           alignSelf: 'stretch',
           marginVertical: 24,
         }}
+        region={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.0121,
+        }}
       >
-        <Text>Map view</Text>
-      </View>
+        <Marker
+          // image={stopMarker}
+          // anchor={{ x: 0.5, y: 0.5 }}
+          coordinate={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+          }}
+        />
+      </MapView>
+
       <View
         style={{
           flexDirection: 'column',
-          marginHorizontal: 40,
+          marginHorizontal: 28,
         }}
       >
         <Text
@@ -268,7 +283,15 @@ const Destination = () => (
         </Text>
 
         {['Great Food', 'Adventure and Sports', 'Culture and History', 'Nature', 'Lifestyle'].map((text, index) => <InfoRowView key={index} title={text} />)}
-        <HorizontalScroll containerStyle={{ margin: 0, marginTop: 20 }} />
+      </View>
+      <HorizontalScroll containerStyle={{ margin: 0, marginLeft: 28, marginTop: 20 }} />
+      <View
+        style={{
+          flexDirection: 'column',
+
+          marginHorizontal: 28,
+        }}
+      >
         <Text
           style={{
             color: '#222222',
@@ -297,6 +320,7 @@ const Destination = () => (
           borderTopColor: 'rgba(112, 112, 112, 0.2)',
           borderTopWidth: 1,
           justifyContent: 'space-between',
+          paddingTop: 20,
         }}
       >
         <View
