@@ -2,21 +2,26 @@ import Config from 'react-native-config';
 import React, { Component } from "react";
 import { Image, View, StatusBar, Linking, TouchableOpacity, ImageBackground, ScrollView } from "react-native";
 import { List, ListItem, Avatar, Icon } from "react-native-elements"
-import { Container, H3, Text, Title, Body, Left, Right } from "native-base";
-import { Header, Button } from "react-native-elements";
+import { Container, H3, Text, Title, Body, Left, Right,Button } from "native-base";
+import { Header } from "react-native-elements";
 import Backgroundimage from '../../components/Backgroundimage/Backgroundimage';
 import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import Collapsed from '../../components/Collapsed/Collapsed';
 import { MaterialIcons } from 'react-native-vector-icons/MaterialIcons';
 import styles from "./styles";
-
+import DaterangeModal from '../../components/DaterangeModal/DaterangeModal';
 class Activity extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isModalVisible: true,
     }
   }
+  _toggleModal = () =>
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+
   render() {
+    console.log('render')
     return (
       <Container style={{backgroundColor: 'white'}}>
         <Backgroundimage />
@@ -25,7 +30,7 @@ class Activity extends Component {
           <Text style={styles.imageTitle}>Jeep Safari in the{'\n'}National Park</Text>
           <Text style={styles.imageSubtitle}>Kefalonia</Text>
         </View>
-
+        <DaterangeModal isModalVisible={this.state.isModalVisible} styles={{height:400}}/>
         <ScrollView>
           <View>
             <View style={styles.gridRow}>
@@ -83,7 +88,10 @@ class Activity extends Component {
              </Collapsed>
           </View>
         </ScrollView>
-      </Container>
+        <TouchableOpacity onPress={this._toggleModal}>
+          <Text>Book!</Text>
+        </TouchableOpacity>
+            </Container>
     );
   }
 }
