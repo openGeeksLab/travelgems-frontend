@@ -1,18 +1,25 @@
 import Config from 'react-native-config';
 import React, { Component } from 'react';
 import ReadMore from 'react-native-read-more-text';
-import { Image, View, StatusBar, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import { Image, View, StatusBar, Dimensions, WebView, ScrollView } from 'react-native';
 import { List, ListItem, Text, Avatar } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import IconEntypo from 'react-native-vector-icons/Entypo';
+import R from 'ramda';
+
 import { Container, H3, Title, Body, Left, Right } from 'native-base';
-import HorizontalScroll from '../../components/HorizontalScroll/HorizontalScroll';
+import MapView, { Marker } from 'react-native-maps';
 import { Header, Button, Card } from 'react-native-elements';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import Backgroundimage from '../../components/Backgroundimage/Backgroundimage';
+import { compose, withHandlers } from 'recompose';
+import { connect } from 'react-redux';
+import Collapsed from '../../components/Collapsed/Collapsed';
+import MoreTextView from '../../components/Collapsed/MoreTextView';
+import { destinationsByIdSelector, activitiesSelector } from './selector';
+
 import styles from './styles';
 import Favorite from '../../components/Favorite/Favorite';
-import MapView, { Marker } from 'react-native-maps';
+import HorizontalScroll from '../../components/HorizontalScroll/HorizontalScroll';
 
 const horizontalMargin = 0;
 const sliderWidth = Dimensions.get('window').width;
@@ -25,79 +32,38 @@ const battleItems = [
   { prize: 200, imageName: 'prize200' },
   { prize: 200, imageName: 'prize200' },
 ];
-const RowView = ({ title }) => (
-  <View
-    style={{
-      flexDirection: 'row',
-      alignSelf: 'stretch',
-      justifyContent: 'space-between',
-      marginTop: 16,
-    }}
-  >
-    <Text
-      style={{
-        color: '#A1A1A1',
-        fontWeight: 'normal',
-        fontSize: 13,
-      }}
-    >
-      {title}
-    </Text>
-    <Icon
-      style={{
-        fontSize: 23,
-        color: '#46DFE8',
-      }}
-      name="plus"
-    />
-  </View>
-);
-const InfoRowView = ({ title }) => (
-  <View
-    style={{
-      flexDirection: 'row',
-      alignSelf: 'stretch',
-      marginTop: 16,
-      alignItems: 'center',
-    }}
-  >
-    <Icon
-      style={{
-        fontSize: 30,
-        color: '#46DFE8',
-      }}
-      name="image"
-    />
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        alignSelf: 'stretch',
-        justifyContent: 'space-between',
-        borderBottomColor: 'rgba(112, 112, 112, 0.2)',
-        borderBottomWidth: 1,
-        marginLeft: 20,
-      }}
-    >
-      <Text
+
+const InfoRowView = ({ title, description }) =>
+  (description && description !== 'NULL' ? (
+    <View style={styles.infoRowContainer}>
+      <Icon
         style={{
-          color: '#A1A1A1',
-          fontWeight: 'normal',
-          fontSize: 13,
+          fontSize: 30,
+          color: '#46DFE8',
         }}
-      >
-        {title}
-      </Text>
-      <IconEntypo
-        style={{
-          fontSize: 13,
-          color: '#222222',
-        }}
-        name="chevron-thin-right"
+        name="image"
       />
+      <View style={styles.infoRowTextContainer}>
+        <Text
+          style={{
+            color: '#A1A1A1',
+            fontWeight: 'normal',
+            fontSize: 13,
+          }}
+        >
+          {title}
+        </Text>
+        <IconEntypo
+          style={{
+            fontSize: 13,
+            color: '#222222',
+          }}
+          name="chevron-thin-right"
+        />
+      </View>
     </View>
-  </View>
-);
+  ) : null);
+
 const BattleItem = ({ imageName = '' }) => (
   <View style={styles.slide}>
     <View style={styles.slideInnerContainer}>
@@ -111,272 +77,205 @@ const BattleItem = ({ imageName = '' }) => (
     </View>
   </View>
 );
-const Destination = () => (
-  <Container>
-    <ScrollView style={{ backgroundColor: '#FFFFFF' }}>
-      <View
-        style={{
-          height: 400,
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: '#FFFFFF',
-        }}
-      >
-        <Carousel
-          data={battleItems}
-          renderItem={item => <BattleItem item={item} />}
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth}
-        />
-        <Pagination
-          dotsLength={4}
-          containerStyle={{
-            backgroundColor: 'transparent',
-            top: 200,
-            height: 100,
-            width: sliderWidth,
-            position: 'absolute',
-          }}
-          dotColor="white"
-          inactiveDotColor="white"
-          inactiveDotOpacity={1}
-          inactiveDotScale={0.6}
-        />
-      </View>
-      <View
-        style={{
-          flexDirection: 'column',
-          backgroundColor: '#FFFFFF',
-          marginTop: 281,
-          marginHorizontal: 23,
-          padding: 17,
-          elevation: 1,
-          shadowOffset: { width: 0, height: 5 },
-          shadowColor: 'black',
-          shadowOpacity: 0.15,
-        }}
-      >
-        <View style={{ flexDirection: 'row', alignSelf: 'stretch' }}>
+
+const Destination = ({ destination, activities }) => {
+  console.log('activities ===', activities);
+  return (
+    <Container>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.caroselContainer}>
+          <Carousel
+            data={battleItems}
+            renderItem={item => <BattleItem item={item} />}
+            sliderWidth={sliderWidth}
+            itemWidth={itemWidth}
+          />
+          <Pagination
+            dotsLength={4}
+            containerStyle={styles.paginationView}
+            dotColor="white"
+            inactiveDotColor="white"
+            inactiveDotOpacity={1}
+            inactiveDotScale={0.6}
+          />
+        </View>
+        <View style={styles.cardContainer}>
+          <View style={styles.rowContainer}>
+            <Text
+              style={{
+                color: '#222222',
+                fontWeight: 'bold',
+                fontSize: 32,
+              }}
+            >
+              {destination.name}
+            </Text>
+            <Favorite color="blue" />
+          </View>
           <Text
             style={{
-              color: '#222222',
+              color: '#A1A1A1',
               fontWeight: 'bold',
-              fontSize: 32,
+              fontSize: 14,
+              marginBottom: 17,
             }}
           >
-            Kefalonia
+            {R.path(['extra_fields', 'country'], destination)}
           </Text>
-          <Favorite color="blue" />
+          <MoreTextView description={destination.description} />
         </View>
-        <Text
-          style={{
-            color: '#A1A1A1',
-            fontWeight: 'bold',
-            fontSize: 14,
-            marginBottom: 17,
-          }}
-        >
-          GREECE
-        </Text>
-        <ReadMore
-          numberOfLines={4}
-          renderTruncatedFooter={handlePress => (
-            <Text style={{ color: '#46DFE8', marginTop: 5 }} onPress={handlePress}>
-              More
-            </Text>
-          )}
-          renderRevealedFooter={handlePress => (
-            <Text style={{ color: '#46DFE8', marginTop: 5 }} onPress={handlePress}>
-              Less
-            </Text>
-          )}
-        >
-          <Text style={styles.cardText}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum
-          </Text>
-        </ReadMore>
-      </View>
-      <View
-        style={{
-          flexDirection: 'column',
-          marginTop: 24,
-          marginHorizontal: 28,
-        }}
-      >
-        <Text
-          style={{
-            color: '#222222',
-            fontWeight: 'bold',
-            fontSize: 24,
-            marginTop: 16,
-          }}
-        >
-          Travel Info
-        </Text>
-        <RowView title="Location" />
-
-        <Text
-          style={{
-            marginTop: 16,
-            color: '#222222',
-            fontWeight: 'normal',
-            fontSize: 15,
-          }}
-        >
-          Kefalonia is the largest of the Ionian islands, situated off the north-western coast of
-          Greece. Its nearest neighbour, lying to its west across a channel that measures just 2km
-          from the town of Fiskardo, is Ithaki (Ithaca). To the north is Lefkada and to the south
-          Zakynthos. The weather is generally mild on the Ionian islands, with long sunny summers
-          and rainy winters, but with its high mountain peaks, Kefalonia does often see snowfall in
-          the colder months (January-February). As a large and developed island, Kefalonia offers a
-          varied selection of towns and resorts, each with their own allure.
-        </Text>
-        {['Climate', 'Where to stay', 'Getting there', 'Getting around', 'Handy details'].map((text, index) => <RowView key={index} title={text} />)}
-      </View>
-
-      <MapView
-        style={{
-          height: 245,
-          backgroundColor: 'lightgray',
-          alignSelf: 'stretch',
-          marginVertical: 24,
-        }}
-        region={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
-        }}
-      >
-        <Marker
-          // image={stopMarker}
-          // anchor={{ x: 0.5, y: 0.5 }}
-          coordinate={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-          }}
-        />
-      </MapView>
-
-      <View
-        style={{
-          flexDirection: 'column',
-          marginHorizontal: 28,
-        }}
-      >
-        <Text
-          style={{
-            color: '#222222',
-            fontWeight: 'bold',
-            fontSize: 24,
-            marginTop: 16,
-          }}
-        >
-          Essential Info
-        </Text>
-
-        {['Great Food', 'Adventure and Sports', 'Culture and History', 'Nature', 'Lifestyle'].map((text, index) => <InfoRowView key={index} title={text} />)}
-      </View>
-      <HorizontalScroll containerStyle={{ margin: 0, marginLeft: 28, marginTop: 20 }} />
-      <View
-        style={{
-          flexDirection: 'column',
-
-          marginHorizontal: 28,
-        }}
-      >
-        <Text
-          style={{
-            color: '#222222',
-            fontWeight: 'bold',
-            fontSize: 24,
-            marginTop: 20,
-          }}
-        >
-          Our Curators
-        </Text>
-        <Text
-          style={{
-            color: '#A1A1A1',
-            fontWeight: 'normal',
-            fontSize: 13,
-            marginTop: 16,
-          }}
-        >
-          Regina Kouri | Spyros Antonellos | Giola Gyftoula | Vaggelis Ladas | Nitsa Botsa
-        </Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginTop: 24,
-          borderTopColor: 'rgba(112, 112, 112, 0.2)',
-          borderTopWidth: 1,
-          justifyContent: 'space-between',
-          paddingTop: 20,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: 'column',
-            marginLeft: 28,
-          }}
-        >
+        <View style={styles.columnTravelContainer}>
           <Text
             style={{
               color: '#222222',
               fontWeight: 'bold',
               fontSize: 24,
+              marginTop: 16,
             }}
           >
-            Tailor Made Plan
+            Travel Info
+          </Text>
+
+          {[
+            { id: 'location', title: 'Location' },
+            { id: 'climate', title: 'Climate' },
+            { id: 'accommodation', title: 'Where to stay' },
+            { id: 'getting_there', title: 'Getting there' },
+            { id: 'getting_around', title: 'Getting around' },
+            { id: 'handy_details', title: 'Handy details' },
+          ].map(({ id, title }) => (
+            <Collapsed
+              key={id}
+              title={title}
+              description={R.path(['extra_fields', 'travel_info', id], destination)}
+            />
+          ))}
+        </View>
+
+        <MapView
+          style={styles.mapView}
+          region={{
+            latitude: R.path(['extra_fields', 'latitude'], destination),
+            longitude: R.path(['extra_fields', 'longitude'], destination),
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
+          }}
+        >
+          <Marker
+            // image={stopMarker}
+            // anchor={{ x: 0.5, y: 0.5 }}
+            coordinate={{
+              latitude: R.path(['extra_fields', 'latitude'], destination),
+              longitude: R.path(['extra_fields', 'longitude'], destination),
+            }}
+          />
+        </MapView>
+
+        <View style={styles.columnContainer}>
+          <Text
+            style={{
+              color: '#222222',
+              fontWeight: 'bold',
+              fontSize: 24,
+              marginTop: 16,
+            }}
+          >
+            Essential Info
+          </Text>
+
+          {[
+            { id: 'food', title: 'Great Food' },
+            { id: 'adventures', title: 'Adventure and Sports' },
+            { id: 'culture', title: 'Culture and History' },
+            { id: 'nature', title: 'Nature' },
+            { id: 'lifestyle', title: 'Lifestyle' },
+          ].map(({ id, title }) => (
+            <InfoRowView
+              key={id}
+              title={title}
+              description={R.path(['extra_fields', 'essential_info', id], destination)}
+            />
+          ))}
+        </View>
+        <HorizontalScroll
+          containerStyle={{ margin: 0, marginLeft: 28, marginTop: 20 }}
+          activities={activities}
+          title={destination.name}
+        />
+        <View style={styles.columnContainer}>
+          <Text
+            style={{
+              color: '#222222',
+              fontWeight: 'bold',
+              fontSize: 24,
+              marginTop: 20,
+            }}
+          >
+            Our Curators
           </Text>
           <Text
             style={{
               color: '#A1A1A1',
               fontWeight: 'normal',
               fontSize: 13,
+              marginTop: 16,
             }}
           >
-            1-12 days
+            {R.path(['extra_fields', 'curators'], destination)}
           </Text>
         </View>
-        <View
-          style={{
-            backgroundColor: '#46DFE8',
-            paddingHorizontal: 5,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Text
-            style={{
-              color: 'white',
-              fontWeight: 'normal',
-              fontSize: 14,
-            }}
-          >
-            GET PLAN
-          </Text>
+        <View style={styles.tailorPLan}>
+          <View style={styles.columnContainer}>
+            <Text
+              style={{
+                color: '#222222',
+                fontWeight: 'bold',
+                fontSize: 24,
+              }}
+            >
+              Tailor Made Plan
+            </Text>
+            <Text
+              style={{
+                color: '#A1A1A1',
+                fontWeight: 'normal',
+                fontSize: 13,
+              }}
+            >
+              1-12 days
+            </Text>
+          </View>
+          <View style={styles.getPlanView}>
+            <Text
+              style={{
+                color: 'white',
+                fontWeight: 'normal',
+                fontSize: 14,
+              }}
+            >
+              GET PLAN
+            </Text>
+          </View>
         </View>
-      </View>
-      <View
-        style={{
-          marginHorizontal: 120,
-          backgroundColor: '#F2F2F2',
-          height: 1,
-          marginVertical: 34,
-        }}
-      />
-    </ScrollView>
-  </Container>
-);
+        <View style={styles.bottomLineView} />
+      </ScrollView>
+    </Container>
+  );
+};
 
-export default Destination;
+export default compose(
+  connect(
+    state => ({
+      destination: destinationsByIdSelector(state, '24ed67928db14878b7730baf09f479a2'),
+      activities: activitiesSelector(state, '24ed67928db14878b7730baf09f479a2'),
+    }),
+    {},
+  ),
+  withHandlers({
+    onPressItem: ({ navigation }) => (item) => {
+      navigation.navigate('MyScheduleDetail', {
+        selectedPerson: item,
+      });
+    },
+  }),
+)(Destination);
