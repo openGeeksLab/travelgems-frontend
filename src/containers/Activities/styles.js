@@ -38,5 +38,11 @@ export default {
     resizeMode : 'stretch',
     alignItems: 'center',
     position: "absolute"
+  },
+  date: {
+    marginTop: 50
+  },
+  focused: {
+    color: 'blue'
   }
 };
