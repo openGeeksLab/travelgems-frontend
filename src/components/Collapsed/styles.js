@@ -1,32 +1,28 @@
-import { StyleSheet, Platform, Dimensions } from "react-native";
+import { StyleSheet } from 'react-native';
 
-const deviceHeight = Dimensions.get("window").height;
-const deviceWidth = Dimensions.get("window").width;
-
-export default {
-  container   : {
-      backgroundColor: '#fff',
-      margin:10,
-      overflow:'hidden'
+export default StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+    overflow: 'hidden',
+    marginTop: 10,
   },
-  titleContainer : {
-      flexDirection: 'row'
+  titleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    paddingBottom: 10,
   },
-  title       : {
-      flex    : 1,
-      padding : 10,
-      color   :'#2a2f43',
-      fontWeight:'bold'
+  title: {
+    flex: 1,
+    color: '#A1A1A1',
+    fontWeight: 'normal',
   },
-  button      : {
-
+  moreText: {
+    flex: 1,
+    color: '#46DFE8',
+    fontWeight: 'normal',
+    fontSize: 14,
   },
-  buttonImage : {
-      width   : 30,
-      height  : 25
-  },
-  body        : {
-      padding     : 10,
-      paddingTop  : 0
-  }
-};
+  button: { flexDirection: 'row' },
+});

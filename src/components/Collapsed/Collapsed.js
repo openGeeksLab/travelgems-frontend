@@ -1,82 +1,82 @@
-import Config from 'react-native-config';
-import React, { Component } from "react";
-import { Image, View, StatusBar, Linking, TouchableOpacity,StyleSheet,TouchableHighlight,Animated } from "react-native";
-import { List, ListItem, Avatar } from "react-native-elements"
-import { Container, H3, Text, Title, Body, Left, Right } from "native-base";
-import { Header,Button } from "react-native-elements";
-import styles from "./styles";
-import Icon from 'react-native-vector-icons/Entypo';
+import React, { Component } from 'react';
+import { View, TouchableOpacity, Animated } from 'react-native';
+import { List, ListItem, Avatar } from 'react-native-elements';
+import { Container, H3, Text, Title, Body, Left, Right } from 'native-base';
+import { Header, Button } from 'react-native-elements';
+import styles from './styles';
+import Icon from 'react-native-vector-icons/EvilIcons';
+import HTMLView from 'react-native-htmlview';
 
 class collapsed extends Component {
-  constructor (props) {
-    super(props)
-    this.icons = {
-                'up'    : <Icon name='arrow-bold-up' />,
-                'down'  : <Icon name='arrow-bold-down' />
-            };
+  constructor(props) {
+    super(props);
 
-            this.state = {
-                title       : props.title,
-                expanded    : true,
-                animation   : new Animated.Value()
-            };
-
+    this.state = {
+      expanded: false,
+      animation: new Animated.Value(0),
+    };
   }
-  toggle(){
-         let initialValue    = this.state.expanded? this.state.maxHeight + this.state.minHeight : this.state.minHeight,
-             finalValue      = this.state.expanded? this.state.minHeight : this.state.maxHeight + this.state.minHeight;
 
-         this.setState({
-             expanded : !this.state.expanded
-         });
+  componentDidMount() {
+    Animated.spring(this.state.animation, {
+      toValue: 25,
+    }).start();
+  }
 
-         this.state.animation.setValue(initialValue);
-         Animated.spring(
-             this.state.animation,
-             {
-                 toValue: finalValue
-             }
-         ).start();
-     }
+  toggle = () => {
+    const initialValue = this.state.expanded
+      ? this.state.maxHeight + this.state.minHeight
+      : this.state.minHeight;
+    const finalValue = this.state.expanded
+      ? this.state.minHeight
+      : this.state.maxHeight + this.state.minHeight;
 
-     _setMaxHeight(event){
-         this.setState({
-             maxHeight   : event.nativeEvent.layout.height
-         });
-     }
+    this.setState({
+      expanded: !this.state.expanded,
+    });
 
-     _setMinHeight(event){
-         this.setState({
-             minHeight   : event.nativeEvent.layout.height
-         });
-     }
+    this.state.animation.setValue(initialValue);
+    Animated.spring(this.state.animation, {
+      toValue: finalValue,
+    }).start();
+  };
 
-     render(){
-         let icon = this.icons['down'];
+  _setMaxHeight = (event) => {
+    this.setState({
+      maxHeight: event.nativeEvent.layout.height,
+    });
+  };
 
-         if(this.state.expanded){
-             icon = this.icons['up'];
-         }
+  _setMinHeight = (event) => {
+    this.setState({
+      minHeight: event.nativeEvent.layout.height,
+    });
+  };
 
-         return (
-             <Animated.View
-                 style={[styles.container,{height: this.state.animation}]}>
-                 <View style={styles.titleContainer} onLayout={this._setMinHeight.bind(this)}>
-                     <Text style={styles.title}>{this.state.title}</Text>
-                     <TouchableHighlight
-                         style={styles.button}
-                         onPress={this.toggle.bind(this)}
-                         underlayColor="#f1f1f1">
-                         {icon}
-                     </TouchableHighlight>
-                 </View>
+  render() {
+    if (!this.props.description) {
+      return null;
+    }
+    return (
+      <Animated.View style={[styles.container, { height: this.state.animation }]}>
+        <View style={styles.titleContainer} onLayout={this._setMinHeight}>
+          <Text style={styles.title}>{this.props.title}</Text>
+          <TouchableOpacity onPress={this.toggle}>
+            <Icon
+              style={{
+                fontSize: 23,
+                color: '#46DFE8',
+              }}
+              name={this.state.expanded ? 'minus' : 'plus'}
+            />
+          </TouchableOpacity>
+        </View>
 
-                 <View style={styles.body} onLayout={this._setMaxHeight.bind(this)}>
-                     {this.props.children}
-                 </View>
-
-             </Animated.View>
-         );
-     }
+        <View onLayout={this._setMaxHeight}>
+          <HTMLView value={this.props.description} />
+        </View>
+      </Animated.View>
+    );
+  }
 }
 export default collapsed;
