@@ -14,11 +14,11 @@ const ItemView = ({ name, price }) => (
   </View>
 );
 
-const HorizontalScroll = ({ activities = [], title, containerStyle }) => (
+const HorizontalScroll = ({ activities, title, containerStyle }) => (
   <View style={[{ margin: 15 }, containerStyle]}>
     <Title style={{ color: 'black', textAlign: 'left' }}>Activities in {title}</Title>
     <ScrollView horizontal style={{ height: 150 }}>
-      {activities.map(item => <ItemView {...item} key={item.id} />)}
+      {activities && activities.map(item => <ItemView {...item} key={item.id} />)}
     </ScrollView>
   </View>
 );

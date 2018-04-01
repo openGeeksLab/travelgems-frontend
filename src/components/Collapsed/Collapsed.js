@@ -12,9 +12,15 @@ class collapsed extends Component {
     super(props);
 
     this.state = {
-      expanded: true,
-      animation: new Animated.Value(),
+      expanded: false,
+      animation: new Animated.Value(0),
     };
+  }
+
+  componentDidMount() {
+    Animated.spring(this.state.animation, {
+      toValue: 25,
+    }).start();
   }
 
   toggle = () => {

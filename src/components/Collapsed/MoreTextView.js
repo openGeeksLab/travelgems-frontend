@@ -2,22 +2,22 @@ import React from 'react';
 import { TouchableOpacity, Animated, View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import HTMLView from 'react-native-htmlview';
-import { compose, withState, withHandlers, withProps } from 'recompose';
+import { compose, withState, withHandlers, withProps, lifecycle } from 'recompose';
 
+const MIN_HEIGHT = 50;
 const enhancer = compose(
   withProps({
-    animation: new Animated.Value(),
+    animation: new Animated.Value(0),
   }),
   withState('maxHeight', 'setMaxHeight', 0),
-  withState('minHeight', 'setMinHeight', 0),
   withState('expanded', 'setExpanded', false),
 
   withHandlers({
     toggle: ({
-      setExpanded, animation, expanded, maxHeight, minHeight,
+      setExpanded, animation, expanded, maxHeight,
     }) => () => {
-      const initialValue = expanded ? maxHeight : minHeight;
-      const finalValue = expanded ? minHeight : maxHeight;
+      const initialValue = expanded ? maxHeight : MIN_HEIGHT;
+      const finalValue = expanded ? MIN_HEIGHT : maxHeight;
       setExpanded(!expanded);
 
       animation.setValue(initialValue);
@@ -26,9 +26,15 @@ const enhancer = compose(
       }).start();
     },
 
-    setMax: ({ setMaxHeight, setMinHeight }) => (event) => {
-      setMinHeight(50);
+    setMax: ({ setMaxHeight }) => (event) => {
       setMaxHeight(event.nativeEvent.layout.height);
+    },
+  }),
+  lifecycle({
+    componentDidMount() {
+      Animated.spring(this.props.animation, {
+        toValue: MIN_HEIGHT,
+      }).start();
     },
   }),
 );
@@ -42,6 +48,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     backgroundColor: 'transparent',
+    paddingTop: 5,
   },
   title: {
     flex: 1,
@@ -49,11 +56,15 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
   },
   moreText: {
-    flex: 1,
     color: '#46DFE8',
     fontWeight: 'normal',
     fontSize: 14,
     marginRight: 5,
+  },
+  icon: {
+    color: '#46DFE8',
+    fontWeight: 'normal',
+    fontSize: 20,
   },
   button: { flexDirection: 'row', flex: 1 },
 });
@@ -77,7 +88,7 @@ const ModalScene = ({
     <View style={styles.titleContainer}>
       <TouchableOpacity style={styles.button} onPress={toggle}>
         <Text style={styles.moreText}> {expanded ? 'More' : 'Less'} </Text>
-        <Icon name={expanded ? 'arrow-up' : 'arrow-down'} />
+        <Icon style={styles.icon} name={expanded ? 'chevron-small-up' : 'chevron-small-down'} />
       </TouchableOpacity>
     </View>
   </View>
