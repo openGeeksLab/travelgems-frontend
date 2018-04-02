@@ -17,7 +17,7 @@ const MainDrawerRouter = DrawerNavigator(
     Smalltile: { screen: Smalltile },
   },
   {
-    initialRouteName: 'Destination',
+    initialRouteName: 'Home',
     contentOptions: {
       activeTintColor: '#e91e63',
     },

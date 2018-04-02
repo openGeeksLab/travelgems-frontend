@@ -1,6 +1,7 @@
 import MicroApp from '../MicroApp';
 
 export default class DeviceInfo extends MicroApp {
+  static permissions = ['ANONYMOUS'];
   static mappName = 'MAPP_DEVICE_INFO';
   rootKey = 'device_info';
   static allowedActions = [];
@@ -17,18 +18,18 @@ export default class DeviceInfo extends MicroApp {
 
   dispatchAction(action, data){
     if (DeviceInfo.allowedActions.indexOf(action)>-1){
-      this.handleAction(action)
+      this.handleAction(action, data)
     }
   }
 
-  async handleAction(action){
+  async handleAction(action, data){
     if (action=='send_info'){
       var devInfo = DeviceInfo.getDevInfo();
       var body = {};
       body[this.rootKey] = {
         advertising_id:"abcdefg"
       };
-      this.postContext(body);
+//      this.postContext(body);
     }
   }
 

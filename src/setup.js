@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import App from './containers/App';
 import configureStore from './stores/configureStore';
 import WarplyReactSDK from '../src/services/warply-react-sdk/WarplyReactSDK';
-//import WarplyReactAuthSDK from '../src/services/warply-react-auth-sdk/WarplyReactAuthSDK';
 import * as actions from './actions/content';
 
 export default class Root extends Component {
@@ -14,17 +13,14 @@ export default class Root extends Component {
       isLoading: true,
     };
     this.warplyReactSDK = new WarplyReactSDK();
-//    this.warplyReactAuthSDK = new WarplyReactAuthSDK();
   }
 
   setupData(){
-    const SDKComplete = this.warplyReactSDK.init();
-//    const authSDKComplete = this.warplyReactAuthSDK.init();
+    const SDKComplete = this.warplyReactSDK.init(true);
     const store = configureStore();
 
     var self = this;
 
-//    Promise.all([store, SDKComplete, authSDKComplete, this.warplyReactSDK.microAppsComplete]).then(
     Promise.all([store, SDKComplete, this.warplyReactSDK.microAppsComplete]).then(
       function(data){
         console.log("FINISHED ALL");
@@ -40,9 +36,7 @@ export default class Root extends Component {
     this.setupData();
   }
 
-  async componentWillUpdate() {
-//    this.setupData();
-  }
+  async componentWillUpdate() {}
 
   handleContent(response){
     this.state.store.dispatch(actions.setDestinations(response.data));

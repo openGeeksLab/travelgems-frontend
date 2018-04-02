@@ -43,11 +43,15 @@ function parseDestinations(data){
 
   for (var i = 0; i < data.length; i++){
     if (data[i]["category_name"]=="destination"){
+      data[i]["extra_fields"]["latitude"] = (data[i]["extra_fields"] && data[i]["extra_fields"]["latitude"]) ? parseFloat(data[i]["extra_fields"]["latitude"].replace(',', '.')) : 0.00;
+      data[i]["extra_fields"]["longitude"] = (data[i]["extra_fields"] && data[i]["extra_fields"]["longitude"]) ? parseFloat(data[i]["extra_fields"]["longitude"].replace(',', '.')) : 0.00;
       destinationsArray.push(data[i]);
       destinationsById[data[i]["id"]] = data[i];
       destinationsCustomIds[data[i]["custom_id"].toString()] = data[i]["id"];
     }
     else {
+      data[i]["extra_fields"]["latitude"] = (data[i]["extra_fields"] && data[i]["extra_fields"]["latitude"]) ? parseFloat(data[i]["extra_fields"]["latitude"].replace(',', '.')) : 0.00;
+      data[i]["extra_fields"]["longitude"] = (data[i]["extra_fields"] && data[i]["extra_fields"]["longitude"]) ? parseFloat(data[i]["extra_fields"]["longitude"].replace(',', '.')) : 0.00;
       placesArray.push(data[i]);
       placesById[data[i]["id"]] = data[i];
       if (!destinationsPlaces.hasOwnProperty(data[i]["parent"])){
@@ -60,15 +64,17 @@ function parseDestinations(data){
   return [destinationsArray, destinationsById, destinationsCustomIds, destinationsPlaces, placesArray, placesById];
 }
 
-function parseProducts(data){
+function parseProducts(content, data){
   var activitiesArray = [];
   var destinationsActivities = {};
   var destinationsTrips = {};
   var activitiesById = {};
 
   var productJson = {};
+  var destinationUUID = null;
+  debugger;
   for (var i = 0; i < data.length; i++){
-    productJson = _.pick(data[i],'category_custom_id','category_name','created','description','extra_fields','id','merchant','name','price','sku','updated','uuid','currency');
+    productJson = _.pick(data[i],'photo','inner_photo','category_custom_id','category_name','created','description','extra_fields','id','merchant','name','price','sku','updated','uuid','currency');
     productJson["extra_fields"] = JSON.parse(productJson["extra_fields"]);
 
     if (productJson["category_name"]=="trip"){
@@ -78,10 +84,11 @@ function parseProducts(data){
       activitiesArray.push(productJson);
       activitiesById[productJson["uuid"]] = productJson;
 
-      if (!destinationsActivities.hasOwnProperty(productJson["category_custom_id"].toString())){
-        destinationsActivities[productJson["category_custom_id"].toString()] = [];
+      destinationUUID = content.destinationsCustomIds[productJson["category_custom_id"].toString()];
+      if (!destinationsActivities.hasOwnProperty(destinationUUID)){
+        destinationsActivities[destinationUUID] = [];
       }
-      destinationsActivities[productJson["category_custom_id"].toString()].push(productJson["uuid"]);
+      destinationsActivities[destinationUUID].push(_.pick(productJson,'inner_photo','name','price','uuid','currency'));
     }
   }
 
@@ -106,7 +113,7 @@ export default function (state:State = initialState, action:Action): State {
     }
 
     case SET_ACTIVITIES: {
-      parsedValues = parseProducts(action.payload);
+      parsedValues = parseProducts(state, action.payload);
       return {
         ...state,
         activitiesArray: parsedValues[0],
