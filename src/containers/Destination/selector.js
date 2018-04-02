@@ -15,7 +15,7 @@ const activityIds = createSelector(
   (destination, activities) => activities[destination.custom_id],
 );
 
-export const activitiesSelector = createSelector(
+export const moreActivitiesSelector = createSelector(
   activityIds,
   state => state.content.activitiesById,
   (Ids, activitiesById) => (Ids ? Ids.map(id => activitiesById[id]) : null),

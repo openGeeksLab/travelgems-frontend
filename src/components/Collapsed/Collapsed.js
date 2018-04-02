@@ -54,7 +54,7 @@ class collapsed extends Component {
   };
 
   render() {
-    if (!this.props.description) {
+    if (!this.props.description || this.props.description === 'NULL') {
       return null;
     }
     return (

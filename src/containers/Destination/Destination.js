@@ -1,15 +1,13 @@
-import Config from 'react-native-config';
-import React, { Component } from 'react';
-import ReadMore from 'react-native-read-more-text';
-import { Image, View, StatusBar, Dimensions, WebView, ScrollView } from 'react-native';
-import { List, ListItem, Text, Avatar } from 'react-native-elements';
+import React from 'react';
+import R from 'ramda';
+import { Image, View, Dimensions, ScrollView } from 'react-native';
+import { Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import IconEntypo from 'react-native-vector-icons/Entypo';
-import R from 'ramda';
 
-import { Container, H3, Title, Body, Left, Right } from 'native-base';
+import { Container } from 'native-base';
 import MapView, { Marker } from 'react-native-maps';
-import { Header, Button, Card } from 'react-native-elements';
+
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
