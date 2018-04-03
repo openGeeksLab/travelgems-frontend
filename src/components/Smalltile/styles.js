@@ -2,7 +2,7 @@ const React = require('react-native');
 
 const { StyleSheet } = React;
 
-export default {
+export default StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -25,10 +25,11 @@ export default {
     width: undefined,
     padding: 0,
     marginTop: 5,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   heart: {
-    position: 'absolute',
-    right: 15,
-    top: 15,
+    marginRight: 9,
+    marginTop: 9,
   },
-};
+});

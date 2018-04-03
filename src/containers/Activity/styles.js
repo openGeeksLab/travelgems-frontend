@@ -47,7 +47,6 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     paddingLeft: 30,
     paddingRight: 30,
-    paddingTop: 20,
   },
   gridItem: {
     width: 90,
@@ -71,13 +70,14 @@ export default StyleSheet.create({
   },
   infoViewTitle: {
     fontSize: 24,
-    marginLeft: 30,
   },
   getPlanView: {
     backgroundColor: '#46DFE8',
-    paddingHorizontal: 5,
+    marginRight: 30,
+    paddingHorizontal: 10,
     alignItems: 'center',
     height: 37,
+    borderRadius: 3,
     justifyContent: 'center',
   },
   bottomLineView: {

@@ -4,7 +4,7 @@ import { COLOR_TURQUOISE } from '../../constants/Styles';
 
 const { StyleSheet } = React;
 
-export default {
+export default StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -33,14 +33,9 @@ export default {
     fontSize: 23,
     color: 'white',
   },
-  heartview: {
-    position: 'absolute',
-    right: 10,
-    top: 10,
-    backgroundColor: 'transparent',
-  },
+
   heartBlue: {
     fontSize: 23,
     color: COLOR_TURQUOISE,
   },
-};
+});

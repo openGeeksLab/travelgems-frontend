@@ -16,7 +16,7 @@ const AppNavigator = StackNavigator(
   {
     initialRouteName: 'Drawer',
     headerMode: 'none',
-  },
+  }
 );
 
 export default () => (

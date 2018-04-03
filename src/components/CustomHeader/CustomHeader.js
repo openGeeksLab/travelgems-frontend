@@ -6,17 +6,19 @@ import Favorite from '../../components/Favorite/Favorite';
 import styles from './styles';
 import { withNavigation } from 'react-navigation';
 
-const CustomHeader = () => (
+const CustomHeader = ({ navigation }) => (
   <View style={styles.customHeader}>
     <TouchableOpacity style={styles.headerIcon1}>
-      <Icon name="arrow-back" color="#FFFFFF" onPress={() => this.props.navigation.goBack()} />
+      <Icon
+        name="arrow-back"
+        color="#FFFFFF"
+        onPress={() => navigation.goBack()}
+      />
     </TouchableOpacity>
-    <View style={styles.headerIcon2}>
-      <Icon name="launch" color="#FFFFFF" />
-    </View>
-    {/* <View style={styles.headerIcon3}><Icon name="favorite-border" color="#FFFFFF" /></View> */}
+
     <View style={styles.headerIcon3}>
-      <Favorite />
+      <Icon name="launch" color="#FFFFFF" />
+      <Favorite style={styles.headerIcon2} />
     </View>
   </View>
 );
