@@ -1,7 +1,7 @@
 
 import type { Action } from '../actions/types';
 import { OPEN_DRAWER, CLOSE_DRAWER } from '../actions/drawer';
-import { SET_DESTINATIONS, SET_ACTIVITIES } from '../actions/content';
+import { SET_DESTINATIONS, SET_ACTIVITIES, SET_POLL } from '../actions/content';
 
 export type State = {
     destinationsArray: array,
@@ -16,6 +16,8 @@ export type State = {
     destinationsPlaces: json, // destination uuids to place uuids
     destinationsActivities: json, // destination uuids to activities uuids
     destinationsTrips: json,
+
+    poll: json,
 };
 
 const initialState = {
@@ -31,6 +33,8 @@ const initialState = {
   destinationsPlaces: {},
   destinationsActivities: {},
   destinationsTrips: {},
+
+  poll: {},
 };
 
 function parseDestinations(data){
@@ -72,7 +76,6 @@ function parseProducts(content, data){
 
   var productJson = {};
   var destinationUUID = null;
-  debugger;
   for (var i = 0; i < data.length; i++){
     productJson = _.pick(data[i],'photo','inner_photo','category_custom_id','category_name','created','description','extra_fields','id','merchant','name','price','sku','updated','uuid','currency');
     productJson["extra_fields"] = JSON.parse(productJson["extra_fields"]);
@@ -120,6 +123,13 @@ export default function (state:State = initialState, action:Action): State {
         activitiesById: parsedValues[1],
         destinationsActivities: parsedValues[2],
         destinationsTrips: parsedValues[3],
+      };
+    }
+
+    case SET_POLL: {
+      return {
+        ...state,
+        poll: action.payload,
       };
     }
 

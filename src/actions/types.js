@@ -11,6 +11,7 @@ export type Action =
     | { type: 'SET_LIST', list: string}
     | { type: 'SET_DESTINATIONS', payload: array}
     | { type: 'SET_ACTIVITIES', payload: array}
+    | { type: 'SET_POLL', payload: array}
 
 export type Dispatch = (action:Action | Array<Action>) => any;
 export type GetState = () => Object;

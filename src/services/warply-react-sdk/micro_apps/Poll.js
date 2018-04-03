@@ -2,9 +2,9 @@ import MicroApp from '../MicroApp';
 
 export default class Content extends MicroApp {
   static permissions = ['ANONYMOUS','AUTH'];
-  static mappName = 'CONTENT';
-  rootKey = 'content';
-  static allowedActions = ['retrieve'];
+  static mappName = 'POLL';
+  rootKey = 'poll';
+  static allowedActions = ['get_poll'];
 
   constructor(store, requestMiddleware){
     super(store, requestMiddleware);
@@ -19,12 +19,13 @@ export default class Content extends MicroApp {
   }
 
   handleAction(action, data, callback, permission){
-    if (action=='retrieve'){
+    if (action=='get_poll'){
       var body = this.defaultBody;
       body[this.rootKey]["action"] = action
       if (data){
         body[this.rootKey] = Object.assign(data, body[this.rootKey]);
       }
+
       this.postContext(body, callback, permission);
       return true;
     }

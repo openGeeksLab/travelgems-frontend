@@ -24,6 +24,9 @@ export default class Products extends MicroApp {
       var body = this.defaultBody;
       body[this.rootKey]["action"] = action;
       body[this.rootKey]["merchant_id"] = WarpConfig.MERCHANT_ID;
+      if (data){
+        body[this.rootKey] = Object.assign(data, body[this.rootKey]);
+      }
       this.postContext(body, callback);
       return true;
     }

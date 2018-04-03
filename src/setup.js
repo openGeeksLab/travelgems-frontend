@@ -44,10 +44,15 @@ export default class Root extends Component {
       this.setState({isLoading: false});
     }
     this.warplyReactSDK.request('products', 'get_all_raw', null, this.handleActivies.bind(this));
+    this.warplyReactSDK.request('poll', 'get_poll', {"campaign_uuid":"66f0373bf9ec4fe097cba53cdd418101"}, this.handlePoll.bind(this));
   }
 
   handleActivies(response){
     this.state.store.dispatch(actions.setActivities(response.data));
+  }
+
+  handlePoll(response){
+    this.state.store.dispatch(actions.setPoll(response.data));
   }
 
   render() {

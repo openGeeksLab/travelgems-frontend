@@ -154,8 +154,6 @@ export default class AuthRequestMiddleware{
     });
   }
 
-
-
   refreshAuthorization(){
     const self = this;
     return new Promise((resolve, reject) => {
@@ -219,7 +217,6 @@ export default class AuthRequestMiddleware{
       callback(response);
     }
   }
-
 
   clearAuth(){
     this.store.dispatch(actions.deleteAccessTokens());
