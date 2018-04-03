@@ -1,22 +1,32 @@
-import React, { Component } from 'react';
-import { AppRegistry, Image } from 'react-native';
+import React from 'react';
+import { ImageBackground, View } from 'react-native';
 
-const remoteSafari = 'http://www.nesetour.com/style/images/cappadocia-jeep-safari5.jpg';
-const remote =
+const imageUrl =
   'https://www.olympicholidays.com/media/20570/fiskardo_kefalonia_greece.jpg?center=0.37948717948717947,0.51&mode=crop&quality=70&width=550&height=358&rnd=131302560700000000';
 
-export default class Backgroundimage extends Component {
-  render() {
-    const resizeMode = 'cover';
-
-    return (
-      <Image
+const Backgroundimage = ({ containStyle, blur }) => (
+  <ImageBackground
+    style={[
+      {
+        flex: 1,
+        height: 408,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+      },
+      containStyle,
+    ]}
+    source={{ uri: imageUrl }}
+  >
+    {blur && (
+      <View
         style={{
-          flex: 1,
-          resizeMode,
+          marginBottom: 0,
+          height: 150,
+          backgroundColor: 'rgba(255, 255, 255, 0.5)',
         }}
-        source={{ uri: remote }}
       />
-    );
-  }
-}
+    )}
+  </ImageBackground>
+);
+
+export default Backgroundimage;

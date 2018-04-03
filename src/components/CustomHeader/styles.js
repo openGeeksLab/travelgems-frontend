@@ -1,34 +1,28 @@
-const React = require("react-native");
+const React = require('react-native');
+
 const { StyleSheet, Dimensions, Platform } = React;
 
-export default {
-  content: {
-    flex: 1
-  },
+export default StyleSheet.create({
   customHeader: {
-    flex: 0.1,
-    flexDirection: 'row',
+    zIndex: 1000,
     backgroundColor: 'transparent',
-    height: 30,
-    width: Dimensions.get("window").width,
+    height: 60,
+    top: 20,
+    left: 0,
+    right: 0,
     position: 'absolute',
-    marginTop: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: 10,
   },
   headerIcon1: {
-    position: 'absolute',
-    flexDirection: 'row',
-    right: Dimensions.get("window").width-40,
+    marginRight: 40,
   },
   headerIcon2: {
-    position: 'absolute',
-    flexDirection: 'row',
-    left: Dimensions.get("window").width-80,
+    marginHorizontal: 18,
   },
   headerIcon3: {
-    position: 'absolute',
     flexDirection: 'row',
-    left: Dimensions.get("window").width-40,
-    right: 10,
-    top: -10
-  }
-};
+  },
+});

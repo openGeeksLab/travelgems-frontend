@@ -1,40 +1,40 @@
-const React = require("react-native");
+const React = require('react-native');
 
 const { StyleSheet, Dimensions, Platform } = React;
 
-const deviceHeight = Dimensions.get("window").height;
+const deviceHeight = Dimensions.get('window').height;
 
-export default {
+export default StyleSheet.create({
   content: {
-    flex: 1
+    flex: 1,
   },
   imageContainer: {
-    position: "absolute",
+    position: 'absolute',
   },
   logoContainer: {
     flex: 1,
-    marginTop: Dimensions.get("window").height / 8,
+    marginTop: Dimensions.get('window').height / 8,
     marginBottom: 30,
   },
   logo: {
-    position: "absolute",
-    left: Platform.OS === "android" ? 40 : 50,
-    top: Platform.OS === "android" ? 35 : 60,
+    position: 'absolute',
+    left: Platform.OS === 'android' ? 40 : 50,
+    top: Platform.OS === 'android' ? 35 : 60,
     width: 280,
     height: 100,
   },
   text: {
-    color: "#D8D8D8",
+    color: '#D8D8D8',
     bottom: 6,
-    marginTop: 5
+    marginTop: 5,
   },
   imageText: {
-    top: Dimensions.get("window").height - 450,
-    position: 'absolute',
+    marginTop: 281,
+    backgroundColor: 'transparent',
   },
   imageTitle: {
     fontSize: 28,
-    marginLeft: 30,
+    marginHorizontal: 30,
   },
   imageSubtitle: {
     fontSize: 12,
@@ -47,7 +47,6 @@ export default {
     justifyContent: 'space-between',
     paddingLeft: 30,
     paddingRight: 30,
-    paddingTop: 20,
   },
   gridItem: {
     width: 90,
@@ -71,6 +70,20 @@ export default {
   },
   infoViewTitle: {
     fontSize: 24,
-    marginLeft: 30,
-  }
-};
+  },
+  getPlanView: {
+    backgroundColor: '#46DFE8',
+    marginRight: 30,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+    height: 37,
+    borderRadius: 3,
+    justifyContent: 'center',
+  },
+  bottomLineView: {
+    marginHorizontal: 120,
+    backgroundColor: '#F2F2F2',
+    height: 1,
+    marginVertical: 34,
+  },
+});

@@ -1,99 +1,256 @@
-import Config from 'react-native-config';
-import React, { Component } from "react";
-import { Image, View, StatusBar, Linking, TouchableOpacity, ImageBackground, ScrollView } from "react-native";
-import { List, ListItem, Avatar, Icon } from "react-native-elements"
-import { Container, H3, Text, Title, Body, Left, Right,Button } from "native-base";
-import { Header } from "react-native-elements";
+import React from 'react';
+import { View, ScrollView } from 'react-native';
+import { Icon } from 'react-native-elements';
+import { compose, withHandlers } from 'recompose';
+import { connect } from 'react-redux';
+import { Container, Text } from 'native-base';
+import R from 'ramda';
+import { activityByIdSelector } from './selector';
+import { activitiesSelector } from '../Destination/selector';
 import Backgroundimage from '../../components/Backgroundimage/Backgroundimage';
 import CustomHeader from '../../components/CustomHeader/CustomHeader';
 import Collapsed from '../../components/Collapsed/Collapsed';
-import { MaterialIcons } from 'react-native-vector-icons/MaterialIcons';
-import styles from "./styles";
+import styles from './styles';
 import DaterangeModal from '../../components/DaterangeModal/DaterangeModal';
-class Activity extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isModalVisible: true,
-    }
-  }
-  _toggleModal = () =>
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+import HorizontalScroll from '../../components/HorizontalScroll/HorizontalScroll';
+import { getPriceTextActivity } from '../../selectors';
 
-  render() {
-    console.log('render')
-    return (
-      <Container style={{backgroundColor: 'white'}}>
-        <Backgroundimage />
-        <CustomHeader />
-        <View style={styles.imageText}>
-          <Text style={styles.imageTitle}>Jeep Safari in the{'\n'}National Park</Text>
-          <Text style={styles.imageSubtitle}>Kefalonia</Text>
+const Activity = ({ isModalVisible, activity, moreActivities }) => (
+  <Container
+    style={{
+      backgroundColor: 'white',
+    }}
+  >
+    <DaterangeModal
+      isModalVisible={isModalVisible}
+      styles={{
+        height: 400,
+      }}
+    />
+    <CustomHeader />
+    <ScrollView>
+      <Backgroundimage
+        containStyle={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          height: 300,
+        }}
+        blur={true}
+      />
+      <View style={styles.imageText}>
+        <Text style={styles.imageTitle}>{activity.name}</Text>
+        <Text style={styles.imageSubtitle}>{activity.category_name}</Text>
+      </View>
+      <View style={{ marginVertical: 19 }}>
+        <View
+          style={[
+            styles.gridRow,
+            {
+              borderBottomWidth: 1,
+              borderBottomColor: 'rgba(34, 34, 34, 0.1)',
+            },
+          ]}
+        >
+          <View
+            style={[
+              styles.gridItem,
+              {
+                borderRightWidth: 1,
+                borderRightColor: 'rgba(34, 34, 34, 0.1)',
+              },
+            ]}
+          >
+            <Icon name="schedule" color="#15ABC2" size={30} />
+            <Text style={styles.gridTitle}>DURATION</Text>
+            <Text style={styles.gridSubtitle}>
+              {R.path(['extra_fields', 'duration'], activity)}
+            </Text>
+          </View>
+          <View
+            style={[
+              styles.gridItem,
+              {
+                borderRightWidth: 1,
+                borderRightColor: 'rgba(34, 34, 34, 0.1)',
+              },
+            ]}
+          >
+            <Icon name="language" color="#15ABC2" size={30} />
+            <Text style={styles.gridTitle}>LANGUAGE</Text>
+            <Text style={styles.gridSubtitle}>
+              {R.path(['extra_fields', 'language'], activity)}
+            </Text>
+          </View>
+          <View style={styles.gridItem}>
+            <Icon name="people" color="#15ABC2" size={30} />
+            <Text style={styles.gridTitle}>PARTICIPANTS</Text>
+            <Text style={styles.gridSubtitle}>
+              {R.path(['extra_fields', 'participants'], activity)}
+            </Text>
+          </View>
         </View>
-        <DaterangeModal isModalVisible={this.state.isModalVisible} styles={{height:400}}/>
-        <ScrollView>
-          <View>
-            <View style={styles.gridRow}>
-              <View style={styles.gridItem}>
-                <Icon name="schedule" color="#15ABC2" />
-                <Text style={styles.gridTitle}>TITLE</Text>
-                <Text style={styles.gridSubtitle}>Subtitle</Text>
-              </View>
-              <View style={styles.gridItem}>
-                <Icon name="language" color="#15ABC2" />
-                <Text style={styles.gridTitle}>TITLE</Text>
-                <Text style={styles.gridSubtitle}>Subtitle</Text>
-              </View>
-              <View style={styles.gridItem}>
-                <Icon name="people" color="#15ABC2" />
-                <Text style={styles.gridTitle}>TITLE</Text>
-                <Text style={styles.gridSubtitle}>Subtitle</Text>
-              </View>
-            </View>
-            <View style={styles.gridRow}>
-              <View style={styles.gridItem}>
-                <Icon name="directions-car" color="#15ABC2" />
-                <Text style={styles.gridTitle}>TITLE</Text>
-                <Text style={styles.gridSubtitle}>Subtitle</Text>
-              </View>
-              <View style={styles.gridItem}>
-                <Icon name="done" color="#15ABC2" />
-                <Text style={styles.gridTitle}>TITLE</Text>
-                <Text style={styles.gridSubtitle}>Subtitle</Text>
-              </View>
-              <View style={styles.gridItem}>
-                <Icon name="euro-symbol" color="#15ABC2" />
-                <Text style={styles.gridTitle}>TITLE</Text>
-                <Text style={styles.gridSubtitle}>Subtitle</Text>
-              </View>
-            </View>
+        <View style={styles.gridRow}>
+          <View
+            style={[
+              styles.gridItem,
+              {
+                borderRightWidth: 1,
+                borderRightColor: 'rgba(34, 34, 34, 0.1)',
+              },
+            ]}
+          >
+            <Icon
+              name="directions-car"
+              color="#15ABC2"
+              size={30}
+              containerStyle={{ marginTop: 10 }}
+            />
+            <Text style={styles.gridTitle}>TRANSORTATION</Text>
+            <Text style={styles.gridSubtitle}>
+              {R.path(['extra_fields', 'transfer'], activity)}
+            </Text>
           </View>
-
-          <View>
-            <Text style={styles.infoViewTitle}>Info</Text>
-            <Collapsed title='At a glance'>
-            <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</Text>
-             </Collapsed>
-            <Collapsed title='Itenerary'>
-            <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</Text>
-             </Collapsed>
-            <Collapsed title='Cancellation'>
-            <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</Text>
-             </Collapsed>
-            <Collapsed title='Important info'>
-            <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</Text>
-             </Collapsed>
-            <Collapsed title='Handy details'>
-            <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</Text>
-             </Collapsed>
+          <View
+            style={[
+              styles.gridItem,
+              {
+                borderRightWidth: 1,
+                borderRightColor: 'rgba(34, 34, 34, 0.1)',
+              },
+            ]}
+          >
+            <Icon
+              name="done"
+              color="#15ABC2"
+              size={30}
+              containerStyle={{ marginTop: 10 }}
+            />
+            <Text style={styles.gridTitle}>CONFIRMATION</Text>
+            <Text style={styles.gridSubtitle}>
+              {R.path(['extra_fields', 'confirmation'], activity)}
+            </Text>
           </View>
-        </ScrollView>
-        <TouchableOpacity onPress={this._toggleModal}>
-          <Text>Book!</Text>
-        </TouchableOpacity>
-            </Container>
-    );
-  }
-}
-
-export default Activity;
+          <View style={styles.gridItem}>
+            <Icon
+              name="euro-symbol"
+              color="#15ABC2"
+              size={30}
+              containerStyle={{ marginTop: 10 }}
+            />
+            <Text style={styles.gridTitle}>REFUND</Text>
+            <Text style={styles.gridSubtitle}>
+              {R.path(['extra_fields', 'refund'], activity)}
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={{
+          marginHorizontal: 32,
+        }}
+      >
+        <Text style={styles.infoViewTitle}>Info</Text>
+        {[
+          {
+            id: 'short_description',
+            title: 'At a glance',
+          },
+          // { id: 'Itenerary', title: 'Itenerary' },
+          {
+            id: 'cancellation',
+            title: 'Cancellation',
+          },
+          {
+            id: 'content',
+            title: 'Important info',
+          },
+          {
+            id: 'details',
+            title: 'Handy details',
+          },
+        ].map(({ id, title }) => (
+          <Collapsed
+            key={id}
+            title={title}
+            description={R.path(['extra_fields', id], activity)}
+          />
+        ))}
+      </View>
+      {moreActivities && (
+        <HorizontalScroll
+          containerStyle={{ margin: 0, marginLeft: 28, marginTop: 20 }}
+          activities={moreActivities}
+          title={activity.category_name}
+        />
+      )}
+      <View
+        style={{
+          marginTop: 25,
+          paddingTop: 20,
+          borderTopWidth: 1,
+          borderTopColor: 'rgba(149, 152, 154, 0.25)',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}
+      >
+        <View
+          style={{
+            marginHorizontal: 32,
+            flexDirection: 'column',
+          }}
+        >
+          <Text
+            style={{
+              color: 'rgba(34, 34, 34, 0.45)',
+              fontWeight: 'normal',
+              fontSize: 11,
+            }}
+          >
+            From
+          </Text>
+          <Text
+            style={{
+              color: '#222222',
+              fontWeight: 'bold',
+              fontSize: 18,
+            }}
+          >
+            {getPriceTextActivity(activity)}
+          </Text>
+        </View>
+        <View style={styles.getPlanView}>
+          <Text
+            style={{
+              color: 'white',
+              fontWeight: 'normal',
+              fontSize: 14,
+            }}
+          >
+            BOOK NOW
+          </Text>
+        </View>
+      </View>
+      <View style={styles.bottomLineView} />
+    </ScrollView>
+  </Container>
+);
+export default compose(
+  connect(
+    state => ({
+      activity: activityByIdSelector(state, 'a14572be64a44a86a9335d98dea03802'),
+      moreActivities: activitiesSelector(
+        state,
+        '24ed67928db14878b7730baf09f479a2',
+      ),
+    }),
+    {},
+  ),
+  withHandlers({
+    onPressItem: ({ navigation }) => item => {
+      navigation.navigate('MyScheduleDetail', {
+        selectedPerson: item,
+      });
+    },
+  }),
+)(Activity);

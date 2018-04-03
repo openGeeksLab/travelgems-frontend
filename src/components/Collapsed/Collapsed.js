@@ -41,24 +41,26 @@ class collapsed extends Component {
     }).start();
   };
 
-  _setMaxHeight = (event) => {
+  _setMaxHeight = event => {
     this.setState({
       maxHeight: event.nativeEvent.layout.height,
     });
   };
 
-  _setMinHeight = (event) => {
+  _setMinHeight = event => {
     this.setState({
       minHeight: event.nativeEvent.layout.height,
     });
   };
 
   render() {
-    if (!this.props.description) {
+    if (!this.props.description || this.props.description === 'NULL') {
       return null;
     }
     return (
-      <Animated.View style={[styles.container, { height: this.state.animation }]}>
+      <Animated.View
+        style={[styles.container, { height: this.state.animation }]}
+      >
         <View style={styles.titleContainer} onLayout={this._setMinHeight}>
           <Text style={styles.title}>{this.props.title}</Text>
           <TouchableOpacity onPress={this.toggle}>
