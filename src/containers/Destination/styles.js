@@ -48,7 +48,9 @@ export default {
     backgroundColor: '#FFFFFF',
     marginTop: 281,
     marginHorizontal: 23,
-    padding: 17,
+    paddingVertical: 17,
+    paddingHorizontal: 25,
+
     elevation: 1,
     shadowOffset: { width: 0, height: 5 },
     shadowColor: 'black',
@@ -82,6 +84,7 @@ export default {
     borderBottomColor: 'rgba(112, 112, 112, 0.2)',
     borderBottomWidth: 1,
     marginLeft: 20,
+    alignItems: 'center',
   },
   bottomLineView: {
     marginHorizontal: 120,
@@ -91,7 +94,7 @@ export default {
   },
   columnContainer: {
     flexDirection: 'column',
-    marginLeft: 28,
+    marginHorizontal: 28,
   },
 
   columnTravelContainer: {
@@ -99,7 +102,12 @@ export default {
     marginTop: 24,
     marginHorizontal: 28,
   },
-  rowContainer: { flexDirection: 'row', alignSelf: 'stretch' },
+  rowContainer: {
+    flexDirection: 'row',
+    alignSelf: 'stretch',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   scrollView: { backgroundColor: '#FFFFFF' },
   infoRowContainer: {
     flexDirection: 'row',
