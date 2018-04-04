@@ -12,8 +12,8 @@ export default class MicroApp {
     this.defaultBody[this.rootKey] = {action:null};
   }
 
-  postContext(data, callback=null, permission='anonymous'){
-    var requestObj = permission=='anonymous' ? this.requestMiddleware : this.authRequestMiddleware;
+  postContext(data, callback=null, permission='ANONYMOUS'){
+    var requestObj = permission=='ANONYMOUS' ? this.requestMiddleware : this.authRequestMiddleware;
 
     if (callback){
       var self = this;

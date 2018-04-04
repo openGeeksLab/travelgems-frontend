@@ -4,7 +4,8 @@ import { Provider } from 'react-redux';
 import App from './containers/App';
 import configureStore from './stores/configureStore';
 import WarplyReactSDK from '../src/services/warply-react-sdk/WarplyReactSDK';
-import * as actions from './actions/content';
+import * as content from './actions/content';
+import * as profile from './actions/profile';
 
 export default class Root extends Component {
   constructor() {
@@ -39,20 +40,30 @@ export default class Root extends Component {
   async componentWillUpdate() {}
 
   handleContent(response){
-    this.state.store.dispatch(actions.setDestinations(response.data));
+    this.state.store.dispatch(content.setDestinations(response.data));
     if (this.state.isLoading) {
       this.setState({isLoading: false});
     }
     this.warplyReactSDK.request('products', 'get_all_raw', {"fetch_tags":true}, this.handleActivies.bind(this));
     this.warplyReactSDK.request('poll', 'get_poll', {"campaign_uuid":"66f0373bf9ec4fe097cba53cdd418101"}, this.handlePoll.bind(this));
+
+//    const self = this;
+//    this.warplyReactSDK.login({"id":"p.kouts153@gmail.com","password":"123456"}, (response) => {
+//      self.warplyReactSDK.request('consumer_data', 'handle_user_details', {"process":"get"}, self.handleProfile.bind(self), 'AUTH');
+//    }, true);
   }
 
   handleActivies(response){
-    this.state.store.dispatch(actions.setActivities(response.data));
+    this.state.store.dispatch(content.setActivities(response.data));
   }
 
   handlePoll(response){
-    this.state.store.dispatch(actions.setPoll(response.data));
+    this.state.store.dispatch(content.setPoll(response.data));
+  }
+
+  handleProfile(response){
+    this.state.store.dispatch(profile.setProfile(response.data));
+    this.state.store.dispatch(profile.setFavouriteDestinations(this.state.store.getState().content["destinationsArray"]));
   }
 
   render() {

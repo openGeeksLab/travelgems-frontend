@@ -1,6 +1,4 @@
-
 import type { Action } from '../actions/types';
-import { OPEN_DRAWER, CLOSE_DRAWER } from '../actions/drawer';
 import { SET_DESTINATIONS, SET_ACTIVITIES, SET_POLL } from '../actions/content';
 
 export type State = {

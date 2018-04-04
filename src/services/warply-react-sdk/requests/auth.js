@@ -21,9 +21,9 @@ export default class AuthRequestMiddleware{
 
 
   login(data, callback, rememberMe=false, retry=true){
-    if (this.isAuthorized()){
+    var self = this;
+    if (this.isAuthorized() && retry){
       const authorized = this.refreshAuthorization();
-      const self = this;
       Promise.all([authorized]).then(function(promiseData){
         if (!(promiseData && promiseData[0])){
           self.clearAuth();
@@ -39,7 +39,6 @@ export default class AuthRequestMiddleware{
     data["channel"] = "mobile";
     data["app_uuid"] = WarpConfig.APP_UUID;
 
-    const self = this;
     this.post(WarpConfig.OAUTH_API_PATH + 'login', data, (response)=>{
       try{
         if (!response.data.status || response.data.status != "1"){
@@ -67,7 +66,7 @@ export default class AuthRequestMiddleware{
     data["channel"] = "mobile";
     data["app_uuid"] = WarpConfig.APP_UUID;
 
-    const self = this;
+    var self = this;
     this.post(WarpConfig.USER_API_PATH + 'register', data, (response)=>{
       try{
         if (!response.data.status || response.data.status != "1"){
@@ -96,7 +95,7 @@ export default class AuthRequestMiddleware{
   }
 
   authorize(sentData, receivedData, rememberMe){
-    const self = this;
+    var self = this;
     return new Promise(function cb(resolve, reject){
       const authorizeData = {"response_type":"code","scope":"email app_id", "client_id":receivedData["client_id"], "email":sentData["id"], "app_id":receivedData["app_id"], "confirm":"yes"};
       var tokenData = {"grant_type":"authorization_code","code":null,"client_id":receivedData["client_id"],"client_secret":receivedData["client_secret"],"scope":"email app_id","redirect_uri":WarpConfig.BASE_URL + WarpConfig.OAUTH_API_PATH + "authorized"};
@@ -155,7 +154,7 @@ export default class AuthRequestMiddleware{
   }
 
   refreshAuthorization(){
-    const self = this;
+    var self = this;
     return new Promise((resolve, reject) => {
       var requestData = {
         "grant_type":"refresh_token",
@@ -168,7 +167,7 @@ export default class AuthRequestMiddleware{
           resolve(false);
         }
         else{
-          self.store.dispatch(actions.setAccessTokens({access_token: response.access_token, refresh_token: response.refresh_token}));
+          self.store.dispatch(actions.setAccessTokens({access_token: response.data.access_token, refresh_token: response.data.refresh_token}));
           resolve(true);
         }
       });
@@ -201,7 +200,7 @@ export default class AuthRequestMiddleware{
       else {
         const authorized = this.refreshAuthorization();
 
-        const self = this;
+        var self = this;
         Promise.all([authorized]).then(function(data){
           if (!(data && data[0])){
             self.clearAuth();

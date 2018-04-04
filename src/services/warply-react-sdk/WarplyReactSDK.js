@@ -59,9 +59,7 @@ export default class WarplyReactSDK {
                     self.handleInitExc(resolve, reject, cb);
                     return;
                   }
-                  if (!self.microAppsComplete){
-                    self.microAppsComplete = self.setMicroApps(true);
-                  }
+                  self.microAppsComplete = self.setMicroApps(true);
                   resolve(true);
                 }
               ).catch(function () {
@@ -119,7 +117,7 @@ export default class WarplyReactSDK {
     return this.authRequestMiddleware.register(data, callback, autologin, rememberMe);
   }
 
-  request(microApp, action, data=null, callback=null, permission='anonymous'){
+  request(microApp, action, data=null, callback=null, permission='ANONYMOUS'){
     this.microApps[microApp].dispatchAction(action, data, callback, permission);
   }
 
@@ -158,8 +156,8 @@ export default class WarplyReactSDK {
     for (var i = 0; i < MappClasses.length; i++){
       console.log(MappClasses[i]);
       const classObj = new MappClasses[i](this.store, this.requestMiddleware);
-      if (classObj.constructor.permissions.indexOf("AUTH") || this.microAppNames.indexOf(classObj.constructor.mappName) > -1){
-        if (classObj.constructor.permissions.indexOf("AUTH")){
+      if (classObj.constructor.permissions.indexOf("AUTH") > -1 || this.microAppNames.indexOf(classObj.constructor.mappName) > -1){
+        if (classObj.constructor.permissions.indexOf("AUTH") > -1){
           classObj.authRequestMiddleware = this.authRequestMiddleware;
         }
         this.microApps[classObj.rootKey] = classObj;
