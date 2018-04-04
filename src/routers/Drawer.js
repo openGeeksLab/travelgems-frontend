@@ -7,17 +7,19 @@ import Activity from '../containers/Activity/Activity';
 import Destination from '../containers/Destination/Destination';
 import Smalltile from '../components/Smalltile/Smalltile';
 import Tabview from '../components/Tabview/Tabview';
+import Mytravelgems from '../components/Mytravelgems/Mytravelgems';
 
 const MainDrawerRouter = DrawerNavigator(
   {
-    Home: { screen: Tabview },
-    Webview: { screen: Webview },
-    Activity: { screen: Activity },
-    Destination: { screen: Destination },
-    Smalltile: { screen: Smalltile },
+    Mytravelgems:{screen: Mytravelgems},
+    // Home: { screen: Tabview },
+    // Webview: { screen: Webview },
+    // Activity: { screen: Activity },
+    // Destination: { screen: Destination },
+    // Smalltile: { screen: Smalltile },
   },
   {
-    initialRouteName: 'Destination',
+    initialRouteName: 'Mytravelgems',
     contentOptions: {
       activeTintColor: '#e91e63',
     },

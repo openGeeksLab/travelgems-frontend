@@ -8,7 +8,7 @@ export default {
   customHeader: {
     flex: 0.1,
     flexDirection: 'row',
-    backgroundColor: 'transparent',
+    backgroundColor: 'blue',
     height: 30,
     width: Dimensions.get("window").width,
     position: 'absolute',

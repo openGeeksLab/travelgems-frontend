@@ -12,7 +12,7 @@ class CustomHeader extends Component {
     return (
       <View style={styles.customHeader}>
           <TouchableOpacity style={styles.headerIcon1}><Icon name="arrow-back" color="#FFFFFF"  onPress={() => this.props.navigation.goBack()} /></TouchableOpacity>
-          <View style={styles.headerIcon2}><Icon name="launch" color="#FFFFFF" /></View>
+          <View style={styles.headerIcon2}><Icon name="launch" color="red" /></View>
           {/* <View style={styles.headerIcon3}><Icon name="favorite-border" color="#FFFFFF" /></View> */}
           <View style={styles.headerIcon3}><Favorite /></View>
         </View>
