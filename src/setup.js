@@ -43,7 +43,7 @@ export default class Root extends Component {
     if (this.state.isLoading) {
       this.setState({isLoading: false});
     }
-    this.warplyReactSDK.request('products', 'get_all_raw', null, this.handleActivies.bind(this));
+    this.warplyReactSDK.request('products', 'get_all_raw', {"fetch_tags":true}, this.handleActivies.bind(this));
     this.warplyReactSDK.request('poll', 'get_poll', {"campaign_uuid":"66f0373bf9ec4fe097cba53cdd418101"}, this.handlePoll.bind(this));
   }
 
