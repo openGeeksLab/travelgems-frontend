@@ -1,4 +1,3 @@
-
 export type Action =
   { type: 'PUSH_NEW_ROUTE', route: string }
     | { type: 'POP_ROUTE' }
@@ -11,6 +10,10 @@ export type Action =
     | { type: 'SET_LIST', list: string}
     | { type: 'SET_DESTINATIONS', payload: array}
     | { type: 'SET_ACTIVITIES', payload: array}
+    | { type: 'SET_POLL', payload: json}
+    | { type: 'SET_PROFILE', payload: json}
+    | { type: 'SET_FAVOURITE_DESTINATIONS'}
+    | { type: 'SET_FAVOURITE_ACTIVITIES'}
 
 export type Dispatch = (action:Action | Array<Action>) => any;
 export type GetState = () => Object;

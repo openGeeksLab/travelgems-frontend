@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
-import { Tile } from 'react-native-elements';
-import { Container, Header, Content, Thumbnail, Text, Title } from 'native-base';
-import styles from './styles';
+
 import Icon from 'react-native-vector-icons/Entypo';
+import styles from './styles';
 
 class Favorite extends Component {
   constructor(props) {
@@ -15,9 +14,11 @@ class Favorite extends Component {
   render() {
     return (
       <TouchableOpacity
-        style={styles.heartview}
+        style={[{ backgroundColor: 'transparent' }, this.props.style]}
         onPress={() => {
-          this.setState((prevState, props) => ({ favorite: !prevState.favorite }));
+          this.setState((prevState, props) => ({
+            favorite: !prevState.favorite,
+          }));
         }}
       >
         {this.props.color === 'white' ? (

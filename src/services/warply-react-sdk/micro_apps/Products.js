@@ -2,6 +2,7 @@ import MicroApp from '../MicroApp';
 import * as WarpConfig from '../config.js';
 
 export default class Products extends MicroApp {
+  static permissions = ['ANONYMOUS'];
   static mappName = 'MAPP_PRODUCTS';
   rootKey = 'products';
   static allowedActions = ['get_all_raw'];
@@ -13,16 +14,19 @@ export default class Products extends MicroApp {
 
   dispatchAction(action, data, callback){
     if (this.constructor.allowedActions.indexOf(action)>-1){
-      return this.handleAction(action, callback);
+      return this.handleAction(action, data, callback);
     }
     return false;
   }
 
-  handleAction(action, callback=null){
+  handleAction(action, data, callback){
     if (action=='get_all_raw'){
       var body = this.defaultBody;
       body[this.rootKey]["action"] = action;
       body[this.rootKey]["merchant_id"] = WarpConfig.MERCHANT_ID;
+      if (data){
+        body[this.rootKey] = Object.assign(data, body[this.rootKey]);
+      }
       this.postContext(body, callback);
       return true;
     }

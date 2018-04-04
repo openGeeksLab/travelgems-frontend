@@ -1,10 +1,10 @@
 import MicroApp from '../MicroApp';
 
-export default class Content extends MicroApp {
-  static permissions = ['ANONYMOUS','AUTH'];
-  static mappName = 'CONTENT';
-  rootKey = 'content';
-  static allowedActions = ['retrieve'];
+export default class ConsumerData extends MicroApp {
+  static permissions = ['AUTH'];
+  static mappName = 'CONSUMER_DATA';
+  rootKey = 'consumer_data';
+  static allowedActions = ['handle_user_details'];
 
   constructor(store, requestMiddleware){
     super(store, requestMiddleware);
@@ -19,7 +19,7 @@ export default class Content extends MicroApp {
   }
 
   handleAction(action, data, callback, permission){
-    if (action=='retrieve'){
+    if (action=='handle_user_details'){
       var body = this.defaultBody;
       body[this.rootKey]["action"] = action
       if (data){

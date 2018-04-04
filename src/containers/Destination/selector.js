@@ -9,14 +9,8 @@ export const destinationsByIdSelector = createSelector(
   (id, items) => items[id],
 );
 
-const activityIds = createSelector(
-  destinationsByIdSelector,
-  destinationsActivities,
-  (destination, activities) => activities[destination.custom_id],
-);
-
 export const activitiesSelector = createSelector(
-  activityIds,
-  state => state.content.activitiesById,
-  (Ids, activitiesById) => (Ids ? Ids.map(id => activitiesById[id]) : null),
+  (_, id) => id,
+  destinationsActivities,
+  (uuid, activities) => activities[uuid],
 );

@@ -1,7 +1,5 @@
-
 import type { Action } from '../actions/types';
-import { OPEN_DRAWER, CLOSE_DRAWER } from '../actions/drawer';
-import { SET_DESTINATIONS, SET_ACTIVITIES } from '../actions/content';
+import { SET_DESTINATIONS, SET_ACTIVITIES, SET_POLL } from '../actions/content';
 
 export type State = {
     destinationsArray: array,
@@ -16,6 +14,11 @@ export type State = {
     destinationsPlaces: json, // destination uuids to place uuids
     destinationsActivities: json, // destination uuids to activities uuids
     destinationsTrips: json,
+
+    activitiesFilters: array,
+    destinationsFilters: array,
+
+    poll: json,
 };
 
 const initialState = {
@@ -31,6 +34,11 @@ const initialState = {
   destinationsPlaces: {},
   destinationsActivities: {},
   destinationsTrips: {},
+
+  activitiesFilters: [],
+  destinationsFilters: [],
+
+  poll: {},
 };
 
 function parseDestinations(data){
@@ -40,14 +48,21 @@ function parseDestinations(data){
   var destinationsPlaces = {};
   var placesArray = [];
   var placesById = {};
+  var destinationsFilters = [];
 
   for (var i = 0; i < data.length; i++){
+    data[i]["tags"] = data[i]["tags"] ? data[i]["tags"].map(t => t.name) : [];
+    destinationsFilters = destinationsFilters.concat(data[i]["tags"]);
     if (data[i]["category_name"]=="destination"){
+      data[i]["extra_fields"]["latitude"] = (data[i]["extra_fields"] && data[i]["extra_fields"]["latitude"]) ? parseFloat(data[i]["extra_fields"]["latitude"].replace(',', '.')) : 0.00;
+      data[i]["extra_fields"]["longitude"] = (data[i]["extra_fields"] && data[i]["extra_fields"]["longitude"]) ? parseFloat(data[i]["extra_fields"]["longitude"].replace(',', '.')) : 0.00;
       destinationsArray.push(data[i]);
       destinationsById[data[i]["id"]] = data[i];
       destinationsCustomIds[data[i]["custom_id"].toString()] = data[i]["id"];
     }
     else {
+      data[i]["extra_fields"]["latitude"] = (data[i]["extra_fields"] && data[i]["extra_fields"]["latitude"]) ? parseFloat(data[i]["extra_fields"]["latitude"].replace(',', '.')) : 0.00;
+      data[i]["extra_fields"]["longitude"] = (data[i]["extra_fields"] && data[i]["extra_fields"]["longitude"]) ? parseFloat(data[i]["extra_fields"]["longitude"].replace(',', '.')) : 0.00;
       placesArray.push(data[i]);
       placesById[data[i]["id"]] = data[i];
       if (!destinationsPlaces.hasOwnProperty(data[i]["parent"])){
@@ -57,20 +72,27 @@ function parseDestinations(data){
     }
   }
 
-  return [destinationsArray, destinationsById, destinationsCustomIds, destinationsPlaces, placesArray, placesById];
+  destinationsFilters = [...new Set(destinationsFilters)];
+
+  return [destinationsArray, destinationsById, destinationsCustomIds, destinationsPlaces, placesArray, placesById, destinationsFilters];
 }
 
-function parseProducts(data){
+function parseProducts(content, data){
   var activitiesArray = [];
   var destinationsActivities = {};
   var destinationsTrips = {};
   var activitiesById = {};
+  var activitiesFilters = [];
 
   var productJson = {};
+  var destinationUUID = null;
   for (var i = 0; i < data.length; i++){
-    productJson = _.pick(data[i],'category_custom_id','category_name','created','description','extra_fields','id','merchant','name','price','sku','updated','uuid','currency');
+    productJson = _.pick(data[i],'photo','inner_photo','category_custom_id','category_name','created','description','extra_fields','id','merchant','name','price','sku','updated','uuid','currency','tags');
     productJson["extra_fields"] = JSON.parse(productJson["extra_fields"]);
 
+    productJson["tags"] = productJson["tags"] ? productJson["tags"] : [];
+
+    activitiesFilters = activitiesFilters.concat(productJson["tags"]);
     if (productJson["category_name"]=="trip"){
       destinationsTrips[productJson["sku"].toString()] = productJson;
     }
@@ -78,14 +100,17 @@ function parseProducts(data){
       activitiesArray.push(productJson);
       activitiesById[productJson["uuid"]] = productJson;
 
-      if (!destinationsActivities.hasOwnProperty(productJson["category_custom_id"].toString())){
-        destinationsActivities[productJson["category_custom_id"].toString()] = [];
+      destinationUUID = content.destinationsCustomIds[productJson["category_custom_id"].toString()];
+      if (!destinationsActivities.hasOwnProperty(destinationUUID)){
+        destinationsActivities[destinationUUID] = [];
       }
-      destinationsActivities[productJson["category_custom_id"].toString()].push(productJson["uuid"]);
+      destinationsActivities[destinationUUID].push(_.pick(productJson,'inner_photo','name','price','uuid','currency','tags'));
     }
   }
 
-  return [activitiesArray, activitiesById, destinationsActivities, destinationsTrips];
+  activitiesFilters = [...new Set(activitiesFilters)];
+
+  return [activitiesArray, activitiesById, destinationsActivities, destinationsTrips, activitiesFilters];
 }
 
 export default function (state:State = initialState, action:Action): State {
@@ -102,17 +127,26 @@ export default function (state:State = initialState, action:Action): State {
         destinationsPlaces: parsedValues[3],
         placesArray: parsedValues[4],
         placesById: parsedValues[5],
+        destinationsFilters: parsedValues[6]
       };
     }
 
     case SET_ACTIVITIES: {
-      parsedValues = parseProducts(action.payload);
+      parsedValues = parseProducts(state, action.payload);
       return {
         ...state,
         activitiesArray: parsedValues[0],
         activitiesById: parsedValues[1],
         destinationsActivities: parsedValues[2],
         destinationsTrips: parsedValues[3],
+        activitiesFilters: parsedValues[4],
+      };
+    }
+
+    case SET_POLL: {
+      return {
+        ...state,
+        poll: action.payload,
       };
     }
 

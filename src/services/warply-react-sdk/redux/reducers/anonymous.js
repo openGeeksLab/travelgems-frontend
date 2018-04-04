@@ -71,16 +71,11 @@ export default function (state:State = initialState, action:Action): State {
         MicroApps: action.mapps,
       }
 
-    case 'RESET':
-//      return initialState
+    case actions.DELETE_AYTH_KEYS:
       return {
         ...state,
         WebId: null,
-        ApiKey: null,
-        RequestQueue: [],
-        EventQueue: [],
-        ContextVariables: {},
-        MicroApps: []
+        ApiKey: null
       }
 
     default:

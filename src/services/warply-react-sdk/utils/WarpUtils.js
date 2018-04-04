@@ -17,7 +17,17 @@ export function generateHeaders(web_id, api_key){
   return headers;
 };
 
-export function createHttpAPI(baseURL = WarpConfig.MOBILE_API){
+export function generateAuthHeaders(token){
+  if (!token){
+    return {};
+  }
+  let headers = {};
+  headers["Authorization"] = 'Bearer ' + token;
+  headers['Channel','mobile'];
+  return headers;
+};
+
+export function createHttpAPI(baseURL = WarpConfig.BASE_URL){
   return apisauce.create({
     baseURL,
     headers: {

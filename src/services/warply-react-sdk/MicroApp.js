@@ -1,5 +1,4 @@
 import * as WarpUtils from './utils/WarpUtils';
-import RequestMiddleware from './RequestMiddleware';
 import * as WarpConfig from './config.js';
 
 export default class MicroApp {
@@ -13,15 +12,17 @@ export default class MicroApp {
     this.defaultBody[this.rootKey] = {action:null};
   }
 
-  postContext(data, callback=null){
+  postContext(data, callback=null, permission='ANONYMOUS'){
+    var requestObj = permission=='ANONYMOUS' ? this.requestMiddleware : this.authRequestMiddleware;
+
     if (callback){
       var self = this;
-      this.requestMiddleware.postContext(data, (response)=>{
+      requestObj.postContext(data, (response)=>{
         self.handlePostCallback(response, callback);
       });
     }
     else{
-      this.requestMiddleware.postContext(data, this.handlePostContext.bind(this));
+      requestObj.postContext(data, this.handlePostContext.bind(this));
     }
   }
 
@@ -35,11 +36,25 @@ export default class MicroApp {
   }
 
   parseResponse(response){
-    response = response.data.context;
-    response = {
-      data: response[this.constructor.mappName],
-      status: response[this.constructor.mappName + '-status']
-    };
+    if (response.status == 401){
+      return {"status":9999, "msg":"Unathorized"};
+    }
+
+    if (response.data.context){
+      response = response.data.context;
+      response = {
+        data: response[this.constructor.mappName],
+        status: response[this.constructor.mappName + '-status']
+      };
+    }
+    else if (response.data.result){
+      response = response.data;
+      response = {
+        msg: response.msg,
+        data: response.result,
+        status: response.status
+      }
+    }
     return response;
   }
 }

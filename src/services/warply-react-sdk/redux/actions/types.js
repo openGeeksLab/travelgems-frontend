@@ -8,6 +8,12 @@ export type Action =
     | { type: 'EMPTY_EVENT_QUEUE' }
     | { type: 'SET_CONTEXT_VARIABLES', variables: json }
     | { type: 'SET_MICRO_APPS', mapps: json }
+    | { type: 'DELETE_AYTH_KEYS'}
+
+    | { type: 'SET_ACCESS_TOKENS', tokens: json }
+    | { type: 'DELETE_ACCESS_TOKENS' }
+    | { type: 'SET_AUTH_CLIENT', data: json }
+    | { type: 'DELETE_AUTH_CLIENT' }
 
 export type Dispatch = (action:Action | Array<Action>) => any;
 export type GetState = () => Object;

@@ -1,7 +1,8 @@
 // a library to wrap and simplify api calls
 import * as WarpConfig from './config.js';
 import * as WarpUtils from './utils/WarpUtils';
-import RequestMiddleware from './RequestMiddleware';
+import RequestMiddleware from './requests/anonymous';
+import AuthRequestMiddleware from './requests/auth';
 import * as actions from './redux/actions/actions';
 import SDKStore from './redux/stores/SDKStore';
 import micro_apps from './micro_apps';
@@ -16,12 +17,11 @@ export default class WarplyReactSDK {
   */
 
   static eventsBatch = 2;
+  microAppNames = {};
+  microApps = {};
 
-  init(){
+  init(enableAuth=false){
     const self = this;
-    this.microAppNames = {};
-    this.microApps = {};
-
     this.tries = 3;
 
     return new Promise(function cb(resolve, reject){
@@ -30,25 +30,44 @@ export default class WarplyReactSDK {
 
         Promise.all([store]).then(
           function(data){
-            self.store = data[0];
-            self.requestMiddleware = new RequestMiddleware(self.store);
+            if (!(data && data[0])){
+              reject(false);
+            }
+            if (!self.store){
+              self.store = data[0];
+            }
 
-            const registerComplete = self.requestMiddleware.register(self.handleRegister.bind(self));
+            if (!self.requestMiddleware){
+              self.requestMiddleware = new RequestMiddleware(self.store);
+            }
+            if (enableAuth && !self.authRequestMiddleware){
+              self.authRequestMiddleware = new AuthRequestMiddleware(self.store);
+            }
 
-            Promise.all([registerComplete]).then(function(){
-              const contextComplete = self.requestMiddleware.getContext(self.handleGetContext.bind(self));
+            const registerComplete = self.requestMiddleware.register();
+
+            Promise.all([registerComplete]).then(function(data){
+              if (!(data && data[0])){
+                self.handleInitExc(resolve, reject, cb);
+                return;
+              }
+              const contextComplete = self.requestMiddleware.getContext();
 
               Promise.all([contextComplete]).then(
-                function(){
+                function(data){
+                  if (!(data && data[0])){
+                    self.handleInitExc(resolve, reject, cb);
+                    return;
+                  }
                   self.microAppsComplete = self.setMicroApps(true);
                   resolve(true);
                 }
               ).catch(function () {
-                self.handlePromiseExc(resolve, reject, cb);
+                self.handleInitExc(resolve, reject, cb);
               });
 
             }).catch(function () {
-              self.handlePromiseExc(resolve, reject, cb);
+              self.handleInitExc(resolve, reject, cb);
             });
           }
         );
@@ -58,15 +77,52 @@ export default class WarplyReactSDK {
     });
   }
 
-  request(microApp, action, data, callback){
-    this.microApps[microApp].dispatchAction(action, data, callback);
+  initAuth(){
+    const self = this;
+
+    return new Promise(function cb(resolve, reject){
+      try {
+        const store = SDKStore();
+
+        Promise.all([store]).then(
+          function(data){
+            if (!(data && data[0])){
+              reject(false);
+            }
+            if (!self.store){
+              self.store = data[0];
+            }
+
+            if (!self.authRequestMiddleware){
+              self.authRequestMiddleware = new AuthRequestMiddleware(self.store);
+            }
+
+            if (!self.microAppsComplete){
+              self.microAppsComplete = self.setMicroApps();
+            }
+            resolve(true);
+          }
+        );
+      } catch (e) {
+        reject(e);
+      }
+    });
   }
 
+  login(data, callback, rememberMe=false){
+    return this.authRequestMiddleware.login(data, callback, rememberMe);
+  }
 
+  register(data, callback, autologin=false, rememberMe=false){
+    return this.authRequestMiddleware.register(data, callback, autologin, rememberMe);
+  }
 
-  handlePromiseExc(resolve, reject, cb){
+  request(microApp, action, data=null, callback=null, permission='ANONYMOUS'){
+    this.microApps[microApp].dispatchAction(action, data, callback, permission);
+  }
+
+  handleInitExc(resolve, reject, cb){
     if (--this.tries>0){
-      self.store.dispatch({type: 'RESET'});
       cb(resolve, reject);
     }
     else{
@@ -74,21 +130,19 @@ export default class WarplyReactSDK {
     }
   }
 
-
-
   // add listener on ContextVariables
   setMicroApps(persist=true){
     const self = this;
     return new Promise((resolve, reject) => {
       try {
-        self.microAppNames = self.store.getState().reducers.ContextVariables.enabled_microapps;
+        self.microAppNames = self.store.getState().anonymous.ContextVariables.enabled_microapps;
         if (persist){
           self.storeMicroApps();
         }
         self.initMicroApps();
         resolve(true);
       } catch (e) {
-        reject(e);
+        resolve(false);
       }
     });
   }
@@ -102,30 +156,14 @@ export default class WarplyReactSDK {
     for (var i = 0; i < MappClasses.length; i++){
       console.log(MappClasses[i]);
       const classObj = new MappClasses[i](this.store, this.requestMiddleware);
-      if (this.microAppNames.indexOf(classObj.constructor.mappName) > -1){
+      if (classObj.constructor.permissions.indexOf("AUTH") > -1 || this.microAppNames.indexOf(classObj.constructor.mappName) > -1){
+        if (classObj.constructor.permissions.indexOf("AUTH") > -1){
+          classObj.authRequestMiddleware = this.authRequestMiddleware;
+        }
         this.microApps[classObj.rootKey] = classObj;
       }
     }
 
     console.log("microapps finished");
   }
-
-
-
-
-
-  handleRegister(response){
-    this.store.dispatch(actions.setWebId(response.data.context.web_id));
-    this.store.dispatch(actions.setApiKey(response.data.context.api_key));
-    // to remove and add as listener on webid changed
-//    this.requestMiddleware.getContext(this.handleGetContext.bind(this));
-  };
-
-  handleGetContext(response){
-    this.store.dispatch(actions.setContextVariables(response.data.context));
-    // to remove and add as listener on variables changed
-//    this.initMicroApps();
-  }
-
-  handlePostContext(response){}
 }
