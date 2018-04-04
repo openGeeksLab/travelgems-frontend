@@ -22,7 +22,7 @@ const MainDrawerRouter = DrawerNavigator(
       activeTintColor: '#e91e63',
     },
     contentComponent: props => <SideBar {...props} />,
-  }
+  },
 );
 
 export default MainDrawerRouter;

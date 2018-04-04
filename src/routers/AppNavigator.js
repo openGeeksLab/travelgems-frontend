@@ -1,6 +1,4 @@
 import React from 'react';
-
-import { Platform } from 'react-native';
 import { Root, StyleProvider } from 'native-base';
 import { StackNavigator } from 'react-navigation';
 
@@ -16,13 +14,15 @@ const AppNavigator = StackNavigator(
   {
     initialRouteName: 'Drawer',
     headerMode: 'none',
-  }
+  },
 );
 
-export default () => (
+const RootScreen = () => (
   <Root>
     <StyleProvider style={getTheme(material)}>
       <AppNavigator />
     </StyleProvider>
   </Root>
 );
+
+export default RootScreen;
