@@ -41,6 +41,7 @@ class Smalltile extends Component {
     );
   }
 }
+
 Smalltile.defaultProps = {
   img: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
 };
