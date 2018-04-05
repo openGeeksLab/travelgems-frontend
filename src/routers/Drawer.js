@@ -8,9 +8,11 @@ import Destination from '../containers/Destination/Destination';
 
 import Smalltile from '../components/Smalltile/Smalltile';
 import Tabview from '../components/Tabview/Tabview';
+import Mytravelgems from '../components/MyTravelgems/Mytravelgems';
 
 const MainDrawerRouter = DrawerNavigator(
   {
+    Mytravelgems: { screen: Mytravelgems },
     Home: { screen: Tabview },
     Webview: { screen: Webview },
     Activity: { screen: Activity },

@@ -37,6 +37,7 @@ const SearchBar = ({ onPressFilter, onLeftPress, filterText }) => (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Ionicons
         style={{
+          marginLeft: 16,
           fontSize: 30,
           color: 'rgba(34, 34, 34, 1)',
         }}
