@@ -35,7 +35,6 @@ class DayPlan extends Component {
                         <Text style={styles.ImageText}>Bythisma</Text>
                         <Text style={styles.ImageText1}>Beach</Text>
                     </View>
-
                     <View style={styles.parrentViewText}>
                         <View>
                             <Text style={styles.ChildViewText}>BYTHISMA is moderately accessible through a rough mud road.
