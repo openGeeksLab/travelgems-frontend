@@ -7,7 +7,7 @@ import Activity from '../containers/Activity/Activity';
 import Destination from '../containers/Destination/Destination';
 import Smalltile from '../components/Smalltile/Smalltile';
 import Tabview from '../components/Tabview/Tabview';
-import Mytravelgems from '../components/Mytravelgems/Mytravelgems';
+import Mytravelgems from '../components/MyTravelgems/Mytravelgems';
 
 const MainDrawerRouter = DrawerNavigator(
   {
