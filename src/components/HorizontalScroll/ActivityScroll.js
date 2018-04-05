@@ -55,9 +55,7 @@ const ActivityView = ({ activity, onPress, favorite }) => (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.image}
-        onPress={() => {
-          onPress();
-        }}
+        // onPress={}
       >
         <Image
           style={styles.image}

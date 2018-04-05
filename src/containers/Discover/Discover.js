@@ -2,21 +2,23 @@ import React from 'react';
 import {
   ScrollView,
   View,
-  TouchableOpacity,
   TextInput,
   ImageBackground,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-
-import R from 'ramda';
-import { compose, withHandlers } from 'recompose';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import Modal from 'react-native-modal';
+import { slice, append } from 'ramda';
+import { compose, withHandlers, withState } from 'recompose';
 import { connect } from 'react-redux';
 
 import DestinationScroll from '../../components/HorizontalScroll/DestinationScroll';
 import ActivityScroll from '../../components/HorizontalScroll/ActivityScroll';
+import FilterModal from './FilterModal';
 
 const Header = ({ navigation }) => (
   <View
@@ -29,16 +31,19 @@ const Header = ({ navigation }) => (
       alignItems: 'center',
     }}
   >
-    <TouchableOpacity
-      transparent
+    <EntypoIcon
+      name="menu"
+      color="#fff"
+      size={24}
       onPress={() => navigation.navigate('DrawerOpen')}
-    >
-      <EntypoIcon name="menu" color="#fff" size={24} />
-    </TouchableOpacity>
+    />
+
     <Text style={{ color: 'white', fontSize: 24 }}>Discover</Text>
+    <Icon name="close" color="#fff" size={24} />
   </View>
 );
-const SearchBar = () => (
+
+const SearchBar = ({ onPressFilter }) => (
   <View
     style={{
       marginTop: 19,
@@ -64,11 +69,34 @@ const SearchBar = () => (
       placeholderTextColor="rgba(0, 0, 0, 0.58)"
       placeholder="Type a destination?"
     />
+    <Icon
+      style={{
+        fontSize: 23,
+        color: '#46DFE8',
+      }}
+      name={'search'}
+      onPress={onPressFilter}
+    />
   </View>
 );
 
-const Discover = ({ destinations, activities, navigation }) => (
+const Discover = ({
+  destinations,
+  activities,
+  navigation,
+  isModalVisible,
+  setIsModalVisible,
+  destinationsFilters,
+}: Object) => (
   <ScrollView>
+    <FilterModal
+      isModalVisible={isModalVisible}
+      setIsModalVisible={setIsModalVisible}
+      filters={destinationsFilters}
+      onPressFilter={text => {
+        navigation.navigate('Filter', { text });
+      }}
+    />
     <ImageBackground
       style={{
         backgroundColor: '#041DB2',
@@ -80,7 +108,11 @@ const Discover = ({ destinations, activities, navigation }) => (
       }}
     />
     <Header navigation={navigation} />
-    <SearchBar />
+    <SearchBar
+      onPressFilter={() => {
+        setIsModalVisible(true);
+      }}
+    />
     <ActivityScroll
       containerStyle={{
         margin: 0,
@@ -88,7 +120,6 @@ const Discover = ({ destinations, activities, navigation }) => (
         marginTop: 20,
       }}
       activities={activities}
-      title={'destination.name'}
     />
     <DestinationScroll
       containerStyle={{
@@ -97,7 +128,6 @@ const Discover = ({ destinations, activities, navigation }) => (
         marginTop: 20,
       }}
       destinations={destinations}
-      title={'destination.name'}
     />
   </ScrollView>
 );
@@ -110,10 +140,12 @@ Discover.navigationOptions = {
 };
 
 export default compose(
+  withState('isModalVisible', 'setIsModalVisible', false),
   connect(
     state => ({
-      destinations: R.slice(0, 15, state.content.destinationsArray),
-      activities: R.slice(0, 15, state.content.activitiesArray),
+      destinations: slice(0, 15, state.content.destinationsArray),
+      activities: slice(0, 15, state.content.activitiesArray),
+      destinationsFilters: state.content.destinationsFilters,
     }),
     {},
   ),

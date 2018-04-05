@@ -4,25 +4,22 @@ import { getPriceTextActivity } from 'src/selectors';
 import { Title } from 'native-base';
 import Smalltile from '../Smalltile/Smalltile';
 
-const ActivityView = ({ activity }) => (
-  <View style={{ width: 150, height: 150 }}>
-    <Smalltile
-      title={activity.name}
-      subtitle={getPriceTextActivity(activity)}
-      img={activity.inner_photo}
-    />
-  </View>
-);
-
 const HorizontalScroll = ({ activities, title, containerStyle }) => (
   <View style={[{ margin: 15 }, containerStyle]}>
     <Title style={{ color: 'black', textAlign: 'left' }}>
       Activities in {title}
     </Title>
-    <ScrollView horizontal style={{ height: 150 }}>
+    <ScrollView horizontal style={{ height: 200, marginTop: 20 }}>
       {activities &&
         activities.map(activity => (
-          <ActivityView activity={activity} key={activity.uuid} />
+          <Smalltile
+            key={activity.uuid}
+            title={activity.name}
+            subtitle={getPriceTextActivity(activity)}
+            subtitleStyle={{ color: '#46DFE8', fontSize: 9 }}
+            titleStyle={{ fontSize: 15 }}
+            img={activity.inner_photo}
+          />
         ))}
     </ScrollView>
   </View>
