@@ -52,7 +52,6 @@ class DayPlan extends Component {
 
                         </View>
                     </View>
-
                 </View>
             </ScrollView>
         )
