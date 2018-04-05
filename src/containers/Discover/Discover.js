@@ -18,7 +18,8 @@ import { connect } from 'react-redux';
 
 import DestinationScroll from '../../components/HorizontalScroll/DestinationScroll';
 import ActivityScroll from '../../components/HorizontalScroll/ActivityScroll';
-import FilterModal from './FilterModal';
+import { FilterDestinations } from 'src/components/FilterModal';
+import SearchBar from 'src/components/SearchBar';
 
 const Header = ({ navigation }) => (
   <View
@@ -43,43 +44,6 @@ const Header = ({ navigation }) => (
   </View>
 );
 
-const SearchBar = ({ onPressFilter }) => (
-  <View
-    style={{
-      marginTop: 19,
-      marginHorizontal: 13,
-      height: 50,
-      backgroundColor: 'white',
-      borderColor: '#9C9CDD',
-      borderWidth: 1,
-      borderRadius: 2,
-      alignItems: 'center',
-      flexDirection: 'row',
-    }}
-  >
-    <Icon
-      style={{
-        fontSize: 23,
-        color: '#46DFE8',
-      }}
-      name={'search'}
-    />
-    <TextInput
-      style={{ fontSize: 16, flex: 1 }}
-      placeholderTextColor="rgba(0, 0, 0, 0.58)"
-      placeholder="Type a destination?"
-    />
-    <Icon
-      style={{
-        fontSize: 23,
-        color: '#46DFE8',
-      }}
-      name={'search'}
-      onPress={onPressFilter}
-    />
-  </View>
-);
-
 const Discover = ({
   destinations,
   activities,
@@ -89,7 +53,7 @@ const Discover = ({
   destinationsFilters,
 }: Object) => (
   <ScrollView>
-    <FilterModal
+    <FilterDestinations
       isModalVisible={isModalVisible}
       setIsModalVisible={setIsModalVisible}
       filters={destinationsFilters}
@@ -131,13 +95,6 @@ const Discover = ({
     />
   </ScrollView>
 );
-
-Discover.navigationOptions = {
-  tabBarLabel: 'Discover',
-  tabBarIcon: ({ tintColor }) => {
-    return <Icon name="place" type="home" color="#fff" />;
-  },
-};
 
 export default compose(
   withState('isModalVisible', 'setIsModalVisible', false),

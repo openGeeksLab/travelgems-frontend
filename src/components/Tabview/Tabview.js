@@ -22,7 +22,15 @@ import Filter from '../../containers/Discover/Filter';
 
 const DiscoverStack = StackNavigator(
   {
-    Discover: { screen: Discover },
+    Discover: {
+      screen: Discover,
+      navigationOptions: {
+        tabBarLabel: 'Discover',
+        tabBarIcon: ({ tintColor }) => {
+          return <Icon name="place" type="home" color="#fff" />;
+        },
+      },
+    },
     Filter: { screen: Filter },
   },
   {
@@ -31,10 +39,28 @@ const DiscoverStack = StackNavigator(
   },
 );
 
+const ActivitiesStack = StackNavigator(
+  {
+    Activities: {
+      screen: Activities,
+      navigationOptions: {
+        tabBarLabel: 'Activities',
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="flash-on" type="home" color="#fff" />
+        ),
+      },
+    },
+  },
+  {
+    initialRouteName: 'Activities',
+    headerMode: 'none',
+  },
+);
+
 var Tabview = TabNavigator(
   {
     Tab1: { screen: DiscoverStack },
-    Tab2: { screen: Activities },
+    Tab2: { screen: ActivitiesStack },
     Tab3: { screen: Orders },
     Tab4: { screen: Profile },
     Tab5: { screen: Cart },
