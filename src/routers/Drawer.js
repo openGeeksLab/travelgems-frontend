@@ -8,16 +8,18 @@ import Destination from '../containers/Destination/Destination';
 
 import Smalltile from '../components/Smalltile/Smalltile';
 import Tabview from '../components/Tabview/Tabview';
-import Mytravelgems from '../components/MyTravelgems/Mytravelgems';
+import Mytravelgems from '../components/Mytravelgems/Mytravelgems';
+import DayPlan from '../components/Mytravelgems/DayPlan/DayPlan';
 
 const MainDrawerRouter = DrawerNavigator(
   {
     Mytravelgems: { screen: Mytravelgems },
-    Home: { screen: Tabview },
-    Webview: { screen: Webview },
-    Activity: { screen: Activity },
-    Destination: { screen: Destination },
-    Smalltile: { screen: Smalltile },
+    DayPlan: { screen: DayPlan }
+    // Home: { screen: Tabview },
+    // Webview: { screen: Webview },
+    // Activity: { screen: Activity },
+    // Destination: { screen: Destination },
+    // Smalltile: { screen: Smalltile },
   },
   {
     initialRouteName: 'Home',
