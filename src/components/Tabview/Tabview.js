@@ -12,16 +12,28 @@ import { Container, H3, Text, Title, Body, Left, Right } from 'native-base';
 import { Header, Icon, Button } from 'react-native-elements';
 import styles from './styles';
 const launchscreenBg = require('src/assets/images/launchscreen-bg.png');
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import Discover from '../../containers/Discover/Discover';
 import Activities from '../../containers/Activities/Activities';
 import Orders from '../../containers/Orders/Orders';
 import Profile from '../../containers/Profile/Profile';
 import Cart from '../../containers/Cart/Cart';
+import Filter from '../../containers/Discover/Filter';
+
+const DiscoverStack = StackNavigator(
+  {
+    Discover: { screen: Discover },
+    Filter: { screen: Filter },
+  },
+  {
+    initialRouteName: 'Discover',
+    headerMode: 'none',
+  },
+);
 
 var Tabview = TabNavigator(
   {
-    Tab1: { screen: Discover },
+    Tab1: { screen: DiscoverStack },
     Tab2: { screen: Activities },
     Tab3: { screen: Orders },
     Tab4: { screen: Profile },

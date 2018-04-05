@@ -1,10 +1,11 @@
 import React from 'react';
-import { DrawerNavigator } from 'react-navigation';
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
 
 import SideBar from '../components/sidebar';
 import Webview from '../containers/Webview/Webview';
 import Activity from '../containers/Activity/Activity';
 import Destination from '../containers/Destination/Destination';
+
 import Smalltile from '../components/Smalltile/Smalltile';
 import Tabview from '../components/Tabview/Tabview';
 

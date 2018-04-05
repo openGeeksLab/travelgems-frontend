@@ -27,8 +27,8 @@ class Smalltile extends Component {
         >
           <ImageBackground
             style={styles.image}
-            borderRadius={2}
-            resizeMode="contain"
+            borderRadius={3}
+            resizeMode="cover"
             source={{ uri: this.props.img }}
           >
             <Favorite style={styles.heart} favorite={this.props.favorite} />
