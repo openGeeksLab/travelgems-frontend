@@ -5,7 +5,7 @@ import { List, ListItem, Avatar, Icon } from "react-native-elements"
 import { Container, H3, Text, Title, Body, Left, Right } from "native-base";
 import { Header, Button } from "react-native-elements";
 import styles from "./styles";
-import AgendaScreen from "./AgendaScreen";
+import CustomCalendar from "./CustomCalendar";
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -54,14 +54,16 @@ const ListData = [
 class Mytravelgems extends Component {
     constructor(props) {
         super(props)
-        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
         this.state = {
             dataSource: ds.cloneWithRows(ListData),
-        };
+        }
     }
 
     _onText() {
-        alert("Coming soon")
+         const {navigate} = this.props.navigation;
+        navigate('DayPlan');
+        //alert("Coming soon")
 
     }
     render() {
@@ -82,7 +84,7 @@ class Mytravelgems extends Component {
 
 
                 </View>
-                <AgendaScreen />
+                <CustomCalendar />
                 <View style={styles.daysView}>
                     <IconEntypo name="dot-single" size={20}
                         style={{ marginTop: 3 }}
@@ -92,27 +94,30 @@ class Mytravelgems extends Component {
 
 
                 <ListView
-                    //backgroundColor={'red'}
                     showsVerticalScrollIndicator={false}
-                    //removeClippedSubViews={false}
                     vertical={true}
                     dataSource={this.state.dataSource}
-                    // onEndReached={alert("S")}
                     renderRow={(rowData) =>
                         <View style={styles.listParentView}>
                             <View style={styles.listChildView}><Text>{rowData.image}</Text></View>
-                            <View style={styles.listChildView1}><Text style={{ fontSize: 16, color: '#222222' }}>{rowData.title}</Text><Text style={{ fontSize: 14, color: '#A1A1A1' }}>{rowData.subtitle}</Text></View>
-                            <View style={styles.listChildView2}><TouchableOpacity onPress={this._onText}>
-                                <IconEntypo name="chevron-with-circle-right" size={30}
-                                    style={{ marginTop: 5 }}
-                                    color="rgba(70, 223, 232, 1)" />
-                            </TouchableOpacity></View>
+                            <View style={styles.listChildView1}>
+                                <Text style={{ fontSize: 16, color: '#222222' }}>{rowData.title}</Text>
+                                <Text style={{ fontSize: 14, color: '#A1A1A1' }}>{rowData.subtitle}</Text></View>
+                            <View style={styles.listChildView2}>
+                                <TouchableOpacity onPress={() => this._onText()}>
+                                    <Image
+                                        style={{height:35,width:35}}
+                                        source={require('/Volumes/DATA/TravelGemsCode/travelgems/src/assets/images/Mytravelgems/Rightarrowcircled.png')}
+                                        resizeMode='cover' />
+                                </TouchableOpacity></View>
                         </View>
                     } />
 
+
+
             </View>
 
-        );
+        )
     }
 }
 
