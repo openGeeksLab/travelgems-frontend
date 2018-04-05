@@ -22,8 +22,8 @@ class DayPlan extends Component {
                     <View style={styles.ImageView}><Image
                         style={styles.Image}
                         source={require('/Volumes/DATA/TravelGemsCode/travelgems/src/assets/images/water-nature.jpg')}
-                        resizeMode='cover'
-                    /></View><View style={styles.Arrowimage}>
+                        resizeMode='cover'/>
+                        </View><View style={styles.Arrowimage}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Mytravelgems')}>
                             <Image
                                 style={{ height: 35, width: 35 }}
