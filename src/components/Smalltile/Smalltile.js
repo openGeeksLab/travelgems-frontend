@@ -35,8 +35,12 @@ class Smalltile extends Component {
           </ImageBackground>
         </TouchableOpacity>
 
-        <Title style={styles.title}>{this.props.title}</Title>
-        <Text style={styles.subtitle}>{this.props.subtitle}</Text>
+        <Title style={[styles.title, this.props.titleStyle]}>
+          {this.props.title}
+        </Title>
+        <Text style={[styles.subtitle, this.props.subtitleStyle]}>
+          {this.props.subtitle}
+        </Text>
       </View>
     );
   }
