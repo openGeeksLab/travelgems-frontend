@@ -1,5 +1,6 @@
 import Config from 'react-native-config';
 import React, { Component } from "react";
+import MapView, { Marker, PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
 import { Image, View, ListView, StatusBar, Linking, TouchableOpacity, ScrollView } from "react-native";
 import { List, ListItem, Avatar, Icon } from "react-native-elements"
 import { Container, H3, Text, Title, Body, Left, Right } from "native-base";
@@ -9,6 +10,7 @@ import IconFeather from 'react-native-vector-icons/Feather';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import Map from'/Volumes/DATA/TravelGemsCode/travelgems/src/components/Map/Map'
 
 class DayPlan extends Component {
     constructor(props) {
@@ -22,8 +24,8 @@ class DayPlan extends Component {
                     <View style={styles.ImageView}><Image
                         style={styles.Image}
                         source={require('/Volumes/DATA/TravelGemsCode/travelgems/src/assets/images/water-nature.jpg')}
-                        resizeMode='cover'/>
-                        </View><View style={styles.Arrowimage}>
+                        resizeMode='cover' />
+                    </View><View style={styles.Arrowimage}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Mytravelgems')}>
                             <Image
                                 style={{ height: 35, width: 35 }}
@@ -40,7 +42,10 @@ class DayPlan extends Component {
                             <Text style={styles.ChildViewText}>BYTHISMA is moderately accessible through a rough mud road.
                             Be prepared for a shingle beach . Waters are relatively shallow ideal for all types of swimmers.It is relatively windy especially during August.</Text>
                         </View>
-                        <View style={{ marginTop: 20, justifyContent: 'space-between' }}>
+             
+                        <Map/>
+                  
+                        <View style={{ marginTop:20, justifyContent: 'space-between' }}>
                             <Text style={styles.ChildView1Text}>Size & Crowd</Text>
                             <Text style={styles.ChildView1Text1}>With respect to its size it is a moderately large beach up to 600m long.Crowd includes mainly young people without children.</Text></View>
                         <View style={{ marginTop: 20, justifyContent: 'space-between' }}>

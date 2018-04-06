@@ -27,6 +27,12 @@ const datas = [
     bg: '#00BFFF',
     types: 5,
   },
+  {
+    name: 'Questionnaire',
+    route: 'Questionnaire',
+    icon: '',
+    bg: '#00BFFF',
+  },
 ];
 
 class SideBar extends Component {

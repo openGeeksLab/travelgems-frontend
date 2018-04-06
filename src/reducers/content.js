@@ -1,5 +1,5 @@
 import type { Action } from '../actions/types';
-import { SET_DESTINATIONS, SET_ACTIVITIES, SET_POLL } from '../actions/content';
+import { SET_DESTINATIONS, SET_ACTIVITIES, SET_POLL, SET_CONTENT_PERMISSION } from '../actions/content';
 
 export type State = {
     destinationsArray: array,
@@ -19,6 +19,8 @@ export type State = {
     destinationsFilters: array,
 
     poll: json,
+
+    contentPermission: string,
 };
 
 const initialState = {
@@ -39,6 +41,8 @@ const initialState = {
   destinationsFilters: [],
 
   poll: {},
+
+  contentPermission: null
 };
 
 function parseDestinations(data){
@@ -104,7 +108,7 @@ function parseProducts(content, data){
       if (!destinationsActivities.hasOwnProperty(destinationUUID)){
         destinationsActivities[destinationUUID] = [];
       }
-      destinationsActivities[destinationUUID].push(_.pick(productJson,'inner_photo','name','price','uuid','currency','tags'));
+      destinationsActivities[destinationUUID].push(_.pick(productJson,'photo','inner_photo','name','price','uuid','currency','tags'));
     }
   }
 
@@ -128,6 +132,13 @@ export default function (state:State = initialState, action:Action): State {
         placesArray: parsedValues[4],
         placesById: parsedValues[5],
         destinationsFilters: parsedValues[6]
+      };
+    }
+
+    case SET_CONTENT_PERMISSION: {
+      return {
+        ...state,
+        contentPermission: action.permission
       };
     }
 

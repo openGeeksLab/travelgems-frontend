@@ -85,7 +85,7 @@ export default class RequestMiddleware{
     })
   }
 
-  postContext(data, callback){
+  postContext(data, callback, retry=true){
     if (!this.isRegistered()){
       callback(401);
       return;
@@ -133,7 +133,7 @@ export default class RequestMiddleware{
   }
 
   isRegistered(){
-    return this.store.getState().anonymous.WebId && this.store.getState().anonymous.ApiKey;
+    return this.store.getState().anonymous.WebId && this.store.getState().anonymous.ApiKey ? true : false;
   }
 
 }

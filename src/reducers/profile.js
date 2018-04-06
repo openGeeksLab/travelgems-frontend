@@ -6,6 +6,8 @@ export type State = {
   profileBadges: json,
   favouriteDestinations: array,
   favouriteActivities: array,
+  purchasedPlans: array,
+  purchasedActivities: array,
 };
 
 const initialState = {
@@ -13,12 +15,54 @@ const initialState = {
   profileBadges: {},
   favouriteDestinations: [],
   favouriteActivities: [],
+  purchasedPlans: [{
+    'img_preview':"https://warply.s3.amazonaws.com/applications/696e7c69e5b0454d884dde40cb23c34c/images/destinations/destination_preview.png",
+    'name':"Spetses",
+    'id':"ac832a8b40484cc1834c7b4badeac01c",
+    'favourite':true,
+    'country':"Greece",
+    'created':"2018-04-05 14:23:57.736193",
+    'places':{
+      '2018-07-25':[{
+          'img_preview':"https://warply.s3.amazonaws.com/applications/696e7c69e5b0454d884dde40cb23c34c/images/places/place_preview.png",
+          'name':"Agia Marina Beach",
+          'id':"cc057825a99b44f1aa64e1c458808a5d",
+          'tags':["type:beach"],
+        },{
+          'img_preview':"https://warply.s3.amazonaws.com/applications/696e7c69e5b0454d884dde40cb23c34c/images/places/place_preview.png",
+          'name':"Agia Paraskevi",
+          'id':"4f4686703b4448d392546dfdc8d3f2e6",
+          'tags':["type:beach"],
+        }],
+      '2018-07-26':[{
+          'img_preview':"https://warply.s3.amazonaws.com/applications/696e7c69e5b0454d884dde40cb23c34c/images/places/place_preview.png",
+          'name':"Agioi Anargiroi",
+          'id':"57381ba7ea9b4169821118a3b42f1f53",
+          'tags':["type:beach"],
+        },{
+          'img_preview':"https://warply.s3.amazonaws.com/applications/696e7c69e5b0454d884dde40cb23c34c/images/places/place_preview.png",
+          'name':"Agios Mamas",
+          'id':"b73345ba38974ff4b8347ee5f9fe5154",
+          'tags':["type:beach"],
+        }],
+    }
+  }],
+  purchasedActivities: [{
+    "uuid":"bdc2476e5ebe4812814765ab611242c3",
+    "created":"2018-04-05 14:23:57.736193",
+    "photo":"https://warply.s3.amazonaws.com/applications/696e7c69e5b0454d884dde40cb23c34c/images/activities/activity_preview.png",
+    "name":"Gastronomic taste trip",
+    "tags":["country:Greece", "price:<200", "type:food"],
+    "category_name":"Corfu",
+    "price":"150",
+    "currency":"€",
+    "booked_date":"2018-07-26"
+  }],
 };
 
 function parseProfile(data){
-  debugger;
   var profileInfo = JSON.parse(JSON.stringify(data));
-  var profileBadges = data.tags["custom"] || ["single","transportation","christmas"];
+  var profileBadges = data.tags["behaviors"] ? data.tags["behaviors"] : [];
   delete profileInfo["tags"];
 
   return [profileInfo, profileBadges];
@@ -29,8 +73,8 @@ function parseFavouriteDestinations(data){
 
   var f_obj = null;
   for (var i=0;i<data.length;i++){
-    if (i<10){  // if (data[i]["favourite"]){
-      f_obj = _.pick(data[i],'img_preview','name','id');
+    if (data[i]["favourite"]){
+      f_obj = _.pick(data[i],'img_preview','name','id','favourite');
       f_obj["country"] = data[i]["extra_fields"]["country"];
       favouriteDestinations.push(f_obj);
     }
@@ -41,7 +85,14 @@ function parseFavouriteDestinations(data){
 
 function parseFavouriteActivities(data){
   var favouriteActivities = [];
-  debugger;
+  var activity = null;
+  for (var i=0;i<data.favourites.length;i++){
+    try{
+      activity = JSON.parse(JSON.stringify(data.activities[data.favourites[i]["uuid"]]));
+      activity = _.pick(activity,'photo','name','uuid','category_name','tags','price','currency');
+      favouriteActivities.push(activity);
+    }catch(e){}
+  }
 
   return favouriteActivities;
 }

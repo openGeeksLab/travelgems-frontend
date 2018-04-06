@@ -6,20 +6,20 @@ import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-<<<<<<< HEAD
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.airbnb.android.react.maps.MapsPackage;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.airbnb.android.react.maps.MapsPackage;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.airbnb.android.react.maps.MapsPackage;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-=======
->>>>>>> 154f55c8264445d75fad9c1d87f9f969edee2fe1
+//
+//import com.oblador.vectoricons.VectorIconsPackage;
+//import com.airbnb.android.react.maps.MapsPackage;
+//import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+//import com.oblador.vectoricons.VectorIconsPackage;
+//import com.airbnb.android.react.maps.MapsPackage;
+//import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+//import com.airbnb.android.react.maps.MapsPackage;
+//import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+//import com.oblador.vectoricons.VectorIconsPackage;
+
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
@@ -39,7 +39,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new VectorIconsPackage(),
-            new MapsPackage(),
+						new MapsPackage(),
+						new LinearGradientPackage(),
             new ReactNativeConfigPackage()
       );
     }

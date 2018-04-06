@@ -20,8 +20,8 @@ export default class Products extends MicroApp {
   }
 
   handleAction(action, data, callback){
-    if (action=='get_all_raw'){
-      var body = this.defaultBody;
+    try{
+      var body = JSON.parse(JSON.stringify(this.defaultBody));
       body[this.rootKey]["action"] = action;
       body[this.rootKey]["merchant_id"] = WarpConfig.MERCHANT_ID;
       if (data){
@@ -30,7 +30,8 @@ export default class Products extends MicroApp {
       this.postContext(body, callback);
       return true;
     }
-
-    return false;
+    catch(e){
+      return false;
+    }
   }
 }

@@ -24,6 +24,7 @@ export default class CustomCalendar extends Component {
       }}
 
         theme={{
+          
           dayTextColor: '#222222',
           textDayFontSize: 16,
           selectedDayTextColor: '#000000',
@@ -31,6 +32,7 @@ export default class CustomCalendar extends Component {
           agendaDayNumColor: 'green',
           agendaTodayColor: 'red',
           agendaKnobColor: 'grey',
+        
         }}
         items={this.state.items}
        onDayPress={(day) => { this.selectDay(day) }}/>
