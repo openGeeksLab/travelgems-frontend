@@ -27,20 +27,25 @@ class Smalltile extends Component {
         >
           <ImageBackground
             style={styles.image}
-            borderRadius={2}
-            resizeMode="contain"
+            borderRadius={3}
+            resizeMode="cover"
             source={{ uri: this.props.img }}
           >
             <Favorite style={styles.heart} favorite={this.props.favorite} />
           </ImageBackground>
         </TouchableOpacity>
 
-        <Title style={styles.title}>{this.props.title}</Title>
-        <Text style={styles.subtitle}>{this.props.subtitle}</Text>
+        <Title style={[styles.title, this.props.titleStyle]}>
+          {this.props.title}
+        </Title>
+        <Text style={[styles.subtitle, this.props.subtitleStyle]}>
+          {this.props.subtitle}
+        </Text>
       </View>
     );
   }
 }
+
 Smalltile.defaultProps = {
   img: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
 };

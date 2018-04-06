@@ -4,12 +4,11 @@ const { StyleSheet, Dimensions, Platform } = React;
 
 export default StyleSheet.create({
   customHeader: {
-    zIndex: 1000,
-    backgroundColor: 'transparent',
-    height: 60,
-    top: 20,
-    left: 0,
-    right: 0,
+    flex: 0.1,
+    flexDirection: 'row',
+    backgroundColor: 'blue',
+    height: 30,
+    width: Dimensions.get("window").width,
     position: 'absolute',
     flexDirection: 'row',
     alignItems: 'center',

@@ -44,12 +44,10 @@ export default StyleSheet.create({
   gridRow: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft: 30,
-    paddingRight: 30,
+    marginHorizontal: 30,
   },
   gridItem: {
-    width: 90,
+    flex: 1 / 3,
     height: 90,
   },
   gridImage: {
@@ -66,6 +64,7 @@ export default StyleSheet.create({
   },
   gridSubtitle: {
     fontSize: 15,
+    textAlign: 'center',
     alignSelf: 'center',
   },
   infoViewTitle: {

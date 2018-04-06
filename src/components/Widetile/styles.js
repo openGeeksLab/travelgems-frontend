@@ -1,35 +1,33 @@
-const React = require("react-native");
+const React = require('react-native');
 
 const { StyleSheet } = React;
 
-export default {
-  container: {
+export default StyleSheet.create({
+  component: {
     flex: 1,
+    height: 200,
+    marginHorizontal: 25,
   },
-  component:{
-    flex:1,
-    height:200,
-  },
-  title:{
-    padding:0,
-    textAlign:"left",
-    color:"black"
+  title: {
+    padding: 0,
+    textAlign: 'left',
+    color: 'black',
   },
   subtitle: {
     color: 'gray',
-    textAlign:"left",
-    width:"100%"
+    textAlign: 'left',
+    width: '100%',
   },
-  image:{
-    flex:1,
+  image: {
+    flex: 1,
     height: undefined,
     width: undefined,
-    padding:0,
-    marginTop:5
+    padding: 0,
+    marginTop: 5,
   },
-  heart:{
-    position:"absolute",
-    right:15,
-    top:15
-  }
-};
+  heart: {
+    position: 'absolute',
+    right: 15,
+    top: 15,
+  },
+});
