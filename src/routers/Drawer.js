@@ -22,7 +22,7 @@ const MainDrawerRouter = DrawerNavigator(
     Activity: { screen: Activity },
     Destination: { screen: Destination },
     Smalltile: { screen: Smalltile },
-    Questionnaire: { screen: QuestionnaireContainer },
+    //Questionnaire: { screen: QuestionnaireContainer },
   },
   {
     initialRouteName: 'Home',
