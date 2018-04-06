@@ -1,10 +1,10 @@
 import MicroApp from '../MicroApp';
 
-export default class Content extends MicroApp {
-  static permissions = ['ANONYMOUS','AUTH'];
-  static mappName = 'POLL';
-  rootKey = 'poll';
-  static allowedActions = ['get_poll'];
+export default class Favourites extends MicroApp {
+  static permissions = ['AUTH'];
+  static mappName = 'FAVOURITES';
+  rootKey = 'favourites';
+  static allowedActions = ['get','add'];
 
   constructor(store, requestMiddleware){
     super(store, requestMiddleware);
@@ -21,15 +21,18 @@ export default class Content extends MicroApp {
   handleAction(action, data, callback, permission){
     try{
       var body = JSON.parse(JSON.stringify(this.defaultBody));
-      body[this.rootKey]["action"] = action
+      body[this.rootKey]["action"] = action;
       if (data){
+        if (action=='add' && (data.product_id || data.product_uuid)){
+           data["product"] = [JSON.parse(JSON.stringify(data))];
+           delete data["product_id"];
+           delete data["product_uuid"];
+        }
         body[this.rootKey] = Object.assign(data, body[this.rootKey]);
       }
-
       this.postContext(body, callback, permission);
       return true;
-    }
-    catch(e){
+    }catch(e){
       return false;
     }
   }

@@ -19,8 +19,8 @@ export default class Content extends MicroApp {
   }
 
   handleAction(action, data, callback, permission){
-    if (action=='retrieve'){
-      var body = this.defaultBody;
+    try{
+      var body = JSON.parse(JSON.stringify(this.defaultBody));
       body[this.rootKey]["action"] = action
       if (data){
         body[this.rootKey] = Object.assign(data, body[this.rootKey]);
@@ -28,7 +28,8 @@ export default class Content extends MicroApp {
       this.postContext(body, callback, permission);
       return true;
     }
-
-    return false;
+    catch(e){
+      return false;
+    }
   }
 }

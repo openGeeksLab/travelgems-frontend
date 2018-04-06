@@ -223,7 +223,7 @@ export default class AuthRequestMiddleware{
   }
 
   isAuthorized(){
-    return this.store.getState().auth.AccessToken;
+    return this.store.getState().auth.AccessToken ? true : false;
   }
 
 }

@@ -27,30 +27,66 @@ export default class Root extends Component {
         console.log("FINISHED ALL");
         self.setState({store: data[0]});
 
-        self.warplyReactSDK.request('content', 'retrieve', null, self.handleContent.bind(self));
+        const contentLoaded = new Promise((resolve, reject) => {
+          var permission = 'ANONYMOUS';
+          try{
+            if (self.warplyReactSDK.isAuthorized()){
+              permission = 'AUTH';
+            }
+          }catch(e){}
 
+          self.warplyReactSDK.request('content', 'retrieve', {"active":true}, (response) => {
+            if (!response.data){
+              resolve(false);
+            }
+            else{
+              self.handleContent(response, permission);
+              resolve(true);
+            }
+          }, permission);
+        });
+
+        Promise.all([contentLoaded]).then(
+          function(data){
+            if (!(data && data[0])){
+              // show error popup
+              return;
+            }
+            self.warplyReactSDK.request('products', 'get_all_raw', {"fetch_tags":true}, self.handleActivies.bind(self));
+            self.warplyReactSDK.request('poll', 'get_poll', {"campaign_uuid":"66f0373bf9ec4fe097cba53cdd418101"}, self.handlePoll.bind(self));
+
+            self.warplyReactSDK.login({"id":"p.kouts153@gmail.com","password":"123456"}, (response) => {
+
+//              self.warplyReactSDK.request('favourites', 'add', {"content_id":"ac832a8b40484cc1834c7b4badeac01c"}, (response)=>{
+//                debugger;
+//              }, 'AUTH');
+//              self.warplyReactSDK.request('favourites', 'add', {"product_uuid":"bdc2476e5ebe4812814765ab611242c3"}, (response)=>{
+//                debugger;
+//              },'AUTH');
+
+              self.warplyReactSDK.request('consumer_data', 'handle_user_details', {"process":"get"}, self.handleProfile.bind(self), 'AUTH');
+              if (!self.state.store.getState().content.contentPermission || self.state.store.getState().content.contentPermission!="AUTH"){
+                self.warplyReactSDK.request('content', 'retrieve', {"active":true}, (response)=>{
+                  self.handleContent(response,'AUTH');
+                }, 'AUTH');
+              }
+              self.warplyReactSDK.request('favourites', 'get', null, self.handleFavourites.bind(self), 'AUTH');
+            }, true);
+          }
+        );
       }
     );
   }
 
-  async componentWillMount() {
-    this.setupData();
-  }
-
-  async componentWillUpdate() {}
-
-  handleContent(response){
+  handleContent(response, permission){
     this.state.store.dispatch(content.setDestinations(response.data));
+    this.state.store.dispatch(content.setContentPermission(permission));
+    if (permission=="AUTH"){
+      this.handleFavouriteContent(response);
+    }
     if (this.state.isLoading) {
       this.setState({isLoading: false});
     }
-    this.warplyReactSDK.request('products', 'get_all_raw', {"fetch_tags":true}, this.handleActivies.bind(this));
-    this.warplyReactSDK.request('poll', 'get_poll', {"campaign_uuid":"66f0373bf9ec4fe097cba53cdd418101"}, this.handlePoll.bind(this));
-
-//    const self = this;
-//    this.warplyReactSDK.login({"id":"p.kouts153@gmail.com","password":"123456"}, (response) => {
-//      self.warplyReactSDK.request('consumer_data', 'handle_user_details', {"process":"get"}, self.handleProfile.bind(self), 'AUTH');
-//    }, true);
   }
 
   handleActivies(response){
@@ -63,8 +99,25 @@ export default class Root extends Component {
 
   handleProfile(response){
     this.state.store.dispatch(profile.setProfile(response.data));
-    this.state.store.dispatch(profile.setFavouriteDestinations(this.state.store.getState().content["destinationsArray"]));
   }
+
+  handleFavouriteContent(response){
+    this.state.store.dispatch(profile.setFavouriteDestinations(response.data));
+  }
+
+  handleFavourites(response){
+    this.state.store.dispatch(profile.setFavouriteActivities({
+      "favourites":response.data.products || [],
+      "activities":this.state.store.getState().content.activitiesById
+    }));
+  }
+
+
+  async componentWillMount() {
+    this.setupData();
+  }
+
+  async componentWillUpdate() {}
 
   render() {
     if (this.state.isLoading) {
