@@ -166,4 +166,12 @@ export default class WarplyReactSDK {
 
     console.log("microapps finished");
   }
+
+  isAuthorized(){
+    return this.authRequestMiddleware.isAuthorized();
+  }
+
+  isRegistered(){
+    return this.requestMiddleware.isRegistered();
+  }
 }

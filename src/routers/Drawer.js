@@ -22,13 +22,14 @@ const MainDrawerRouter = DrawerNavigator(
     Activity: { screen: Activity },
     Destination: { screen: Destination },
     Smalltile: { screen: Smalltile },
+    Questionnaire: { screen: QuestionnaireContainer },
   },
   {
     initialRouteName: 'Home',
     contentOptions: {
       activeTintColor: '#e91e63',
     },
-    contentComponent: props => <SideBar {...props} />,
+    contentComponent: (props) => <SideBar {...props} />,
   },
 );
 

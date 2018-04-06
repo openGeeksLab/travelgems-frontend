@@ -37,7 +37,11 @@ export default class MicroApp {
 
   parseResponse(response){
     if (response.status == 401){
-      return {"status":9999, "msg":"Unathorized"};
+      return {"status":401, "msg":"Unathorized"};
+    }
+
+    if (!response.data){
+      return {"status":9999, "msg":"Internal Server Error"};
     }
 
     if (response.data.context){
