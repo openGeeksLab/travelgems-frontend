@@ -9,6 +9,7 @@ import Destination from '../containers/Destination/Destination';
 import Smalltile from '../components/Smalltile/Smalltile';
 import Tabview from '../components/Tabview/Tabview';
 import Mytravelgems from '../components/MyTravelgems/Mytravelgems';
+import QuestionnaireContainer from '../containers/Questionnaire/index';
 
 const MainDrawerRouter = DrawerNavigator(
   {
@@ -18,13 +19,15 @@ const MainDrawerRouter = DrawerNavigator(
     Activity: { screen: Activity },
     Destination: { screen: Destination },
     Smalltile: { screen: Smalltile },
+    Questionnaire: { screen: QuestionnaireContainer },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Questionnaire',
+    // initialRouteName: 'Home',
     contentOptions: {
       activeTintColor: '#e91e63',
     },
-    contentComponent: props => <SideBar {...props} />,
+    contentComponent: (props) => <SideBar {...props} />,
   },
 );
 
