@@ -57,8 +57,8 @@ const Discover = ({
       isModalVisible={isModalVisible}
       setIsModalVisible={setIsModalVisible}
       filters={destinationsFilters}
-      onPressFilter={text => {
-        navigation.navigate('Filter', { text });
+      onPressFilter={filter => {
+        navigation.navigate('Filter', { filter });
       }}
     />
     <ImageBackground

@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { filter, path, splitEvery } from 'ramda';
+import { filter, path, splitEvery, keys } from 'ramda';
 import { compose, withProps, withState } from 'recompose';
 import { connect } from 'react-redux';
 import { FilterDestinations } from 'src/components/FilterModal';
@@ -34,8 +34,8 @@ const Filter = ({
       isModalVisible={isModalVisible}
       setIsModalVisible={setIsModalVisible}
       filters={destinationsFilters}
-      onPressFilter={text => {
-        setFilterText(text);
+      onPressFilter={filter => {
+        setFilterText(countryTextFilterHelper(filter));
       }}
     />
     <ImageBackground
@@ -84,12 +84,27 @@ const Filter = ({
   </View>
 );
 
+const countryTextFilterHelper = filter => {
+  let text = null;
+  if (filter.country) {
+    keys(filter.country).forEach(key => {
+      if (filter.country[key]) {
+        text = key;
+        return;
+      }
+    });
+  }
+  return text;
+};
+
 export default compose(
   withState('isModalVisible', 'setIsModalVisible', false),
   withState(
     'filterText',
     'setFilterText',
-    ({ navigation: { state: { params: { text } } } }) => text,
+    ({ navigation: { state: { params: { filter } } } }) => {
+      return countryTextFilterHelper(filter);
+    },
   ),
   connect(
     state => ({
@@ -100,11 +115,6 @@ export default compose(
   ),
   withProps(({ destinations, filterText }) => ({
     filteredDestination: filter(destination => {
-      console.log(
-        'path  destination) ===',
-        path(['extra_fields', 'country'], destination, filterText),
-      );
-
       return path(['extra_fields', 'country'], destination) === filterText;
     }, destinations),
   })),

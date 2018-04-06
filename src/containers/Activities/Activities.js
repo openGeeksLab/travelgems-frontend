@@ -11,17 +11,18 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { filter, path, splitEvery } from 'ramda';
-import { compose, withProps, withState } from 'recompose';
+import { filter, contains } from 'ramda';
+import { compose, withHandlers, withState } from 'recompose';
 import { connect } from 'react-redux';
 import { FilterActivities } from 'src/components/FilterModal';
 import Widetile from 'src/components/Widetile/Widetile';
 import SearchBar from 'src/components/SearchBar';
+import { getTextFilterHelper, arrayContainsArray } from 'src/selectors';
 
 const Header = ({ navigation }) => (
   <View
     style={{
-      paddingTop: 50,
+      paddingTop: 28,
       paddingHorizontal: 26,
       backgroundColor: '#041DB2',
       flexDirection: 'row',
@@ -46,9 +47,9 @@ const Acitivities = ({
   isModalVisible,
   setIsModalVisible,
   activitiesFilters,
-  filteredDestination,
+  filteredActivity,
   filterText,
-  setFilterText,
+  onPressFilter,
 }: Object) => (
   <View>
     <FilterActivities
@@ -56,9 +57,7 @@ const Acitivities = ({
       isModalVisible={isModalVisible}
       setIsModalVisible={setIsModalVisible}
       filters={activitiesFilters}
-      onPressFilter={text => {
-        setFilterText(text);
-      }}
+      onPressFilter={onPressFilter}
     />
     <ImageBackground
       style={{
@@ -82,7 +81,7 @@ const Acitivities = ({
     />
     <FlatList
       onEndReachedThreshold={0.5}
-      data={filteredDestination}
+      data={filteredActivity}
       keyExtractor={(item, index) => index}
       renderItem={({ item }) => {
         const activity = item;
@@ -101,8 +100,6 @@ const Acitivities = ({
 );
 
 export default compose(
-  withState('isModalVisible', 'setIsModalVisible', false),
-  withState('filterText', 'setFilterText', null),
   connect(
     state => ({
       activities: state.content.activitiesArray,
@@ -110,11 +107,38 @@ export default compose(
     }),
     {},
   ),
-  withProps(({ activities, filterText }) => ({
-    filteredDestination: filterText
-      ? filter(activity => {
-          return path(['extra_fields', 'country'], activity) === filterText;
-        }, activities)
-      : activities,
-  })),
+  withState('isModalVisible', 'setIsModalVisible', false),
+  withState(
+    'filteredActivity',
+    'setFilteredActivity',
+    ({ activities }) => activities,
+  ),
+  withHandlers({
+    onPressFilter: ({ activities, setFilteredActivity }) => filters => {
+      const result = filter(activity => {
+        const contryPriceFilter = getTextFilterHelper({
+          country: filters.country,
+          price: filters.price,
+        });
+
+        const typeFilter = getTextFilterHelper({
+          type: filters.type,
+        });
+        //Because type is multiple select then it difference when filter
+        const isHasType = !typeFilter
+          ? true
+          : typeFilter.length > 0
+            ? contains(
+                activity.tags.filter(val => val.includes('type'))[0],
+                typeFilter,
+              )
+            : true;
+
+        return (
+          arrayContainsArray(activity.tags, contryPriceFilter) && isHasType
+        );
+      }, activities);
+      setFilteredActivity(result);
+    },
+  }),
 )(Acitivities);
