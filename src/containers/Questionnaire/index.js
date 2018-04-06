@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Questionnaire from './Questionnaire';
 import { connect } from 'react-redux';
-import { compose, withHandlers } from 'recompose';
+import { compose } from 'recompose';
 import R from 'ramda';
 import PropTypes from 'prop-types';
 

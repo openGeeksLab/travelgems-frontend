@@ -145,6 +145,10 @@ class QuestionnaireFirst extends Component {
                 />
               ))}
             </View>
+            <View style={styles.containerRange}>
+              <Text style={styles.rangeText}>TextLeft</Text>
+              <Text style={styles.rangeText}>TextRight</Text>
+            </View>
           </View>
         );
       default:
@@ -175,7 +179,6 @@ class QuestionnaireFirst extends Component {
       >
         <View style={styles.container}>
           {questions.map((q, index) => {
-            // console.warn('q', q.text);
             if (index + 1 === currentPage) {
               return (
                 <View>
@@ -194,7 +197,7 @@ class QuestionnaireFirst extends Component {
             }
             return <View />;
           })}
-
+          {this.renderContent()}
           <QuestionnaireFooter
             onNextStep={onNextStepHandle}
             onPrevStep={onPrevStepHandle}

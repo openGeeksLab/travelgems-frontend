@@ -41,4 +41,13 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  containerRange: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  rangeText: {
+    color: COLOR_WHITE,
+  },
 });
