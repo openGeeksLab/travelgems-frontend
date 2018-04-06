@@ -15,7 +15,7 @@ const launchscreenBg = require('src/assets/images/launchscreen-bg.png');
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import Discover from '../../containers/Discover/Discover';
 import Activities from '../../containers/Activities/Activities';
-import Orders from '../../containers/Orders/Orders';
+import Orders from '../../containers/Myorder/Myorderplan/MyOrderPlan';
 import Profile from '../../containers/Profile/Profile';
 import Cart from '../../containers/Cart/Cart';
 import Filter from '../../containers/Discover/Filter';

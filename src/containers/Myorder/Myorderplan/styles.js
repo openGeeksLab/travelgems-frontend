@@ -3,7 +3,7 @@ const React = require("react-native");
 const { Dimensions, Platform } = React;
 export default StyleSheet.create({
     container: {
-        
+
         backgroundColor: '#fff',
 
 
@@ -11,19 +11,25 @@ export default StyleSheet.create({
     ImageView: {
         //  backgroundColor: 'red',
         width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height / 2.5,
+        height: Dimensions.get("window").height / 3.6,
+        backgroundColor: '#041DB2'
 
     },
-    Image: {
-        width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height / 2.5,
-    },
-    
+
     Arrowimage: {
         backgroundColor: 'transparent',
+        width: Dimensions.get("window").width / 1.5,
         position: 'absolute',
-        top: 40,
+        top: 50,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
         paddingLeft: 20,
+    },
+    OrderText:{
+        fontSize:24,
+        color:'#F2F2F2'
+
     },
     ImageTextView: {
         backgroundColor: 'transparent',
@@ -42,33 +48,5 @@ export default StyleSheet.create({
         color: "#ffffff",
         fontWeight: 'bold'
     },
-    ChildViewText: {
 
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#222222'
-
-    },
-    ChildView1Text: {
-        color: '#15ABC2',
-        fontWeight: 'bold',
-        fontSize: 24
-
-
-    },
-    ChildView1Text1: {
-         fontSize: 16, 
-        fontWeight: 'bold',
-         color: '#222222',
-          marginTop: 15 
-
-    },
-    parrentViewText: {
-        width: Dimensions.get("window").width / 1.3,
-        marginLeft: 35,
-        marginTop: 15,
-
-
-
-    }
 });
