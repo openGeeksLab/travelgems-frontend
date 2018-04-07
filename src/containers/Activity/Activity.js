@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { compose, withHandlers } from 'recompose';
+import { compose, withHandlers, withProps } from 'recompose';
 import { connect } from 'react-redux';
 import { Container, Text } from 'native-base';
 import R from 'ramda';
@@ -236,13 +236,12 @@ const Activity = ({ isModalVisible, activity, moreActivities }) => (
   </Container>
 );
 export default compose(
+  withProps(({ navigation: { state: { params: { activity } } } }) => ({
+    activity,
+  })),
   connect(
-    state => ({
-      activity: activityByIdSelector(state, 'a14572be64a44a86a9335d98dea03802'),
-      moreActivities: activitiesSelector(
-        state,
-        '24ed67928db14878b7730baf09f479a2',
-      ),
+    (state, { activity }) => ({
+      moreActivities: activitiesSelector(state, activity.uuid),
     }),
     {},
   ),

@@ -53,9 +53,6 @@ const Acitivities = ({
       onPressFilter={() => {
         setIsModalVisible(true);
       }}
-      onLeftPress={() => {
-        setFilterText(null);
-      }}
     />
     <FlatList
       onEndReachedThreshold={0.5}
@@ -70,6 +67,9 @@ const Acitivities = ({
             subtitle={activity.category_name}
             img={activity.inner_photo}
             favourite={activity.favourite}
+            onPress={() => {
+              navigation.navigate('Activity', { activity });
+            }}
           />
         );
       }}

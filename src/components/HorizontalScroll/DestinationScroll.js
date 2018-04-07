@@ -5,7 +5,12 @@ import { Title } from 'native-base';
 import { path } from 'ramda';
 import Smalltile from '../Smalltile/Smalltile';
 
-const DestinationScroll = ({ destinations, title, containerStyle }) => (
+const DestinationScroll = ({
+  destinations,
+  title,
+  containerStyle,
+  onPress,
+}) => (
   <View style={[{ margin: 15 }, containerStyle]}>
     <Title style={{ color: 'black', textAlign: 'left', marginBottom: 17 }}>
       Top Destinations
@@ -19,6 +24,7 @@ const DestinationScroll = ({ destinations, title, containerStyle }) => (
             subtitle={path(['extra_fields', 'country'], destination)}
             img={destination.img_preview}
             favourite={destination.favourite}
+            onPress={() => onPress(destination)}
           />
         ))}
     </ScrollView>

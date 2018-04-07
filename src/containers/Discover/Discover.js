@@ -61,6 +61,9 @@ const Discover = ({
 
         marginTop: 20,
       }}
+      onPress={activity => {
+        navigation.navigate('Activity', { activity });
+      }}
       activities={activities}
     />
     <DestinationScroll
@@ -68,6 +71,9 @@ const Discover = ({
         margin: 0,
         marginLeft: 28,
         marginTop: 20,
+      }}
+      onPress={destination => {
+        navigation.navigate('Destination', { destination });
       }}
       destinations={destinations}
     />

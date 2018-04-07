@@ -55,7 +55,9 @@ const ActivityView = ({ activity, onPress, favorite }) => (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.image}
-        // onPress={}
+        onPress={() => {
+          onPress(activity);
+        }}
       >
         <Image
           style={styles.image}
@@ -82,14 +84,18 @@ const ActivityView = ({ activity, onPress, favorite }) => (
   </View>
 );
 
-const HorizontalScroll = ({ activities, containerStyle }) => (
+const HorizontalScroll = ({ activities, containerStyle, onPress }) => (
   <ScrollView
     horizontal
     style={[{ height: 300, marginLeft: 15 }, containerStyle]}
   >
     {activities &&
       activities.map(activity => (
-        <ActivityView activity={activity} key={activity.uuid} />
+        <ActivityView
+          activity={activity}
+          key={activity.uuid}
+          onPress={onPress}
+        />
       ))}
   </ScrollView>
 );

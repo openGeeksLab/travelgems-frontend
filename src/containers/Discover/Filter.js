@@ -76,6 +76,9 @@ const Filter = ({
                 subtitle={path(['extra_fields', 'country'], destination)}
                 img={destination.img_preview}
                 favourite={destination.favourite}
+                onPress={() => {
+                  navigation.navigate('Destination', { destination });
+                }}
               />
             ))}
           </View>
