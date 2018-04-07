@@ -1,8 +1,20 @@
 import React from 'react';
-import { TouchableOpacity, Animated, View, Text, StyleSheet } from 'react-native';
+import {
+  TouchableOpacity,
+  Animated,
+  View,
+  Text,
+  StyleSheet,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import HTMLView from 'react-native-htmlview';
-import { compose, withState, withHandlers, withProps, lifecycle } from 'recompose';
+import {
+  compose,
+  withState,
+  withHandlers,
+  withProps,
+  lifecycle,
+} from 'recompose';
 
 const MIN_HEIGHT = 50;
 const enhancer = compose(
@@ -13,9 +25,7 @@ const enhancer = compose(
   withState('expanded', 'setExpanded', false),
 
   withHandlers({
-    toggle: ({
-      setExpanded, animation, expanded, maxHeight,
-    }) => () => {
+    toggle: ({ setExpanded, animation, expanded, maxHeight }) => () => {
       const initialValue = expanded ? maxHeight : MIN_HEIGHT;
       const finalValue = expanded ? MIN_HEIGHT : maxHeight;
       setExpanded(!expanded);
@@ -26,7 +36,7 @@ const enhancer = compose(
       }).start();
     },
 
-    setMax: ({ setMaxHeight }) => (event) => {
+    setMax: ({ setMaxHeight }) => event => {
       setMaxHeight(event.nativeEvent.layout.height);
     },
   }),
@@ -70,7 +80,13 @@ const styles = StyleSheet.create({
 });
 
 const ModalScene = ({
-  expanded, setMin, setMax, toggle, description, title, animation,
+  expanded,
+  setMin,
+  setMax,
+  toggle,
+  description,
+  title,
+  animation,
 }) => (
   <View>
     <Animated.View
@@ -87,8 +103,11 @@ const ModalScene = ({
     </Animated.View>
     <View style={styles.titleContainer}>
       <TouchableOpacity style={styles.button} onPress={toggle}>
-        <Text style={styles.moreText}> {expanded ? 'More' : 'Less'} </Text>
-        <Icon style={styles.icon} name={expanded ? 'chevron-small-up' : 'chevron-small-down'} />
+        <Text style={styles.moreText}> {!expanded ? 'More' : 'Less'} </Text>
+        <Icon
+          style={styles.icon}
+          name={expanded ? 'chevron-small-up' : 'chevron-small-down'}
+        />
       </TouchableOpacity>
     </View>
   </View>

@@ -30,7 +30,7 @@ const Discover = ({
   setIsModalVisible,
   destinationsFilters,
 }: Object) => (
-  <ScrollView>
+  <View style={{ marginBottom: 120 }}>
     <FilterDestinations
       isModalVisible={isModalVisible}
       setIsModalVisible={setIsModalVisible}
@@ -55,29 +55,31 @@ const Discover = ({
         setIsModalVisible(true);
       }}
     />
-    <ActivityScroll
-      containerStyle={{
-        margin: 0,
+    <ScrollView>
+      <ActivityScroll
+        containerStyle={{
+          margin: 0,
 
-        marginTop: 20,
-      }}
-      onPress={activity => {
-        navigation.navigate('Activity', { activity });
-      }}
-      activities={activities}
-    />
-    <DestinationScroll
-      containerStyle={{
-        margin: 0,
-        marginLeft: 28,
-        marginTop: 20,
-      }}
-      onPress={destination => {
-        navigation.navigate('Destination', { destination });
-      }}
-      destinations={destinations}
-    />
-  </ScrollView>
+          marginTop: 20,
+        }}
+        onPress={activity => {
+          navigation.navigate('Activity', { activity });
+        }}
+        activities={activities}
+      />
+      <DestinationScroll
+        containerStyle={{
+          margin: 0,
+          marginLeft: 28,
+          marginTop: 20,
+        }}
+        onPress={destination => {
+          navigation.navigate('Destination', { destination });
+        }}
+        destinations={destinations}
+      />
+    </ScrollView>
+  </View>
 );
 
 export default compose(

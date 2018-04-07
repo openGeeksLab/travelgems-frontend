@@ -28,7 +28,7 @@ const Filter = ({
   filterText,
   setFilterText,
 }: Object) => (
-  <View>
+  <View style={{ marginBottom: 100 }}>
     <FilterDestinations
       containerStyle={{ marginTop: 55 }}
       isModalVisible={isModalVisible}

@@ -6,16 +6,18 @@ export default StyleSheet.create({
   customHeader: {
     flexDirection: 'row',
     zIndex: 100,
-    height: 30,
+    height: 55,
     position: 'absolute',
     alignItems: 'center',
+    backgroundColor: '#041DB2',
     justifyContent: 'space-between',
-    right: 20,
-    top: 20,
-    left: 20,
+    paddingTop: 20,
+    right: 0,
+    top: 0,
+    left: 0,
   },
   headerIcon1: {
-    marginRight: 40,
+    marginLeft: 20,
   },
   headerIcon2: {
     marginHorizontal: 18,
