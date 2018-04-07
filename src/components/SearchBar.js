@@ -5,6 +5,7 @@ import {
   TextInput,
   ImageBackground,
   Text,
+  Image,
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
@@ -15,21 +16,25 @@ const SearchBarResult = ({
   onPressFilter,
   onLeftPress,
   filterText,
+  containerStyle,
 }: Object) => (
   <View
-    style={{
-      marginLeft: 16,
-      marginTop: 19,
-      marginHorizontal: 13,
-      height: 50,
-      backgroundColor: 'white',
-      borderColor: '#9C9CDD',
-      borderWidth: 1,
-      borderRadius: 2,
-      alignItems: 'center',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    }}
+    style={[
+      {
+        marginLeft: 16,
+        marginTop: 19,
+        marginHorizontal: 13,
+        height: 50,
+        backgroundColor: 'white',
+        borderColor: '#9C9CDD',
+        borderWidth: 1,
+        borderRadius: 2,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      },
+      containerStyle,
+    ]}
   >
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Ionicons
@@ -60,14 +65,13 @@ const SearchBarResult = ({
       )}
     </View>
 
-    <Icon
-      style={{
-        fontSize: 23,
-        color: '#46DFE8',
-      }}
-      name={'search'}
-      onPress={onPressFilter}
-    />
+    <TouchableOpacity onPress={onPressFilter}>
+      <Image
+        style={{ height: 35, width: 35 }}
+        source={require('src/assets/images/Destination/filter_icon.png')}
+        resizeMode="cover"
+      />
+    </TouchableOpacity>
   </View>
 );
 
@@ -87,8 +91,9 @@ const SearchBar = ({ onPressFilter }) => (
   >
     <Icon
       style={{
-        fontSize: 23,
-        color: '#46DFE8',
+        marginLeft: 5,
+        fontSize: 25,
+        color: '#000000',
       }}
       name={'search'}
     />
@@ -97,16 +102,16 @@ const SearchBar = ({ onPressFilter }) => (
       placeholderTextColor="rgba(0, 0, 0, 0.58)"
       placeholder="Type a destination?"
     />
-    <Icon
-      style={{
-        fontSize: 23,
-        color: '#46DFE8',
-      }}
-      name={'search'}
-      onPress={onPressFilter}
-    />
+    <TouchableOpacity onPress={onPressFilter}>
+      <Image
+        style={{ height: 35, width: 35 }}
+        source={require('src/assets/images/Destination/filter_icon.png')}
+        resizeMode="cover"
+      />
+    </TouchableOpacity>
   </View>
 );
+
 const Search = props =>
   props.filterText ? <SearchBarResult {...props} /> : <SearchBar {...props} />;
 export default Search;

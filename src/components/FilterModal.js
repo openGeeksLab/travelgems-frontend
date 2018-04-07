@@ -157,14 +157,14 @@ const FilterModal = ({
             size={12}
           />
         </View>
-        <Icon
-          name="close"
-          color="#15ABC2"
-          size={24}
+
+        <TouchableOpacity
           onPress={() => {
             setIsModalVisible(false);
           }}
-        />
+        >
+          <Text style={{ color: '#46DFE8', fontSize: 14 }}> Cancel</Text>
+        </TouchableOpacity>
       </View>
 
       {children}

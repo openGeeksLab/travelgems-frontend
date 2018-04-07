@@ -50,6 +50,7 @@ const Filter = ({
     />
 
     <SearchBar
+      containerStyle={{ marginTop: 55 }}
       filterText={filterText}
       onPressFilter={() => {
         setIsModalVisible(true);

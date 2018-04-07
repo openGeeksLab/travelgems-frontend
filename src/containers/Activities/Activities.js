@@ -18,29 +18,7 @@ import { FilterActivities } from 'src/components/FilterModal';
 import Widetile from 'src/components/Widetile/Widetile';
 import SearchBar from 'src/components/SearchBar';
 import { getTextFilterHelper, arrayContainsArray } from 'src/selectors';
-
-const Header = ({ navigation }) => (
-  <View
-    style={{
-      paddingTop: 28,
-      paddingHorizontal: 26,
-      backgroundColor: '#041DB2',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    }}
-  >
-    <EntypoIcon
-      name="menu"
-      color="#fff"
-      size={24}
-      onPress={() => navigation.navigate('DrawerOpen')}
-    />
-
-    <Text style={{ color: 'white', fontSize: 24 }}>Activities</Text>
-    <Icon name="close" color="#fff" size={24} />
-  </View>
-);
+import Header from 'src/components/Header';
 
 const Acitivities = ({
   navigation,
@@ -69,7 +47,7 @@ const Acitivities = ({
         position: 'absolute',
       }}
     />
-    <Header navigation={navigation} />
+    <Header navigation={navigation} title="Activities" />
     <SearchBar
       filterText={filterText}
       onPressFilter={() => {

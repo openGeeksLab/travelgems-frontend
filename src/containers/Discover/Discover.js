@@ -2,7 +2,7 @@ import React from 'react';
 import {
   ScrollView,
   View,
-  TextInput,
+  Image,
   ImageBackground,
   Text,
   TouchableOpacity,
@@ -20,29 +20,7 @@ import DestinationScroll from '../../components/HorizontalScroll/DestinationScro
 import ActivityScroll from '../../components/HorizontalScroll/ActivityScroll';
 import { FilterDestinations } from 'src/components/FilterModal';
 import SearchBar from 'src/components/SearchBar';
-
-const Header = ({ navigation }) => (
-  <View
-    style={{
-      paddingTop: 28,
-      paddingHorizontal: 26,
-      backgroundColor: '#041DB2',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    }}
-  >
-    <EntypoIcon
-      name="menu"
-      color="#fff"
-      size={24}
-      onPress={() => navigation.navigate('DrawerOpen')}
-    />
-
-    <Text style={{ color: 'white', fontSize: 24 }}>Discover</Text>
-    <Icon name="close" color="#fff" size={24} />
-  </View>
-);
+import Header from 'src/components/Header';
 
 const Discover = ({
   destinations,
@@ -71,7 +49,7 @@ const Discover = ({
         position: 'absolute',
       }}
     />
-    <Header navigation={navigation} />
+    <Header navigation={navigation} title="Discover" />
     <SearchBar
       onPressFilter={() => {
         setIsModalVisible(true);

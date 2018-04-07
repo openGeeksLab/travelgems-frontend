@@ -24,18 +24,18 @@ const DiscoverStack = StackNavigator(
   {
     Discover: {
       screen: Discover,
-      navigationOptions: {
-        tabBarLabel: 'Discover',
-        tabBarIcon: ({ tintColor }) => {
-          return <Icon name="place" type="home" color="#fff" />;
-        },
-      },
     },
     Filter: { screen: Filter },
   },
   {
     initialRouteName: 'Discover',
     headerMode: 'none',
+    navigationOptions: {
+      tabBarLabel: 'Discover',
+      tabBarIcon: ({ tintColor }) => {
+        return <Icon name="place" type="home" color="#fff" />;
+      },
+    },
   },
 );
 
