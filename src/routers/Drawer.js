@@ -6,8 +6,8 @@ import Webview from '../containers/Webview/Webview';
 import Activity from '../containers/Activity/Activity';
 import Destination from '../containers/Destination/Destination';
 import QuestionnaireContainer from '../containers/Questionnaire/index';
-import Mytravelgems from '../components/MyTravelgems/Mytravelgems';
-import DayPlan from '../components/MyTravelgems/DayPlan/DayPlan';
+//import Mytravelgems from '../components/MyTravelgems/Mytravelgems';
+//import DayPlan from '../components/MyTravelgems/DayPlan/DayPlan';
 import Smalltile from '../components/Smalltile/Smalltile';
 import Tabview from '../components/Tabview/Tabview';
 // import MyOrderPlan from '../containers/Myorder/Myorderplan/MyOrderPlan';
@@ -16,8 +16,8 @@ const MainDrawerRouter = DrawerNavigator(
   {
     // MyOrderPlan: { screen: MyOrderPlan },
     // MyOrderTab: { screen: MyOrderTab },
-    //  Mytravelgems: { screen: Mytravelgems },
-    //  DayPlan: { screen: DayPlan },
+    // Mytravelgems: { screen: Mytravelgems },
+    //DayPlan: { screen: DayPlan },
     Home: { screen: Tabview },
     Webview: { screen: Webview },
     Activity: { screen: Activity },
