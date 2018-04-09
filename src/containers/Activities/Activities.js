@@ -33,6 +33,7 @@ const Acitivities = ({
   filteredActivity,
   filterText,
   onPressFilter,
+  onSearchText,
 }: Object) => (
   <View>
     <FilterActivities
@@ -58,6 +59,8 @@ const Acitivities = ({
       onPressFilter={() => {
         setIsModalVisible(true);
       }}
+      placeholder="Type a activity?"
+      onSearchText={onSearchText}
     />
     <FlatList
       onEndReachedThreshold={0.5}
@@ -97,12 +100,31 @@ export default compose(
     ({ activities }) => activities,
   ),
   withHandlers({
+    onSearchText: ({
+      filteredActivity,
+      setFilteredActivity,
+      activities,
+    }) => text => {
+      const textTrim = text.trim();
+      if (textTrim != '') {
+        setFilteredActivity(
+          filteredActivity.filter(({ name }) => name.includes(textTrim)),
+        );
+      } else {
+        setFilteredActivity(activities);
+      }
+    },
     onPressFilter: ({ activities, setFilteredActivity }) => filters => {
       const result = filter(activity => {
         const contryFilter = getTextFilterHelper({
           country: filters.country,
         });
 
+        /**
+        |--------------------------------------------------
+        | filter price checking
+        |--------------------------------------------------
+        */
         let isPriceTrue = false;
         const priceFilter = valueIsTrue(filters.price);
         if (priceFilter.length > 0) {
@@ -116,11 +138,15 @@ export default compose(
           isPriceTrue = true;
         }
 
+        /**
+        |--------------------------------------------------
+        | filter type checking
+        | Because type is multiple select then it difference when filter
+        |--------------------------------------------------
+        */
         const typeFilter = getTextFilterHelper({
           type: filters.type,
         });
-
-        //Because type is multiple select then it difference when filter
         const isHasType = !typeFilter
           ? true
           : typeFilter.length > 0

@@ -29,6 +29,7 @@ const Discover = ({
   isModalVisible,
   setIsModalVisible,
   destinationsFilters,
+  onSearchText,
 }: Object) => (
   <View style={{ marginBottom: 120 }}>
     <FilterDestinations
@@ -54,6 +55,7 @@ const Discover = ({
       onPressFilter={() => {
         setIsModalVisible(true);
       }}
+      onSearchText={onSearchText}
     />
     <ScrollView>
       <ActivityScroll
@@ -93,6 +95,12 @@ export default compose(
     {},
   ),
   withHandlers({
+    onSearchText: ({ navigation }) => text => {
+      const textTrim = text.trim();
+      if (textTrim != '') {
+        navigation.navigate('Filter', { filter: text });
+      }
+    },
     onPressItem: ({ navigation }) => item => {
       navigation.navigate('MyScheduleDetail', {
         selectedPerson: item,

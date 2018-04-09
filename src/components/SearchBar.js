@@ -75,7 +75,11 @@ const SearchBarResult = ({
   </View>
 );
 
-const SearchBar = ({ onPressFilter }) => (
+const SearchBar = ({
+  onSearchText,
+  onPressFilter,
+  placeholder = 'Type a destination?',
+}) => (
   <View
     style={{
       marginTop: 19,
@@ -100,7 +104,11 @@ const SearchBar = ({ onPressFilter }) => (
     <TextInput
       style={{ fontSize: 16, flex: 1 }}
       placeholderTextColor="rgba(0, 0, 0, 0.58)"
-      placeholder="Type a destination?"
+      placeholder={placeholder}
+      returnKeyType="search"
+      onSubmitEditing={event => {
+        onSearchText(event.nativeEvent.text);
+      }}
     />
     <TouchableOpacity onPress={onPressFilter}>
       <Image
