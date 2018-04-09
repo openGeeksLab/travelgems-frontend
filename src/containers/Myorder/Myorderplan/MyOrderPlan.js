@@ -33,7 +33,30 @@ class MyOrderPlan extends Component {
       <ScrollView>
         <View style={styles.container}>
           <StatusBar barStyle="light-content" />
-          <View style={styles.ImageView} />
+          <View style={styles.HeaderView}>
+
+            <View style={styles.HeaderInner}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Mytravelgems')}
+              >
+                <Image
+                  style={{ height: 35, width: 35 }}
+                  source={require('src/assets/images/Myorder/burgermenu.png')}
+                  resizeMode="cover"
+                />
+              </TouchableOpacity>
+              <Text style={styles.OrderText}>My Orders</Text>
+            </View>
+
+            <View style={styles.tabView}>
+            <MyOrderTab/>
+
+            </View>
+
+
+
+          </View>
+          {/* <View style={styles.ImageView} >
           <View style={styles.Arrowimage}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('Mytravelgems')}
@@ -45,8 +68,10 @@ class MyOrderPlan extends Component {
               />
             </TouchableOpacity>
             <Text style={styles.OrderText}>My Orders</Text>
-          </View>
-          <MyOrderTab/>
+          
+           <View style={{height:550,marginTop:100,marginLeft:25,marginRight:25}}><MyOrderTab/></View>
+        </View>
+        </View> */}
         </View>
       </ScrollView>
     );

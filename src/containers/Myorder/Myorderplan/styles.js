@@ -8,50 +8,40 @@ export default StyleSheet.create({
 
 
     },
-    ImageView: {
+    HeaderView: {
         //  backgroundColor: 'red',
+
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height / 3.6,
-        backgroundColor: '#041DB2'
-
-    },
-
-    Arrowimage: {
-        backgroundColor: 'transparent',
-        width: Dimensions.get("window").width / 1.5,
-        position: 'absolute',
-        top: 50,
-        alignItems: 'center',
+        backgroundColor: '#041DB2',
         justifyContent: 'space-between',
+
+    },
+    HeaderInner: {
         flexDirection: 'row',
-        paddingLeft: 20,
-    },
-    OrderText:{
-        fontSize:24,
-        color:'#F2F2F2'
+        top: 60,
+        justifyContent: 'space-between',
+        width: Dimensions.get("window").width / 1.6,
+        marginLeft: 20
 
     },
-    ImageTextView: {
-        backgroundColor: 'transparent',
-        position: 'absolute',
-        top: 185,
-        paddingLeft: 35,
+    tabView: {
+        marginBottom: 40,
+        height: Dimensions.get("window").height,
+        marginTop: 90,
+        marginLeft: 20,
+        marginRight: 20,
+
+
 
 
     },
-    tabView:{
-        position: 'absolute',
-        top: 185,
-        paddingLeft: 35,
+
+    OrderText: {
+        fontSize: 24,
+        color: '#F2F2F2'
+
     },
-    ImageText: {
-        fontSize: 32,
-        color: "#ffffff"
-    },
-    ImageText1: {
-        fontSize: 14,
-        color: "#ffffff",
-        fontWeight: 'bold'
-    },
+
 
 });
