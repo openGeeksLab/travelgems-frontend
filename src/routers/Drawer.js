@@ -6,22 +6,24 @@ import Webview from '../containers/Webview/Webview';
 import Activity from '../containers/Activity/Activity';
 import Destination from '../containers/Destination/Destination';
 import QuestionnaireContainer from '../containers/Questionnaire/index';
-import Mytravelgems from '../components/MyTravelgems/Mytravelgems';
-import DayPlan from '../components/MyTravelgems/DayPlan/DayPlan';
+import Mytravelgems from '../components/Mytravelgems/Mytravelgems';
+import DayPlan from '../components/Mytravelgems/DayPlan/DayPlan';
 import Smalltile from '../components/Smalltile/Smalltile';
 import Tabview from '../components/Tabview/Tabview';
-// import MyOrderPlan from '../containers/Myorder/Myorderplan/MyOrderPlan';
-// import MyOrderTab from '../components/MyOrderTab/MyOrderTab';
+import MyOrderPlan from '../containers/Myorder/Myorderplan/MyOrderPlan';
+import MyOrderTab from '../components/MyOrderTab/MyOrderTab';
 const MainDrawerRouter = DrawerNavigator(
   {
     // MyOrderPlan: { screen: MyOrderPlan },
-    // MyOrderTab: { screen: MyOrderTab },
-    //  Mytravelgems: { screen: Mytravelgems },
-    //  DayPlan: { screen: DayPlan },
+    MyOrderTab: { screen: MyOrderTab },
+    Mytravelgems: { screen: Mytravelgems },
+    DayPlan: { screen: DayPlan },
     Home: { screen: Tabview },
-    Webview: { screen: Webview },
-    Smalltile: { screen: Smalltile },
-    Questionnaire: { screen: QuestionnaireContainer },
+    // Webview: { screen: Webview },
+    // Activity: { screen: Activity },
+    // Destination: { screen: Destination },
+    // Smalltile: { screen: Smalltile },
+    // Questionnaire: { screen: QuestionnaireContainer },
   },
   {
     initialRouteName: 'Home',

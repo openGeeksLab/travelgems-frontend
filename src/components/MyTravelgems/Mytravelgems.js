@@ -29,8 +29,8 @@ const ListData = [
         style={{ marginTop: 8, color: '#000000' }}
       />
     ),
-    title: 'Beach',
-    subtitle: '8 items',
+    title: 'Bythisma',
+    subtitle: 'Beach',
   },
   {
     image: (
@@ -40,8 +40,8 @@ const ListData = [
         style={{ marginTop: 8, color: '#000000' }}
       />
     ),
-    title: 'Helocopter',
-    subtitle: '11 items',
+    title: '"Ilios" Patitiri',
+    subtitle: 'Restaurant',
   },
   {
     image: (
@@ -51,8 +51,8 @@ const ListData = [
         style={{ marginTop: 8, color: '#000000' }}
       />
     ),
-    title: 'Beach Bars & Cafe',
-    subtitle: '12 items',
+    title: 'Bythisma',
+    subtitle: 'Restaurant',
   },
 
   {
@@ -63,8 +63,8 @@ const ListData = [
         style={{ marginTop: 8, color: '#000000' }}
       />
     ),
-    title: 'Great Food',
-    subtitle: '13 items',
+    title: 'Bythisma',
+    subtitle: 'Restaurant',
   },
   {
     image: (
@@ -74,8 +74,8 @@ const ListData = [
         style={{ marginTop: 8, color: '#000000' }}
       />
     ),
-    title: 'Great Food',
-    subtitle: '14 items',
+    title: 'Restaurant',
+    subtitle: 'Bythisma',
   },
 ];
 class Mytravelgems extends Component {
@@ -109,11 +109,11 @@ class Mytravelgems extends Component {
               />
             </TouchableOpacity>
             <Text style={styles.headerInnerViewText}>Kefalonia</Text>
-            <Text style={styles.headerInnerViewText1}>TAILOR MADE PLAN</Text>
+            <Text style={styles.headerInnerViewText1}>4 DAYS PLAN</Text>
           </View>
         </View>
         <CustomCalendar />
-        <View style={styles.daysView}>
+        {/* <View style={styles.daysView}>
           <IconEntypo
             name="dot-single"
             size={20}
@@ -121,7 +121,7 @@ class Mytravelgems extends Component {
             color="#FE1E9A"
           />
           <Text style={{ color: '#222222', fontSize: 16 }}>3 Days</Text>
-        </View>
+        </View> */}
 
         <ListView
           showsVerticalScrollIndicator={false}

@@ -39,6 +39,11 @@ export default StyleSheet.create({
 
 
     },
+    tabView:{
+        position: 'absolute',
+        top: 185,
+        paddingLeft: 35,
+    },
     ImageText: {
         fontSize: 32,
         color: "#ffffff"
