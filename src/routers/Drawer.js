@@ -10,8 +10,8 @@ import Mytravelgems from '../components/Mytravelgems/Mytravelgems';
 import DayPlan from '../components/Mytravelgems/DayPlan/DayPlan';
 import Smalltile from '../components/Smalltile/Smalltile';
 import Tabview from '../components/Tabview/Tabview';
- import MyOrderPlan from '../containers/Myorder/Myorderplan/MyOrderPlan';
- import MyOrderTab from '../components/MyOrderTab/MyOrderTab';
+import MyOrderPlan from '../containers/Myorder/Myorderplan/MyOrderPlan';
+import MyOrderTab from '../components/MyOrderTab/MyOrderTab';
 const MainDrawerRouter = DrawerNavigator(
   {
     
@@ -31,7 +31,7 @@ const MainDrawerRouter = DrawerNavigator(
     contentOptions: {
       activeTintColor: '#e91e63',
     },
-    contentComponent: (props) => <SideBar {...props} />,
+    contentComponent: props => <SideBar {...props} />,
   },
 );
 
