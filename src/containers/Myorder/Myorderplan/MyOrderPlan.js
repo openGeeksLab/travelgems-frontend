@@ -16,7 +16,7 @@ import styles from './styles';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-//import MyOrderTab from '../../Component/MyOrderTab/MyOrderTab';
+import MyOrderTab from '../../../components/MyOrderTab/MyOrderTab';
 
 class MyOrderPlan extends Component {
   constructor(props) {
@@ -46,7 +46,7 @@ class MyOrderPlan extends Component {
             </TouchableOpacity>
             <Text style={styles.OrderText}>My Orders</Text>
           </View>
-          {/* <MyOrderTab/> */}
+          <MyOrderTab/>
         </View>
       </ScrollView>
     );
