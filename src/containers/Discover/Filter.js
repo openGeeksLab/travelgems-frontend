@@ -18,7 +18,7 @@ import { FilterDestinations } from 'src/components/FilterModal';
 import Smalltile from 'src/components/Smalltile/Smalltile';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import SearchBar from 'src/components/SearchBar';
-
+import { getFiltersObject } from 'src/selectors/index';
 const Filter = ({
   navigation,
   isModalVisible,
@@ -113,7 +113,7 @@ export default compose(
   connect(
     state => ({
       destinations: state.content.destinationsArray,
-      destinationsFilters: state.content.destinationsFilters,
+      destinationsFilters: getFiltersObject(state.content.destinationsFilters),
     }),
     {},
   ),

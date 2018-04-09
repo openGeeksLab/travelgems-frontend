@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
-
+import { getFiltersObject } from 'src/selectors/index';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Modal from 'react-native-modal';
@@ -88,7 +88,7 @@ export default compose(
     state => ({
       destinations: slice(0, 15, state.content.destinationsArray),
       activities: slice(0, 15, state.content.activitiesArray),
-      destinationsFilters: state.content.destinationsFilters,
+      destinationsFilters: getFiltersObject(state.content.destinationsFilters),
     }),
     {},
   ),

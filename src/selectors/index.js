@@ -3,8 +3,9 @@ import R from 'ramda';
 export const getPriceTextActivity = (activity: Object) =>
   activity.price + ' ' + activity.currency;
 
+export const valueIsTrue = R.compose(R.keys, R.pickBy(val => val === true));
+
 export const getTextFilterHelper = filters => {
-  const valueIsTrue = R.compose(R.keys, R.pickBy(val => val === true));
   return R.compose(
     R.flatten,
     R.values,
@@ -17,4 +18,17 @@ export const arrayContainsArray = (superset, subset) => {
     return true;
   }
   return subset.every(value => superset.indexOf(value) >= 0);
+};
+
+export const getFiltersObject = filters => {
+  const data = filters.reduce((result, text, index) => {
+    const array = text.split(':');
+    if (array.length > 1) {
+      result[array[0]] = result[array[0]]
+        ? { ...result[array[0]], [array[1]]: false }
+        : { [array[1]]: false };
+    }
+    return result;
+  }, {});
+  return data;
 };

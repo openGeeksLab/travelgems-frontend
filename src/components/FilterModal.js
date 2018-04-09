@@ -7,7 +7,7 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/EvilIcons';
+
 import { slice, keys, lensPath, set, view } from 'ramda';
 
 import { compose, withHandlers, withState } from 'recompose';
@@ -41,19 +41,6 @@ const styles = StyleSheet.create({
     top: 15,
   },
 });
-
-const getFiltersObject = filters => {
-  const data = filters.reduce((result, text, index) => {
-    const array = text.split(':');
-    if (array.length > 1) {
-      result[array[0]] = result[array[0]]
-        ? { ...result[array[0]], [array[1]]: false }
-        : { [array[1]]: false };
-    }
-    return result;
-  }, {});
-  return data;
-};
 
 const capitalizeFirstLetter = string =>
   string.charAt(0).toUpperCase() + string.slice(1);
@@ -293,9 +280,7 @@ const FilterActivitiesView = props => {
 };
 
 const enhance = compose(
-  withState('filterObject', 'setFilterObject', ({ filters }) =>
-    getFiltersObject(filters),
-  ),
+  withState('filterObject', 'setFilterObject', ({ filters }) => filters),
 );
 
 export const FilterActivities = enhance(FilterActivitiesView);

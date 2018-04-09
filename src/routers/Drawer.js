@@ -20,8 +20,6 @@ const MainDrawerRouter = DrawerNavigator(
     //  DayPlan: { screen: DayPlan },
     Home: { screen: Tabview },
     Webview: { screen: Webview },
-    Activity: { screen: Activity },
-    Destination: { screen: Destination },
     Smalltile: { screen: Smalltile },
     Questionnaire: { screen: QuestionnaireContainer },
   },
@@ -30,7 +28,7 @@ const MainDrawerRouter = DrawerNavigator(
     contentOptions: {
       activeTintColor: '#e91e63',
     },
-    contentComponent: (props) => <SideBar {...props} />,
+    contentComponent: props => <SideBar {...props} />,
   },
 );
 

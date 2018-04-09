@@ -11,14 +11,19 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { filter, contains } from 'ramda';
+import { filter, contains, replace } from 'ramda';
 import { compose, withHandlers, withState } from 'recompose';
 import { connect } from 'react-redux';
 import { FilterActivities } from 'src/components/FilterModal';
 import Widetile from 'src/components/Widetile/Widetile';
 import SearchBar from 'src/components/SearchBar';
-import { getTextFilterHelper, arrayContainsArray } from 'src/selectors';
+import {
+  getTextFilterHelper,
+  arrayContainsArray,
+  valueIsTrue,
+} from 'src/selectors';
 import Header from 'src/components/Header';
+import { filtersSelector } from './selector';
 
 const Acitivities = ({
   navigation,
@@ -81,7 +86,7 @@ export default compose(
   connect(
     state => ({
       activities: state.content.activitiesArray,
-      activitiesFilters: state.content.activitiesFilters,
+      activitiesFilters: filtersSelector(state),
     }),
     {},
   ),
@@ -94,14 +99,27 @@ export default compose(
   withHandlers({
     onPressFilter: ({ activities, setFilteredActivity }) => filters => {
       const result = filter(activity => {
-        const contryPriceFilter = getTextFilterHelper({
+        const contryFilter = getTextFilterHelper({
           country: filters.country,
-          price: filters.price,
         });
+
+        let isPriceTrue = false;
+        const priceFilter = valueIsTrue(filters.price);
+        if (priceFilter.length > 0) {
+          const priceNumb = replace(/^\D+/g, '', priceFilter[0]);
+          if (priceFilter[0].includes('>=')) {
+            isPriceTrue = activity.price > priceNumb;
+          } else {
+            isPriceTrue = activity.price < priceNumb;
+          }
+        } else {
+          isPriceTrue = true;
+        }
 
         const typeFilter = getTextFilterHelper({
           type: filters.type,
         });
+
         //Because type is multiple select then it difference when filter
         const isHasType = !typeFilter
           ? true
@@ -113,7 +131,9 @@ export default compose(
             : true;
 
         return (
-          arrayContainsArray(activity.tags, contryPriceFilter) && isHasType
+          arrayContainsArray(activity.tags, contryFilter) &&
+          isHasType &&
+          isPriceTrue
         );
       }, activities);
       setFilteredActivity(result);
