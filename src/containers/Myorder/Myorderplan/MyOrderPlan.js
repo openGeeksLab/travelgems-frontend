@@ -15,6 +15,7 @@ import { Header, Button } from 'react-native-elements';
 import styles from './styles';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconEntypo from 'react-native-vector-icons/Entypo';
+import { withNavigation } from 'react-navigation';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MyOrderTab from '../../../components/MyOrderTab/MyOrderTab';
 
@@ -28,52 +29,42 @@ class MyOrderPlan extends Component {
       <Icon name="favorite" type="home" color="#fff" />
     ),
   };
+  _openDrawer() {
+    const { navigate } = this.props.navigation;
+    navigate('DrawerOpen');
+    // navigation.navigate('DrawerOpen')
+  }
   render() {
     return (
-      <ScrollView>
+     
         <View style={styles.container}>
           <StatusBar barStyle="light-content" />
           <View style={styles.HeaderView}>
 
             <View style={styles.HeaderInner}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Mytravelgems')}
+                onPress={() => this._openDrawer()}
               >
                 <Image
-                  style={{ height: 35, width: 35 }}
+                  style={{ height: 30, width: 30 }}
                   source={require('src/assets/images/Myorder/burgermenu.png')}
                   resizeMode="cover"
                 />
               </TouchableOpacity>
               <Text style={styles.OrderText}>My Orders</Text>
             </View>
-
             <View style={styles.tabView}>
-            <MyOrderTab/>
-
-            </View>
-
-
+            
+            <MyOrderTab />
 
           </View>
-          {/* <View style={styles.ImageView} >
-          <View style={styles.Arrowimage}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Mytravelgems')}
-            >
-              <Image
-                style={{ height: 35, width: 35 }}
-                source={require('src/assets/images/Myorder/burgermenu.png')}
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
-            <Text style={styles.OrderText}>My Orders</Text>
+
+          </View>
           
-           <View style={{height:550,marginTop:100,marginLeft:25,marginRight:25}}><MyOrderTab/></View>
+
+          
         </View>
-        </View> */}
-        </View>
-      </ScrollView>
+      
     );
   }
 }

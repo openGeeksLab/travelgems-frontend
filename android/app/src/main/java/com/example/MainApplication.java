@@ -45,11 +45,8 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new MapsPackage(),
             new LinearGradientPackage(),
-            new ReactNativeConfigPackage(),
-            new VectorIconsPackage(),
-						new MapsPackage(),
-						new LinearGradientPackage(),
             new ReactNativeConfigPackage()
+
       );
     }
 

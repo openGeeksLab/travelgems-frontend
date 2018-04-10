@@ -58,18 +58,18 @@ class Activity extends Component {
                 showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
                     <ListView
-                        showsVerticalScrollIndicator={false}
+                        // showsVerticalScrollIndicator={false}
                         vertical={true}
                         dataSource={this.state.dataSource}
                         renderRow={rowData => (<View style={styles.listParentView}>
-                            <View>
+                            <View style={styles.imageView}>
                                 <Image style={styles.image}
                                     source={rowData.image}>
                                 </Image>
                             </View>
                             <View style={styles.itemView}>
                                 <Text style={styles.listViewText}>{rowData.title}</Text>
-                                <Text>{rowData.title}</Text>
+                                <Text style={styles.listViewText1}>{rowData.subtitle}</Text>
                             </View></View>
                         )} /></View>
             </ScrollView>

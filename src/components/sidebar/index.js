@@ -20,6 +20,12 @@ const datas = [
     icon: '',
     bg: '#00BFFF',
   },
+  {
+    name: 'TravelGems',
+    route: 'Mytravelgems',
+    icon: '',
+    bg: '#00BFFF',
+  },
 ];
 
 const SideBar = ({ navigation }) => (

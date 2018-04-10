@@ -3,34 +3,39 @@ const React = require("react-native");
 const { Dimensions, Platform } = React;
 export default StyleSheet.create({
     container: {
-
-        backgroundColor: '#fff',
+backgroundColor:"white",
+        flex: 1
 
 
     },
-    HeaderView: {
-        //  backgroundColor: 'red',
 
+    HeaderView: {
+        //backgroundColor: 'red',
+        height: Dimensions.get("window").height,
         width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height / 3.6,
         backgroundColor: '#041DB2',
-        justifyContent: 'space-between',
+       // justifyContent: 'space-between',
 
     },
     HeaderInner: {
         flexDirection: 'row',
-        top: 60,
+        top: 45,
         justifyContent: 'space-between',
         width: Dimensions.get("window").width / 1.6,
         marginLeft: 20
 
     },
     tabView: {
+        //     position: 'absolute',
+        //     top: 90,
+          width: Dimensions.get("window").width,
+        //    height: Dimensions.get("window").height,
+       backgroundColor:'#041DB2',
         marginBottom: 40,
         height: Dimensions.get("window").height,
-        marginTop: 90,
-        marginLeft: 20,
-        marginRight: 20,
+        marginTop: 85,
+        // marginLeft: 20,
+        // marginRight: 20,
 
 
 

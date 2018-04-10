@@ -91,8 +91,8 @@ class Mytravelgems extends Component {
 
   _onText() {
     const { navigate } = this.props.navigation;
-    navigate('DayPlan');
-    //alert("Coming soon")
+     navigate('DayPlan');
+  
   }
   render() {
     return (
@@ -100,7 +100,7 @@ class Mytravelgems extends Component {
         <StatusBar barStyle="light-content" />
         <View style={styles.headerStyle}>
           <View style={styles.headerInnerView}>
-            <TouchableOpacity onPress={this._onText}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
               <IconFeather
                 name="arrow-left"
                 size={26}

@@ -6,31 +6,38 @@ export default StyleSheet.create({
 
         backgroundColor: '#fff',
         marginTop: 20,
+        flex: 1
 
     },
     itemView: {
         flexDirection: 'column',
-        marginTop: 20
-
-
-
+        marginTop: 20,
+        marginLeft: 45
     },
     listViewText: {
-        color: '#222222'
+        color: '#222222',
+        fontSize: 13
 
+    },
+    listViewText1: {
+        color: '#A1A1A1',
+        fontSize: 13
+    },
+    imageView: {
+
+        alignItems: 'center'
 
     },
     image: {
         height: 150,
         width: 300,
-
+        borderRadius: 6,
     },
     listParentView: {
 
-
         marginTop: 30,
-        //justifyContent: 'center',
-        alignItems: 'center',
+
+
 
 
 

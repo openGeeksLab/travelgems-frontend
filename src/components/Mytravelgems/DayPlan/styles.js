@@ -3,7 +3,7 @@ const React = require("react-native");
 const { Dimensions, Platform } = React;
 export default StyleSheet.create({
     container: {
-        marginTop:20,
+       
         backgroundColor: '#fff',
 
 
