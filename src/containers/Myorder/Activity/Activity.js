@@ -19,17 +19,17 @@ import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommun
 import MyOrderTab from '../../../components/MyOrderTab/MyOrderTab';
 const ListData = [
     {
-        image: require('/Volumes/DATA/TravelGemsCode/travelgems/src/assets/images/drawer-cover.png'),
+        image: require('../../../assets/images/drawer-cover.png'),
         title: 'Bythisma',
         subtitle: 'Beach',
     },
     {
-        image: require('/Volumes/DATA/TravelGemsCode/travelgems/src/assets/images/drawer-cover.png'),
+        image: require('../../../assets/images/drawer-cover.png'),
         title: 'Jeep Safari in the National....',
         subtitle: 'Restaurant',
     },
     {
-        image: require('/Volumes/DATA/TravelGemsCode/travelgems/src/assets/images/drawer-cover.png'),
+        image: require('../../../assets/images/drawer-cover.png'),
         title: 'Jeep Safari in the National...',
         subtitle: 'Restaurant',
     },

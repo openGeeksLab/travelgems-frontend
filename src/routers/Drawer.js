@@ -6,15 +6,15 @@ import Webview from '../containers/Webview/Webview';
 import Activity from '../containers/Activity/Activity';
 import Destination from '../containers/Destination/Destination';
 import QuestionnaireContainer from '../containers/Questionnaire/index';
-import Mytravelgems from '../components/Mytravelgems/Mytravelgems';
-import DayPlan from '../components/Mytravelgems/DayPlan/DayPlan';
+import Mytravelgems from '../components/MyTravelgems/Mytravelgems';
+import DayPlan from '../components/MyTravelgems/DayPlan/DayPlan';
 import Smalltile from '../components/Smalltile/Smalltile';
 import Tabview from '../components/Tabview/Tabview';
 import MyOrderPlan from '../containers/Myorder/Myorderplan/MyOrderPlan';
 import MyOrderTab from '../components/MyOrderTab/MyOrderTab';
 const MainDrawerRouter = DrawerNavigator(
   {
-    
+
     Home: { screen: Tabview },
     Webview: { screen: Webview },
     Activity: { screen: Activity },
