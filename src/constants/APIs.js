@@ -1,2 +1,2 @@
-export const serverUrl = 'http://example.com';
-//example constant variable
+export const serverUrl = 'http://travelgems.com';
+//travelgems constant variable

@@ -12,7 +12,7 @@
 - Install nvm(for macOs or Linux) or nvm for windows
 - Install latest version of node on nvm and use it.
     ```sh
-    nvm install node
+    nvm install nodcom.examplee
 
     nvm list
 

@@ -89,6 +89,6 @@ var Tabview = TabNavigator(
   },
 );
 Tabview.navigationOptions = {
-  title: 'tab example',
+  title: 'tab travelgems',
 };
 export default Tabview;

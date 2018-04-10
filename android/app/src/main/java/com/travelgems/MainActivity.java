@@ -1,4 +1,4 @@
-package com.example;
+package com.travelgems;
 
 import com.facebook.react.ReactActivity;
 

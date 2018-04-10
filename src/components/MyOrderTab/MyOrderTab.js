@@ -40,7 +40,7 @@ const MyOrderTab = TabNavigator({
     },
 );
 MyOrderTab.navigationOptions = {
-    title: 'tab example',
+    title: 'tab travelgems',
 };
 
 export default MyOrderTab;

@@ -1,29 +1,14 @@
-package com.example;
+package com.travelgems;
 
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
+//import com.BV.LinearGradient.LinearGradientPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.airbnb.android.react.maps.MapsPackage;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-//
-//import com.oblador.vectoricons.VectorIconsPackage;
-//import com.airbnb.android.react.maps.MapsPackage;
-//import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-//import com.oblador.vectoricons.VectorIconsPackage;
-//import com.airbnb.android.react.maps.MapsPackage;
-//import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-//import com.airbnb.android.react.maps.MapsPackage;
-//import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-//import com.oblador.vectoricons.VectorIconsPackage;
-
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 

@@ -57,12 +57,12 @@ export default class Root extends Component {
 
             self.warplyReactSDK.login({"id":"p.kouts153@gmail.com","password":"123456"}, (response) => {
 
-//              self.warplyReactSDK.request('favourites', 'add', {"content_id":"ac832a8b40484cc1834c7b4badeac01c"}, (response)=>{
-//                debugger;
-//              }, 'AUTH');
-//              self.warplyReactSDK.request('favourites', 'add', {"product_uuid":"bdc2476e5ebe4812814765ab611242c3"}, (response)=>{
-//                debugger;
-//              },'AUTH');
+             self.warplyReactSDK.request('favourites', 'add', {"content_id":"ac832a8b40484cc1834c7b4badeac01c"}, (response)=>{
+               debugger;
+             }, 'AUTH');
+             self.warplyReactSDK.request('favourites', 'add', {"product_uuid":"bdc2476e5ebe4812814765ab611242c3"}, (response)=>{
+               debugger;
+             },'AUTH');
 
               self.warplyReactSDK.request('consumer_data', 'handle_user_details', {"process":"get"}, self.handleProfile.bind(self), 'AUTH');
               if (!self.state.store.getState().content.contentPermission || self.state.store.getState().content.contentPermission!="AUTH"){
