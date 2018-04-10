@@ -30,7 +30,7 @@ class Cart extends Component {
           <Text style={styles.planHeader}>Tailor Made Plans</Text>
 
           <View style={styles.planChoices}>
-            <Image style={styles.planImage} source={require('D:/Πάνος/Android Studio Projects/REACT/Travelgems/src/assets/images/Mytravelgems/Rightarrowcircled.png')}></Image>
+            <Image style={styles.planImage} source={require('src/assets/images/Mytravelgems/Rightarrowcircled.png')}></Image>
             <View style={styles.planHeader}>
               <Text style={styles.planHeaderTitle}>Kefalonia</Text>
               <Text style={styles.planHeaderSubtitle}>Greece</Text>
@@ -38,7 +38,7 @@ class Cart extends Component {
             <Text style={styles.planHeaderAmount}>275 &#36;</Text>
           </View>
           <View style={styles.planChoices}>
-            <Image style={styles.planImage} source={require('D:/Πάνος/Android Studio Projects/REACT/Travelgems/src/assets/images/Mytravelgems/Rightarrowcircled.png')}></Image>
+            <Image style={styles.planImage} source={require('src/assets/images/Mytravelgems/Rightarrowcircled.png')}></Image>
             <View style={styles.planHeader}>
               <Text style={styles.planHeaderTitle}>Kos</Text>
               <Text style={styles.planHeaderSubtitle}>Greece</Text>
@@ -49,7 +49,7 @@ class Cart extends Component {
           <Text style={styles.planHeader}>Activities</Text>
 
           <View style={styles.planChoices}>
-            <Image style={styles.planImage} source={require('D:/Πάνος/Android Studio Projects/REACT/Travelgems/src/assets/images/Mytravelgems/Rightarrowcircled.png')}></Image>
+            <Image style={styles.planImage} source={require('src/assets/images/Mytravelgems/Rightarrowcircled.png')}></Image>
             <View style={styles.planHeader}>
               <Text style={styles.planHeaderTitle}>Jeep Safari</Text>
               <Text style={styles.planHeaderSubtitle}>Kefalonia</Text>
