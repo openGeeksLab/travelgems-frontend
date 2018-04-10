@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import CalendarPicker from '../../components/react-native-calendar-picker/CalendarPicker/index';
-import { COLOR_WHITE, COLOR_TURQUOISE } from '../../constants/Styles';
+import CalendarPicker from '../../../components/react-native-calendar-picker/CalendarPicker/index';
+import { COLOR_WHITE, COLOR_TURQUOISE } from '../../../constants/Styles';
 import styles from './styles';
 
 class QCalendar extends Component {

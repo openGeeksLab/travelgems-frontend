@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import PropTypes from 'prop-types';
 import styles from './styles';
-import { COLOR_WHITE, COLOR_TURQUOISE } from '../../constants/Styles';
+import { COLOR_WHITE, COLOR_TURQUOISE } from '../../../constants/Styles';
 
 class MultiQuestionsField extends Component {
   static defaultProps = {

@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import { COLOR_DARK_OPACITY_20, COLOR_WHITE } from '../../constants/Styles';
+import { COLOR_DARK_OPACITY_20, COLOR_WHITE } from '../../../constants/Styles';
 
 const { width } = Dimensions.get('window');
 

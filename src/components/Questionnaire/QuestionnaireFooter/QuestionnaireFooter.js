@@ -4,7 +4,10 @@ import * as Progress from 'react-native-progress';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
-import { COLOR_TURQUOISE, COLOR_DARK_OPACITY_20 } from '../../constants/Styles';
+import {
+  COLOR_TURQUOISE,
+  COLOR_DARK_OPACITY_20,
+} from '../../../constants/Styles';
 
 const { width } = Dimensions.get('window');
 

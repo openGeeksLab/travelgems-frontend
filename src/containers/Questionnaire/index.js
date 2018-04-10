@@ -5,12 +5,12 @@ import { compose } from 'recompose';
 import R from 'ramda';
 import PropTypes from 'prop-types';
 
-const thirdAnswers = [
-  { value: 'firstValue', isSelected: false },
-  { value: 'secondValue', isSelected: false },
-  { value: 'thirdValue', isSelected: false },
-  { value: 'fourthValue', isSelected: false },
-];
+// const thirdAnswers = [
+//   { value: 'firstValue', isSelected: false },
+//   { value: 'secondValue', isSelected: false },
+//   { value: 'thirdValue', isSelected: false },
+//   { value: 'fourthValue', isSelected: false },
+// ];
 
 const fourthAnswer = ['1', '2', '3', '4', '5'];
 
@@ -24,33 +24,65 @@ class QuestionnaireContainer extends Component {
       selectedStartDate: null,
       selectedEndDate: null,
       textVal: '',
-      thirdAnswers: thirdAnswers,
+      // thirdAnswers: thirdAnswers,
       fourthAnswer: fourthAnswer,
       activeIndex: null,
       progress: 0,
+      allAnswers: {},
     };
   }
 
-  onCheckedHandle = (textVal) => {
+  onCheckedHandle = (textVal, index, currentPage) => {
+    // console.warn('text', textVal);
+    // console.warn('index', index);
     this.setState({
       textVal,
     });
+
+    const data = {
+      [currentPage]: {
+        index: index + 1,
+        answer: textVal,
+      },
+    };
+
+    this.setState(
+      {
+        allAnswers: { ...data },
+      },
+      () => console.warn('allAnswers', this.state.allAnswers),
+    );
   };
 
-  onCheckMultiHandle = (index) => {
-    const data = this.state.thirdAnswers;
+  onCheckMultiHandle = (index, text) => {
+    // const data = this.state.thirdAnswers;
 
-    data.map((item, num) => {
-      if (index === num) {
-        item.isSelected = !item.isSelected;
-        return item;
-      }
-      return item;
-    });
+    console.warn('index', index);
+
+    // data.map((item, num) => {
+    //   if (index === num) {
+    //     item.isSelected = !item.isSelected;
+    //     return item;
+    //   }
+    //   return item;
+    // });
+
+    const data = {
+      [currentPage]: {
+        index: index + 1,
+        answer: textVal,
+      },
+    };
 
     this.setState({
-      thirdAnswers: data,
+      allAnswers: { ...data },
     });
+
+    // this.setState({
+    //   thirdAnswers: data,
+    // });
+
+    console.warn('data', data);
   };
 
   onDateChangeHandle = (date, type) => {
@@ -64,6 +96,10 @@ class QuestionnaireContainer extends Component {
         selectedEndDate: null,
       });
     }
+
+    // console.warn('date', date);
+    console.warn('selectedStartDate', this.state.selectedStartDate);
+    console.warn('selectedEndDate', this.state.selectedEndDate);
   };
 
   onRadioSelectHandle = (index) => {
@@ -108,10 +144,6 @@ class QuestionnaireContainer extends Component {
     }
   };
 
-  aKey = () => {
-    return R.uniq(R.flatten(Object.values(this.props.qa_map)));
-  };
-
   render() {
     const {
       isChecked,
@@ -122,15 +154,15 @@ class QuestionnaireContainer extends Component {
       activeIndex,
     } = this.state;
 
-    const { questions, answers } = this.props;
+    const { questions, answers, qa_map } = this.props;
 
     return (
       <Questionnaire
         onCheckedHandle={this.onCheckedHandle}
         questions={questions}
         isChecked={isChecked}
-        aKey={this.aKey}
         answers={answers}
+        qa_map={qa_map}
         currentPage={currentPage}
         onDateChangeHandle={this.onDateChangeHandle}
         onCheckMultiHandle={this.onCheckMultiHandle}

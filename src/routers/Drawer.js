@@ -22,7 +22,8 @@ const MainDrawerRouter = DrawerNavigator(
     Questionnaire: { screen: QuestionnaireContainer },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Questionnaire',
+    // initialRouteName: 'Home',
     contentOptions: {
       activeTintColor: '#e91e63',
     },

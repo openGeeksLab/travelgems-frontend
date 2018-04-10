@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { COLOR_WHITE, COLOR_WHITE_OPACITY_70 } from '../../constants/Styles';
+import { COLOR_WHITE, COLOR_WHITE_OPACITY_70 } from '../../../constants/Styles';
 
 export default StyleSheet.create({
   container: {
@@ -34,11 +34,5 @@ export default StyleSheet.create({
   fieldText: {
     color: COLOR_WHITE,
     fontSize: 14,
-  },
-  chekedIcon: {
-    position: 'absolute',
-    right: 16,
-    width: 16,
-    height: 16,
   },
 });
