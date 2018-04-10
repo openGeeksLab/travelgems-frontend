@@ -19,33 +19,33 @@ import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommun
 import GridView from "react-native-easy-grid-view";
 const ListData = [
   {
-    image: require('/Volumes/DATA/TravelGemsCode/travelgems/src/assets/images/water-nature.jpg'),
+     image: require('../../../assets/images/water-nature.jpg'),
     title: 'Spetses',
     subtitle: 'Beach',
   },
   {
-    image: require('/Volumes/DATA/TravelGemsCode/travelgems/src/assets/images/water-nature.jpg'),
+     image: require('../../../assets/images/water-nature.jpg'),
     title: 'Jeep Safari ',
     subtitle: 'Greece',
   },
   {
-    image: require('/Volumes/DATA/TravelGemsCode/travelgems/src/assets/images/water-nature.jpg'),
+     image: require('../../../assets/images/water-nature.jpg'),
     title: 'Kos',
     subtitle: 'Greece',
   },
 
   {
-    image: require('/Volumes/DATA/TravelGemsCode/travelgems/src/assets/images/water-nature.jpg'),
+    image: require('../../../assets/images/water-nature.jpg'),
     title: 'Kos',
     subtitle: 'Greece',
   },
   {
-    image: require('/Volumes/DATA/TravelGemsCode/travelgems/src/assets/images/water-nature.jpg'),
+     image: require('../../../assets/images/water-nature.jpg'),
     title: 'Kos',
     subtitle: 'Greece',
   },
   {
-    image: require('/Volumes/DATA/TravelGemsCode/travelgems/src/assets/images/water-nature.jpg'),
+    image: require('../../../assets/images/water-nature.jpg'),
     title: 'Kos',
     subtitle: 'Greece',
   },
