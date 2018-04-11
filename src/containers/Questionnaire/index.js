@@ -29,6 +29,7 @@ class QuestionnaireContainer extends Component {
       activeIndex: null,
       progress: 0,
       allAnswers: {},
+      groupQAarray: {},
     };
   }
 
@@ -67,22 +68,22 @@ class QuestionnaireContainer extends Component {
     //   return item;
     // });
 
-    const data = {
-      [currentPage]: {
-        index: index + 1,
-        answer: textVal,
-      },
-    };
+    // const data = {
+    //   [currentPage]: {
+    //     index: index + 1,
+    //     answer: textVal,
+    //   },
+    // };
 
-    this.setState({
-      allAnswers: { ...data },
-    });
+    // this.setState({
+    //   allAnswers: { ...data },
+    // });
 
     // this.setState({
     //   thirdAnswers: data,
     // });
 
-    console.warn('data', data);
+    // console.warn('data', data);
   };
 
   onDateChangeHandle = (date, type) => {
@@ -144,6 +145,72 @@ class QuestionnaireContainer extends Component {
     }
   };
 
+  // getGroupQAarray = () => {
+  //   const { questions, qa_map, answers } = this.props;
+
+  //   const groupQAarray = {};
+
+  //   questions.map((q, i) => {
+  //     let index = i + 1;
+  //     qa_map[index].map((key, index) => {
+  //       // console.warn('key', key);
+  //     });
+
+  //     if (q.group_id.length !== 0) {
+  //       groupQAarray[q.group_id] = groupQAarray[q.group_id]
+  //         ? groupQAarray[q.group_id]
+  //         : [];
+  // 			groupQAarray[q.group_id].push(q);
+  // 			console.warn('q', groupQAarray[q.group_id]);
+  //     } else {
+  //       groupQAarray['other'] = groupQAarray['other']
+  //         ? groupQAarray['other']
+  //         : [];
+  //       groupQAarray['other'].push(q);
+  //     }
+  //   });
+
+  //   // console.warn(JSON.stringify(groupQAarray, null, 2));
+  //   return groupQAarray;
+  // };
+
+  getGroupQAarray = () => {
+    const { questions, qa_map, answers } = this.props;
+
+    let groupQAarray = [];
+    const groupIndexes = {};
+
+    questions.map((q, i) => {
+      let index = i + 1;
+      R.uniq(qa_map[index]).map((key) => {
+        if (q.group_id.length !== 0) {
+          if (groupIndexes[q.group_id] === undefined) {
+            groupQAarray[index] = [];
+            groupIndexes[q.group_id] = index;
+          }
+          const groupIndex = groupIndexes[q.group_id];
+          groupQAarray[groupIndex].push({
+            ...q,
+            answers: answers[key],
+          });
+        } else {
+          groupQAarray[index] = { ...q, answers: answers[key] };
+        }
+      });
+    });
+
+    // this.setState({
+    //   groupQAarray: groupQAarray,
+    // });
+
+    // console.warn(JSON.stringify(groupQAarray, null, 2));
+    return groupQAarray.filter((u) => u && u);
+  };
+
+  componentWillMount() {
+    this.getGroupQAarray();
+  }
+
   render() {
     const {
       isChecked,
@@ -156,6 +223,10 @@ class QuestionnaireContainer extends Component {
 
     const { questions, answers, qa_map } = this.props;
 
+    // console.warn('groupQAarray', JSON.stringify(this.groupQAarray(), null, 2));
+
+    // console.warn(this.state.allAnswers);
+
     return (
       <Questionnaire
         onCheckedHandle={this.onCheckedHandle}
@@ -163,7 +234,9 @@ class QuestionnaireContainer extends Component {
         isChecked={isChecked}
         answers={answers}
         qa_map={qa_map}
+        getGroupQAarray={this.getGroupQAarray}
         currentPage={currentPage}
+        groupQAarray={this.state.groupQAarray}
         onDateChangeHandle={this.onDateChangeHandle}
         onCheckMultiHandle={this.onCheckMultiHandle}
         onRadioSelectHandle={this.onRadioSelectHandle}

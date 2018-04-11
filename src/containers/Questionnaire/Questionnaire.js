@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
 import R from 'ramda';
+import _ from 'lodash';
 import styles from './styles';
 import { questionnaireScreen, COLOR_TURQUOISE } from '../../constants/Styles';
 import QuestionsField from '../../components/Questionnaire/QuestionsField/QuestionsField';
@@ -179,6 +180,8 @@ class Questionnaire extends Component {
       onCheckedHandle,
       onRadioSelectHandle,
       onDateChangeHandle,
+      getGroupQAarray,
+      groupQAarray,
     } = this.props;
     return (
       <LinearGradient
@@ -192,11 +195,10 @@ class Questionnaire extends Component {
         style={{ flex: 1 }}
       >
         <View style={styles.container}>
-          {questions.map((question, qIndex) => {
+          {/*questions.map((question, qIndex) => {
             let i = qIndex + 1;
 
             if (i === currentPage) {
-              console.warn('q', question.group_id);
               return (
                 <View>
                   <View style={styles.titleContainer}>
@@ -210,7 +212,6 @@ class Questionnaire extends Component {
                     <Text style={styles.titleText}>{question.text}</Text>
                   </View>
                   <View style={styles.questionsContainer}>
-                    {/* {this.asd(i)} */}
                     {R.uniq(qa_map[i]).map((key, aIndex) => {
                       const answ = answers[key];
 
@@ -230,13 +231,87 @@ class Questionnaire extends Component {
                         />
                       );
                     })}
-                    {/* <QCalendar onDateChange={onDateChangeHandle} /> */}
                   </View>
                 </View>
               );
             }
             return null;
+					})*/}
+          {/* {console.warn('getGroupQAarray', getGroupQAarray())} */}
+
+          {/* {console.warn('groupQAarray,', groupQAarray)} */}
+          {/* {_.forIn(getGroupQAarray(), function(value, key) {
+            console.log(key);
+					})} */}
+          {/* {getGroupQAarray().filter((u) => u === undefined)} */}
+          {/* {console.warn(getGroupQAarray())} */}
+
+          {getGroupQAarray().map((item, i) => {
+            let index = i + 1;
+            if (index === currentPage) {
+              return (
+                <View>
+                  <View style={styles.titleContainer}>
+                    <Text style={styles.titleNumber}>{currentPage}</Text>
+                    <Icon
+                      size={14}
+                      name="md-arrow-round-forward"
+                      color={COLOR_TURQUOISE}
+                      style={styles.titleIcon}
+                    />
+                    <Text style={styles.titleText}>{item.text}</Text>
+                  </View>
+                </View>
+              );
+            }
           })}
+
+          {/* {_.mapKeys(groupQAarray, (i) => {
+            console.warn('i', i);
+          })} */}
+
+          {/* {questions.map((question, qIndex) => {
+            let i = qIndex + 1;
+
+            if (i === currentPage) {
+              return (
+                <View>
+                  <View style={styles.titleContainer}>
+                    <Text style={styles.titleNumber}>{currentPage}</Text>
+                    <Icon
+                      size={14}
+                      name="md-arrow-round-forward"
+                      color={COLOR_TURQUOISE}
+                      style={styles.titleIcon}
+                    />
+                    <Text style={styles.titleText}>{question.text}</Text>
+                  </View>
+                  <View style={styles.questionsContainer}>
+                    {R.uniq(qa_map[i]).map((key, aIndex) => {
+                      const answ = answers[key];
+
+                      return (
+                        <AnswerItem
+                          item={answ}
+                          type={question.type}
+                          key={aIndex}
+                          currentPage={currentPage}
+                          activeIndex={activeIndex}
+                          onCheckedHandle={(text) =>
+                            onCheckedHandle(text, aIndex, i)
+                          }
+                          onDateChangeHandle={onDateChangeHandle}
+                          onCheckMultiHandle={onCheckMultiHandle}
+                          onRadioSelectHandle={onRadioSelectHandle}
+                        />
+                      );
+                    })}
+                  </View>
+                </View>
+              );
+            }
+            return null;
+          })} */}
           <QuestionnaireFooter
             onNextStep={onNextStepHandle}
             onPrevStep={onPrevStepHandle}
