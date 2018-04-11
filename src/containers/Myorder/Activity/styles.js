@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+// import { platform } from 'os';
 const React = require("react-native");
 const { Dimensions, Platform } = React;
 export default StyleSheet.create({
@@ -36,12 +37,11 @@ export default StyleSheet.create({
     listParentView: {
 
         marginTop: 30,
-
-
-
-
-
     },
+    ListStyle: {
+        height: Dimensions.get("window").height,
+        marginBottom:Platform.OS === 'android' ? 220: 180,
+    }
 
 
 

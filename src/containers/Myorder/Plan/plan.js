@@ -49,6 +49,32 @@ const ListData = [
     title: 'Kos',
     subtitle: 'Greece',
   },
+  {
+    image: require('../../../assets/images/water-nature.jpg'),
+   title: 'Jeep Safari ',
+   subtitle: 'Greece',
+ },
+ {
+    image: require('../../../assets/images/water-nature.jpg'),
+   title: 'Kos',
+   subtitle: 'Greece',
+ },
+
+ {
+   image: require('../../../assets/images/water-nature.jpg'),
+   title: 'Kos',
+   subtitle: 'Greece',
+ },
+ {
+    image: require('../../../assets/images/water-nature.jpg'),
+   title: 'Kos',
+   subtitle: 'Greece',
+ },
+ {
+   image: require('../../../assets/images/water-nature.jpg'),
+   title: 'Kos',
+   subtitle: 'Greece',
+ },
 ];
 
 
@@ -94,20 +120,21 @@ class Plan extends Component {
   }
   render() {
     return (
-      <ScrollView>
+     
         <View style={styles.container}>
-          <View style={{ marginTop: 10 }}>
+        {/* <ScrollView>
+          <View style={{ marginTop: 10 }}> */}
             <GridView dataSource={this.state.dataSource}
               spacing={5}
-              style={{ margin: 20 }}
+              style={styles.GridStyle}
               renderCell={this._renderCell.bind(this)}
 
             />
 
           </View>
-
-        </View>
-      </ScrollView>
+        //   </ScrollView>
+        // </View>
+  
 
     );
   }

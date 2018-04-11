@@ -28,12 +28,53 @@ const ListData = [
         title: 'Jeep Safari in the National....',
         subtitle: 'Restaurant',
     },
+    
     {
         image: require('src/assets/images/drawer-cover.png'),
-        title: 'Jeep Safari in the National...',
+        title: 'Bythisma',
+        subtitle: 'Beach',
+    },
+    {
+        image: require('src/assets/images/drawer-cover.png'),
+        title: 'Jeep Safari in the National....',
         subtitle: 'Restaurant',
     },
-
+    {
+        image: require('src/assets/images/drawer-cover.png'),
+        title: 'Bythisma',
+        subtitle: 'Beach',
+    },
+    {
+        image: require('src/assets/images/drawer-cover.png'),
+        title: 'Jeep Safari in the National....',
+        subtitle: 'Restaurant',
+    },
+    {
+        image: require('src/assets/images/drawer-cover.png'),
+        title: 'Jeep Safari in the National....',
+        subtitle: 'Restaurant',
+    },
+    
+    {
+        image: require('src/assets/images/drawer-cover.png'),
+        title: 'Bythisma',
+        subtitle: 'Beach',
+    },
+    {
+        image: require('src/assets/images/drawer-cover.png'),
+        title: 'Jeep Safari in the National....',
+        subtitle: 'Restaurant',
+    },
+    {
+        image: require('src/assets/images/drawer-cover.png'),
+        title: 'Bythisma',
+        subtitle: 'Beach',
+    },
+    {
+        image: require('src/assets/images/drawer-cover.png'),
+        title: 'Jeep Safari in the National....',
+        subtitle: 'Restaurant',
+    },
 
 ];
 
@@ -54,25 +95,32 @@ class Activity extends Component {
     };
     render() {
         return (
-            <ScrollView
-                showsVerticalScrollIndicator={false}>
-                <View style={styles.container}>
-                    <ListView
-                        // showsVerticalScrollIndicator={false}
-                        vertical={true}
-                        dataSource={this.state.dataSource}
-                        renderRow={rowData => (<View style={styles.listParentView}>
-                            <View style={styles.imageView}>
-                                <Image style={styles.image}
-                                    source={rowData.image}>
-                                </Image>
-                            </View>
-                            <View style={styles.itemView}>
-                                <Text style={styles.listViewText}>{rowData.title}</Text>
-                                <Text style={styles.listViewText1}>{rowData.subtitle}</Text>
-                            </View></View>
-                        )} /></View>
-            </ScrollView>
+
+            <View style={styles.container}>
+                {/* <ScrollView
+                    showsVerticalScrollIndicator={false}> */}
+             
+                        <ListView
+                            // showsVerticalScrollIndicator={false}
+                            //initialListSize={2000}
+                            style={styles.ListStyle}
+                            vertical={true}
+                            dataSource={this.state.dataSource}
+                            renderRow={rowData => (<View style={styles.listParentView}>
+                                <View style={styles.imageView}>
+                                    <Image style={styles.image}
+                                        source={rowData.image}>
+                                    </Image>
+                                </View>
+                                <View style={styles.itemView}>
+                                    <Text style={styles.listViewText}>{rowData.title}</Text>
+                                    <Text style={styles.listViewText1}>{rowData.subtitle}</Text>
+                                </View></View>
+                            )} />
+                   
+                {/* </ScrollView> */}
+                </View>
+
         );
     }
 }
