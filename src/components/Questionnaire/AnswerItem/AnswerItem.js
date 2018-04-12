@@ -8,15 +8,15 @@ import RadioQuestionsField from '../RadioQuestionsField/RadioQuestionsField';
 class AnswerItem extends Component {
   render() {
     const {
-      currentPage,
       item,
       type,
       key,
-      activeIndex,
+      // activeIndex,
       onCheckedHandle,
       onCheckMultiHandle,
       onDateChangeHandle,
-      onRadioSelectHandle,
+      onSliderChangeValueHandle,
+      sliderValue,
     } = this.props;
 
     switch (type) {
@@ -43,8 +43,9 @@ class AnswerItem extends Component {
           <RadioQuestionsField
             item={item}
             key={key}
-            activeIndex={activeIndex}
-            onRadioSelect={(index) => onRadioSelectHandle(index)}
+            sliderValue={sliderValue}
+            // activeIndex={activeIndex}
+            onSliderChangeValue={onSliderChangeValueHandle}
           />
         );
       default:
@@ -52,5 +53,16 @@ class AnswerItem extends Component {
     }
   }
 }
+
+AnswerItem.propTypes = {
+  item: PropTypes.object,
+  type: PropTypes.string,
+  key: PropTypes.number,
+  onCheckedHandle: PropTypes.func,
+  sliderValue: PropTypes.number,
+  onCheckMultiHandle: PropTypes.func,
+  onDateChangeHandle: PropTypes.func,
+  onSliderChangeValueHandle: PropTypes.func,
+};
 
 export default AnswerItem;

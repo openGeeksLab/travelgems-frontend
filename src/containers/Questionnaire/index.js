@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 //   { value: 'fourthValue', isSelected: false },
 // ];
 
-const fourthAnswer = ['1', '2', '3', '4', '5'];
+// const fourthAnswer = ['1', '2', '3', '4', '5'];
 
 class QuestionnaireContainer extends Component {
   constructor(props) {
@@ -20,16 +20,17 @@ class QuestionnaireContainer extends Component {
 
     this.state = {
       currentPage: 1,
-      allPages: R.length(props.questions),
+      allPages: R.length(this.getGroupQAarray()),
       selectedStartDate: null,
       selectedEndDate: null,
+      sliderValue: 1,
       textVal: '',
       // thirdAnswers: thirdAnswers,
-      fourthAnswer: fourthAnswer,
+      // fourthAnswer: fourthAnswer,
       activeIndex: null,
       progress: 0,
       allAnswers: {},
-      groupQAarray: {},
+      // groupQAarray: {},
     };
   }
 
@@ -103,9 +104,10 @@ class QuestionnaireContainer extends Component {
     console.warn('selectedEndDate', this.state.selectedEndDate);
   };
 
-  onRadioSelectHandle = (index) => {
+  onSliderChangeValueHandle = (value) => {
+    // console.warn(value);
     this.setState({
-      activeIndex: index,
+      sliderValue: value,
     });
   };
 
@@ -182,66 +184,57 @@ class QuestionnaireContainer extends Component {
 
     questions.map((q, i) => {
       let index = i + 1;
+      const qAnswers = [];
       R.uniq(qa_map[index]).map((key) => {
-        if (q.group_id.length !== 0) {
-          if (groupIndexes[q.group_id] === undefined) {
-            groupQAarray[index] = [];
-            groupIndexes[q.group_id] = index;
-          }
-          const groupIndex = groupIndexes[q.group_id];
-          groupQAarray[groupIndex].push({
-            ...q,
-            answers: answers[key],
-          });
-        } else {
-          groupQAarray[index] = { ...q, answers: answers[key] };
-        }
+        qAnswers.push(answers[key]);
       });
+      if (q.group_id.length !== 0) {
+        if (groupIndexes[q.group_id] === undefined) {
+          groupQAarray[index] = [];
+          groupIndexes[q.group_id] = index;
+        }
+        const groupIndex = groupIndexes[q.group_id];
+        groupQAarray[groupIndex].push({
+          ...q,
+          answers: qAnswers,
+        });
+      } else {
+        groupQAarray[index] = { ...q, answers: qAnswers };
+      }
     });
 
-    // this.setState({
-    //   groupQAarray: groupQAarray,
-    // });
-
-    // console.warn(JSON.stringify(groupQAarray, null, 2));
     return groupQAarray.filter((u) => u && u);
   };
-
-  componentWillMount() {
-    this.getGroupQAarray();
-  }
 
   render() {
     const {
       isChecked,
       currentPage,
-      thirdAnswers,
+      // thirdAnswers,
+      // fourthAnswer,
       progress,
-      fourthAnswer,
       activeIndex,
+      sliderValue,
     } = this.state;
 
-    const { questions, answers, qa_map } = this.props;
-
-    // console.warn('groupQAarray', JSON.stringify(this.groupQAarray(), null, 2));
-
-    // console.warn(this.state.allAnswers);
+    // const { questions, answers, qa_map } = this.props;
 
     return (
       <Questionnaire
         onCheckedHandle={this.onCheckedHandle}
-        questions={questions}
         isChecked={isChecked}
-        answers={answers}
-        qa_map={qa_map}
+        // questions={questions}
+        // answers={answers}
+        // qa_map={qa_map}
         getGroupQAarray={this.getGroupQAarray}
         currentPage={currentPage}
-        groupQAarray={this.state.groupQAarray}
+        sliderValue={sliderValue}
+        // groupQAarray={this.state.groupQAarray}
         onDateChangeHandle={this.onDateChangeHandle}
         onCheckMultiHandle={this.onCheckMultiHandle}
-        onRadioSelectHandle={this.onRadioSelectHandle}
-        thirdAnswers={thirdAnswers}
-        fourthAnswer={fourthAnswer}
+        onSliderChangeValueHandle={this.onSliderChangeValueHandle}
+        // thirdAnswers={thirdAnswers}
+        // fourthAnswer={fourthAnswer}
         onNextStepHandle={this.onNextStepHandle}
         onPrevStepHandle={this.onPrevStepHandle}
         activeIndex={activeIndex}

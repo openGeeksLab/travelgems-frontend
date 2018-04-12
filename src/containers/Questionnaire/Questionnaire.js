@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
@@ -14,6 +14,7 @@ import RulerElements from '../../components/Questionnaire/RadioQuestionsField/Ru
 import QCalendar from '../../components/Questionnaire/QuestionnaireCalendar/Calendar';
 import QuestionnaireFooter from '../../components/Questionnaire/QuestionnaireFooter/QuestionnaireFooter';
 import AnswerItem from '../../components/Questionnaire/AnswerItem/AnswerItem';
+import QuestionItem from '../../components/Questionnaire/QuestionItem/QuestionItem';
 
 class Questionnaire extends Component {
   // renderTitle = () => {
@@ -160,10 +161,10 @@ class Questionnaire extends Component {
   //   }
   // };
 
-  // asd = (i) => {
-  //   if (this.props.qa_map[i].length === 0) {
-  //     console.warn('dfgdfgdfg');
-  //   }
+  // asd = () => {
+  //   this.props.getGroupQAarray().map((item, i) => {
+  // 		console.log(item)
+  // 	});
   // };
 
   render() {
@@ -178,8 +179,9 @@ class Questionnaire extends Component {
       qa_map,
       onCheckMultiHandle,
       onCheckedHandle,
-      onRadioSelectHandle,
+      onSliderChangeValueHandle,
       onDateChangeHandle,
+      sliderValue,
       getGroupQAarray,
       groupQAarray,
     } = this.props;
@@ -244,24 +246,72 @@ class Questionnaire extends Component {
             console.log(key);
 					})} */}
           {/* {getGroupQAarray().filter((u) => u === undefined)} */}
-          {/* {console.warn(getGroupQAarray())} */}
+          {/* {console.log(getGroupQAarray())} */}
+          {/* {this.asd()} */}
 
           {getGroupQAarray().map((item, i) => {
             let index = i + 1;
             if (index === currentPage) {
-              return (
-                <View>
-                  <View style={styles.titleContainer}>
-                    <Text style={styles.titleNumber}>{currentPage}</Text>
-                    <Icon
-                      size={14}
-                      name="md-arrow-round-forward"
-                      color={COLOR_TURQUOISE}
-                      style={styles.titleIcon}
-                    />
-                    <Text style={styles.titleText}>{item.text}</Text>
+              if (R.type(item) === 'Object') {
+                return (
+                  <View style={{ paddingHorizontal: 27.5 }}>
+                    <QuestionItem text={item.text} currentPage={currentPage} />
+                    <View style={styles.questionsContainer}>
+                      {item.answers.map((aItem, aIndex) => {
+                        return (
+                          <AnswerItem
+                            item={aItem}
+                            type={item.type}
+                            key={aIndex}
+                            currentPage={currentPage}
+                            activeIndex={activeIndex}
+                            sliderValue={sliderValue}
+                            onCheckedHandle={(text) =>
+                              onCheckedHandle(text, aIndex, i)
+                            }
+                            onDateChangeHandle={onDateChangeHandle}
+                            onCheckMultiHandle={onCheckMultiHandle}
+                            onSliderChangeValueHandle={
+                              onSliderChangeValueHandle
+                            }
+                          />
+                        );
+                      })}
+                    </View>
                   </View>
-                </View>
+                );
+              }
+
+              return (
+                <ScrollView>
+                  <View style={styles.groupContainer}>
+                    <QuestionItem
+                      text={item[0].group_name}
+                      currentPage={currentPage}
+                    />
+                    <View style={styles.questionsContainer}>
+                      {item.map((qItem, qIndex) => {
+                        return (
+                          <AnswerItem
+                            item={qItem.answers[0]}
+                            type={qItem.answers[0].type}
+                            key={qIndex}
+                            currentPage={currentPage}
+                            activeIndex={activeIndex}
+                            onCheckedHandle={(text) =>
+                              onCheckedHandle(text, qIndex, i)
+                            }
+                            onDateChangeHandle={onDateChangeHandle}
+                            onCheckMultiHandle={onCheckMultiHandle}
+                            onSliderChangeValueHandle={
+                              onSliderChangeValueHandle
+                            }
+                          />
+                        );
+                      })}
+                    </View>
+                  </View>
+                </ScrollView>
               );
             }
           })}

@@ -1,44 +1,50 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View } from 'react-native';
 import PropTypes from 'prop-types';
+import Slider from '../../../components/MySlider/Slider';
 import styles from './styles';
 import RulerElements from './RulerElements';
-import { COLOR_TURQUOISE } from '../../../constants/Styles';
 
 class RadioQuestionsField extends Component {
   static defaultProps = {
-    onRadioSelect: () => {},
-    item: '',
-    index: 1,
-    selected: false,
+    // onRadioSelect: () => {},
+    // index: 1,
   };
 
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      // sliderValue: props.value
+    };
   }
 
-  renderArray = () => {
-    const { item } = this.props;
+  // renderArray = () => {
+  //   const { item } = this.props;
 
-    let start = item.range_min;
-    const arr = [];
+  //   let start = item.range_min;
+  //   const arr = [];
 
-    while (start <= item.range_max) {
-      arr.push(start++);
-    }
+  //   while (start <= item.range_max) {
+  //     arr.push(start++);
+  //   }
 
-    return arr;
-  };
+  //   return arr;
+  // };
 
   render() {
-    const { item, onRadioSelect, activeIndex } = this.props;
+    const {
+      item,
+      onSliderChangeValue,
+      sliderValue,
+      // onRadioSelect,
+      // activeIndex,
+    } = this.props;
 
     return (
       <View style={styles.questionsContainer}>
-        <RulerElements />
-        <View style={styles.itemContainer}>
+        <RulerElements style={{ marginBottom: 2 }} />
+        {/* <View style={styles.itemContainer}>
           {this.renderArray().map((el, index) => {
             let i = index + 1;
             return (
@@ -57,8 +63,26 @@ class RadioQuestionsField extends Component {
               </TouchableOpacity>
             );
           })}
+				</View> */}
+        <View style={styles.sliderContainer}>
+          <Slider
+            value={sliderValue}
+            step={1}
+            minimumValue={item.range_min}
+            maximumValue={item.range_max}
+            onValueChange={(sliderValue) => onSliderChangeValue(sliderValue)}
+            trackStyle={styles.trackStyle}
+            thumbStyle={styles.thumbStyle}
+            // minimumTrackTintColor="red"
+            minimumTrackTintColor="transparent"
+            customComponent={
+              <View style={styles.customComponent}>
+                <Text style={styles.customComponentText}>{sliderValue}</Text>
+              </View>
+            }
+          />
         </View>
-
+        <RulerElements />
         <View style={styles.containerRange}>
           <Text style={styles.rangeText}>{item.range_min_text}</Text>
           <Text style={styles.rangeText}>{item.range_max_text}</Text>
@@ -69,9 +93,11 @@ class RadioQuestionsField extends Component {
 }
 
 RadioQuestionsField.propTypes = {
-  onRadioSelect: PropTypes.func,
+  // onRadioSelect: PropTypes.func,
+  onSliderChangeValue: PropTypes.func,
+  sliderValue: PropTypes.number,
   item: PropTypes.string,
-  activeIndex: PropTypes.numberm,
+  // activeIndex: PropTypes.numberm,
   index: PropTypes.number,
 };
 

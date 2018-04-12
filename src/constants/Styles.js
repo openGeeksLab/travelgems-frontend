@@ -12,9 +12,10 @@ export const COLOR_DARK_BLUE = '#041DB2';
 export const COLOR_WHITE_OPACITY_70 = 'rgba(255,255,255, 0.7)';
 export const COLOR_WHITE_OPACITY_38 = 'rgba(255,255,255, 0.38)';
 export const COLOR_WHITE_OPACITY_20 = 'rgba(255,255,255, 0.2)';
+export const COLOR_WHITE_OPACITY_16 = 'rgba(255,255,255, 0.16)';
 export const COLOR_DARK_OPACITY_20 = 'rgba(77, 77, 77, 0.2)';
 
 export const questionnaireScreen = {
   bgGradientOne: COLOR_DARK_BLUE,
-  bgGradientTwo: COLOR_TURQUOISE
+  bgGradientTwo: COLOR_TURQUOISE,
 };

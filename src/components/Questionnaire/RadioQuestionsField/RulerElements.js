@@ -12,17 +12,25 @@ class RulerElements extends Component {
   );
 
   render() {
+    const { style } = this.props;
+
     return (
-      <View style={styles.rulerContainer}>
+      <View style={[styles.rulerContainer, style]}>
+        {/* {this.OnePart()}
         {this.OnePart()}
         {this.OnePart()}
         {this.OnePart()}
         {this.OnePart()}
         {this.OnePart()}
         {this.OnePart()}
-        {this.OnePart()}
-        {this.OnePart()}
-        <View style={[styles.rulerElementLong, { marginRight: 0 }]} />
+				{this.OnePart()} */}
+        <View style={styles.rulerElementLong} />
+        <View style={styles.rulerElementLong} />
+        <View style={styles.rulerElementLong} />
+        <View style={styles.rulerElementLong} />
+        <View style={styles.rulerElementLong} />
+        <View style={styles.rulerElementLong} />
+        {/* <View style={[styles.rulerElementLong, { marginRight: 0 }]} /> */}
       </View>
     );
   }
