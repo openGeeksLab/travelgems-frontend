@@ -20,6 +20,10 @@ export default StyleSheet.create({
     width,
     alignItems: 'center',
   },
+  scrollView: {
+    marginBottom: 80,
+    marginTop: 30,
+  },
   questionsContainer: {
     marginTop: 64,
     alignItems: 'center',

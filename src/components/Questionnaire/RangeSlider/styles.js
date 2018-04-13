@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import {
   COLOR_WHITE,
-  COLOR_WHITE_OPACITY_70,
   COLOR_TURQUOISE,
   COLOR_WHITE_OPACITY_16,
 } from '../../../constants/Styles';
@@ -9,18 +8,6 @@ import {
 const WIDTH = 232;
 
 export default StyleSheet.create({
-  container: {
-    borderRadius: 3,
-    borderColor: COLOR_WHITE_OPACITY_70,
-    borderWidth: 0.8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingHorizontal: 8,
-    paddingVertical: 10,
-    width: WIDTH,
-    marginBottom: 8,
-  },
   checkBoxContainer: {
     borderRadius: 3,
     borderColor: COLOR_WHITE,
@@ -56,17 +43,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // marginBottom: 6,
-    // borderWidth: 1,
   },
   rulerElementLong: {
     height: 8,
-    backgroundColor: COLOR_WHITE,
-    width: 1,
-    // marginRight: 49,
-  },
-  rulerElementShort: {
-    height: 4,
     backgroundColor: COLOR_WHITE,
     width: 1,
   },
@@ -74,8 +53,9 @@ export default StyleSheet.create({
     color: COLOR_WHITE,
     fontSize: 12,
   },
-  questionsContainer: {
+  container: {
     alignItems: 'center',
+    marginBottom: 36,
   },
   containerRange: {
     flexDirection: 'row',

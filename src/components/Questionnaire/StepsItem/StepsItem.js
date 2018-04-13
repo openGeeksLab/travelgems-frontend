@@ -11,7 +11,7 @@ import {
 
 const { width } = Dimensions.get('window');
 
-class QuestionnaireFooter extends Component {
+class StepsItem extends Component {
   constructor() {
     super();
 
@@ -57,16 +57,10 @@ class QuestionnaireFooter extends Component {
   }
 }
 
-QuestionnaireFooter.defaultProps = {
-  progress: 0,
-  onNextStep: () => {},
-  onPrevStep: () => {},
-};
-
-QuestionnaireFooter.propTypes = {
+StepsItem.propTypes = {
   progress: PropTypes.number,
   onNextStep: PropTypes.func,
   onPrevStep: PropTypes.func,
 };
 
-export default QuestionnaireFooter;
+export default StepsItem;

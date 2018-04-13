@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import QuestionsField from '../QuestionsField/QuestionsField';
-import MultiQuestionsField from '../MultiQuestionsField/MultiQuestionsField';
-import QCalendar from '../QuestionnaireCalendar/Calendar';
-import RadioQuestionsField from '../RadioQuestionsField/RadioQuestionsField';
+import SingleItem from '../SingleItem/SingleItem';
+import MultipleItem from '../MultipleItem/MultipleItem';
+import QCalendar from '../CalendarItem/CalendarItem';
+import RangeSlider from '../RangeSlider/RangeSlider';
 
 class AnswerItem extends Component {
   render() {
@@ -11,41 +11,43 @@ class AnswerItem extends Component {
       item,
       type,
       key,
-      // activeIndex,
-      onCheckedHandle,
-      onCheckMultiHandle,
-      onDateChangeHandle,
-      onSliderChangeValueHandle,
+      activeIndex,
+      onSingleChoice,
+      onMultipleChoice,
+      onDateChoice,
       sliderValue,
+      onSliderChoice,
+      itemIndex,
     } = this.props;
 
     switch (type) {
       case 'single':
         return (
-          <QuestionsField
-            // text={item.text}
+          <SingleItem
+            activeIndex={activeIndex}
+            itemIndex={itemIndex}
             iconText={item.text}
-            onToggle={() => onCheckedHandle(item.text)}
+            onToggle={() => onSingleChoice(item.text)}
           />
         );
       case 'date':
-        return <QCalendar onDateChange={onDateChangeHandle} />;
+        return <QCalendar onDateChange={onDateChoice} />;
       case 'multiple':
         return (
-          <MultiQuestionsField
+          <MultipleItem
             text={item.text}
             key={key}
-            onToggle={() => onCheckMultiHandle(key)}
+            onToggle={() => onMultipleChoice(item.text)}
           />
         );
       case 'range':
         return (
-          <RadioQuestionsField
+          <RangeSlider
             item={item}
             key={key}
             sliderValue={sliderValue}
             // activeIndex={activeIndex}
-            onSliderChangeValue={onSliderChangeValueHandle}
+            onChangeValue={onSliderChoice}
           />
         );
       default:
@@ -58,11 +60,13 @@ AnswerItem.propTypes = {
   item: PropTypes.object,
   type: PropTypes.string,
   key: PropTypes.number,
-  onCheckedHandle: PropTypes.func,
+  activeIndex: PropTypes.number,
+  onSingleChoice: PropTypes.func,
+  onMultipleChoice: PropTypes.func,
+  onDateChoice: PropTypes.func,
+  onSliderChoice: PropTypes.func,
   sliderValue: PropTypes.number,
-  onCheckMultiHandle: PropTypes.func,
-  onDateChangeHandle: PropTypes.func,
-  onSliderChangeValueHandle: PropTypes.func,
+  itemIndex: PropTypes.number,
 };
 
 export default AnswerItem;
