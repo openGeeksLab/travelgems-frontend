@@ -11,44 +11,29 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { filter, path, splitEvery } from 'ramda';
-import { compose, withProps, withState } from 'recompose';
+import { filter, contains, replace } from 'ramda';
+import { compose, withHandlers, withState } from 'recompose';
 import { connect } from 'react-redux';
 import { FilterActivities } from 'src/components/FilterModal';
 import Widetile from 'src/components/Widetile/Widetile';
 import SearchBar from 'src/components/SearchBar';
-
-const Header = ({ navigation }) => (
-  <View
-    style={{
-      paddingTop: 50,
-      paddingHorizontal: 26,
-      backgroundColor: '#041DB2',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    }}
-  >
-    <EntypoIcon
-      name="menu"
-      color="#fff"
-      size={24}
-      onPress={() => navigation.navigate('DrawerOpen')}
-    />
-
-    <Text style={{ color: 'white', fontSize: 24 }}>Activities</Text>
-    <Icon name="close" color="#fff" size={24} />
-  </View>
-);
+import {
+  getTextFilterHelper,
+  arrayContainsArray,
+  valueIsTrue,
+} from 'src/selectors';
+import Header from 'src/components/Header';
+import { filtersSelector } from './selector';
 
 const Acitivities = ({
   navigation,
   isModalVisible,
   setIsModalVisible,
   activitiesFilters,
-  filteredDestination,
+  filteredActivity,
   filterText,
-  setFilterText,
+  onPressFilter,
+  onSearchText,
 }: Object) => (
   <View>
     <FilterActivities
@@ -56,9 +41,7 @@ const Acitivities = ({
       isModalVisible={isModalVisible}
       setIsModalVisible={setIsModalVisible}
       filters={activitiesFilters}
-      onPressFilter={text => {
-        setFilterText(text);
-      }}
+      onPressFilter={onPressFilter}
     />
     <ImageBackground
       style={{
@@ -70,19 +53,18 @@ const Acitivities = ({
         position: 'absolute',
       }}
     />
-    <Header navigation={navigation} />
+    <Header navigation={navigation} title="Activities" />
     <SearchBar
       filterText={filterText}
       onPressFilter={() => {
         setIsModalVisible(true);
       }}
-      onLeftPress={() => {
-        setFilterText(null);
-      }}
+      placeholder="Type a activity?"
+      onSearchText={onSearchText}
     />
     <FlatList
       onEndReachedThreshold={0.5}
-      data={filteredDestination}
+      data={filteredActivity}
       keyExtractor={(item, index) => index}
       renderItem={({ item }) => {
         const activity = item;
@@ -93,6 +75,9 @@ const Acitivities = ({
             subtitle={activity.category_name}
             img={activity.inner_photo}
             favourite={activity.favourite}
+            onPress={() => {
+              navigation.navigate('Activity', { activity });
+            }}
           />
         );
       }}
@@ -101,20 +86,83 @@ const Acitivities = ({
 );
 
 export default compose(
-  withState('isModalVisible', 'setIsModalVisible', false),
-  withState('filterText', 'setFilterText', null),
   connect(
     state => ({
       activities: state.content.activitiesArray,
-      activitiesFilters: state.content.activitiesFilters,
+      activitiesFilters: filtersSelector(state),
     }),
     {},
   ),
-  withProps(({ activities, filterText }) => ({
-    filteredDestination: filterText
-      ? filter(activity => {
-          return path(['extra_fields', 'country'], activity) === filterText;
-        }, activities)
-      : activities,
-  })),
+  withState('isModalVisible', 'setIsModalVisible', false),
+  withState(
+    'filteredActivity',
+    'setFilteredActivity',
+    ({ activities }) => activities,
+  ),
+  withHandlers({
+    onSearchText: ({
+      filteredActivity,
+      setFilteredActivity,
+      activities,
+    }) => text => {
+      const textTrim = text.trim();
+      if (textTrim != '') {
+        setFilteredActivity(
+          filteredActivity.filter(({ name }) => name.includes(textTrim)),
+        );
+      } else {
+        setFilteredActivity(activities);
+      }
+    },
+    onPressFilter: ({ activities, setFilteredActivity }) => filters => {
+      const result = filter(activity => {
+        const contryFilter = getTextFilterHelper({
+          country: filters.country,
+        });
+
+        /**
+        |--------------------------------------------------
+        | filter price checking
+        |--------------------------------------------------
+        */
+        let isPriceTrue = false;
+        const priceFilter = valueIsTrue(filters.price);
+        if (priceFilter.length > 0) {
+          const priceNumb = replace(/^\D+/g, '', priceFilter[0]);
+          if (priceFilter[0].includes('>=')) {
+            isPriceTrue = activity.price > priceNumb;
+          } else {
+            isPriceTrue = activity.price < priceNumb;
+          }
+        } else {
+          isPriceTrue = true;
+        }
+
+        /**
+        |--------------------------------------------------
+        | filter type checking
+        | Because type is multiple select then it difference when filter
+        |--------------------------------------------------
+        */
+        const typeFilter = getTextFilterHelper({
+          type: filters.type,
+        });
+        const isHasType = !typeFilter
+          ? true
+          : typeFilter.length > 0
+            ? contains(
+                activity.tags.filter(val => val.includes('type'))[0],
+                typeFilter,
+              )
+            : true;
+
+        return (
+          arrayContainsArray(activity.tags, contryFilter) &&
+          isHasType &&
+          isPriceTrue
+        );
+      }, activities);
+      setFilteredActivity(result);
+    },
+  }),
 )(Acitivities);

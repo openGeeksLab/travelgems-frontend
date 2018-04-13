@@ -10,7 +10,10 @@ export const destinationsByIdSelector = createSelector(
 );
 
 export const activitiesSelector = createSelector(
-  (_, id) => id,
+  (_, id) => {
+    console.log('id', id);
+    return id;
+  },
   destinationsActivities,
   (uuid, activities) => activities[uuid],
 );

@@ -6,7 +6,7 @@ const { StyleSheet, Dimensions, Platform } = React;
 export default {
     container: {
         flex: 1,
-
+        backgroundColor: '#FFFFFF'
     },
     headerStyle: {
         backgroundColor: '#041DB2',
@@ -39,6 +39,7 @@ export default {
 
         paddingLeft: 20,
         marginTop: 30,
+
         //justifyContent:'center',
         alignItems: 'center',
         width: Dimensions.get("window").width / .95,

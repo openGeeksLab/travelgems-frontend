@@ -5,48 +5,34 @@ import { Text, Title } from 'native-base';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Entypo';
 import Favorite from '../../components/Favorite/Favorite';
-import { withNavigation } from 'react-navigation';
 
-class Smalltile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  onPress() {
-    console.log('test');
-    this.props.navigation.navigate('Destination', { name: this.props.title });
-  }
-  render() {
-    return (
-      <View style={styles.component}>
-        <TouchableOpacity
-          style={styles.image}
-          onPress={() => {
-            this.onPress();
-          }}
-        >
-          <ImageBackground
-            style={styles.image}
-            borderRadius={3}
-            resizeMode="cover"
-            source={{ uri: this.props.img }}
-          >
-            <Favorite style={styles.heart} favorite={this.props.favorite} />
-          </ImageBackground>
-        </TouchableOpacity>
+const Smalltile = ({
+  titleStyle,
+  favorite,
+  img,
+  subtitleStyle,
+  subtitle,
+  title,
+  onPress,
+}: Object) => (
+  <View style={styles.component}>
+    <TouchableOpacity style={styles.image} onPress={onPress}>
+      <ImageBackground
+        style={styles.image}
+        borderRadius={3}
+        resizeMode="cover"
+        source={{ uri: img }}
+      >
+        <Favorite style={styles.heart} favorite={favorite} />
+      </ImageBackground>
+    </TouchableOpacity>
 
-        <Title style={[styles.title, this.props.titleStyle]}>
-          {this.props.title}
-        </Title>
-        <Text style={[styles.subtitle, this.props.subtitleStyle]}>
-          {this.props.subtitle}
-        </Text>
-      </View>
-    );
-  }
-}
+    <Title style={[styles.title, titleStyle]}>{title}</Title>
+    <Text style={[styles.subtitle, subtitleStyle]}>{subtitle}</Text>
+  </View>
+);
 
 Smalltile.defaultProps = {
   img: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
 };
-export default withNavigation(Smalltile);
+export default Smalltile;

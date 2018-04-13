@@ -9,7 +9,7 @@ import { Container } from 'native-base';
 import MapView, { Marker } from 'react-native-maps';
 
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { compose, withHandlers } from 'recompose';
+import { compose, withHandlers, withProps } from 'recompose';
 import { connect } from 'react-redux';
 import Collapsed from '../../components/Collapsed/Collapsed';
 import MoreTextView from '../../components/Collapsed/MoreTextView';
@@ -99,7 +99,7 @@ const BattleItem = ({ imageName = '' }) => (
   </View>
 );
 
-const Destination = ({ destination, activities }) => (
+const Destination = ({ destination, activities, latitude, longitude }) => (
   <Container>
     <CustomHeader />
     <ScrollView style={styles.scrollView}>
@@ -194,8 +194,8 @@ const Destination = ({ destination, activities }) => (
       <MapView
         style={styles.mapView}
         region={{
-          latitude: R.path(['extra_fields', 'latitude'], destination),
-          longitude: R.path(['extra_fields', 'longitude'], destination),
+          latitude: latitude,
+          longitude: longitude,
           latitudeDelta: 0.015,
           longitudeDelta: 0.0121,
         }}
@@ -204,8 +204,8 @@ const Destination = ({ destination, activities }) => (
           // image={stopMarker}
           // anchor={{ x: 0.5, y: 0.5 }}
           coordinate={{
-            latitude: R.path(['extra_fields', 'latitude'], destination),
-            longitude: R.path(['extra_fields', 'longitude'], destination),
+            latitude: latitude,
+            longitude: longitude,
           }}
         />
       </MapView>
@@ -323,13 +323,19 @@ const Destination = ({ destination, activities }) => (
 );
 
 export default compose(
+  withProps(({ navigation: { state: { params: { destination } } } }) => {
+    const latitude = R.path(['extra_fields', 'latitude'], destination);
+
+    const longitude = R.path(['extra_fields', 'longitude'], destination);
+    return {
+      destination,
+      latitude: latitude ? latitude : 0,
+      longitude: longitude ? longitude : 0,
+    };
+  }),
   connect(
-    state => ({
-      destination: destinationsByIdSelector(
-        state,
-        '24ed67928db14878b7730baf09f479a2',
-      ),
-      activities: activitiesSelector(state, '24ed67928db14878b7730baf09f479a2'),
+    (state, { destination }) => ({
+      activities: activitiesSelector(state, destination.uuid),
     }),
     {},
   ),

@@ -11,14 +11,14 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { filter, path, splitEvery } from 'ramda';
+import { filter, path, splitEvery, keys } from 'ramda';
 import { compose, withProps, withState } from 'recompose';
 import { connect } from 'react-redux';
 import { FilterDestinations } from 'src/components/FilterModal';
 import Smalltile from 'src/components/Smalltile/Smalltile';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import SearchBar from 'src/components/SearchBar';
-
+import { getFiltersObject } from 'src/selectors/index';
 const Filter = ({
   navigation,
   isModalVisible,
@@ -28,14 +28,14 @@ const Filter = ({
   filterText,
   setFilterText,
 }: Object) => (
-  <View>
+  <View style={{ marginBottom: 100 }}>
     <FilterDestinations
       containerStyle={{ marginTop: 55 }}
       isModalVisible={isModalVisible}
       setIsModalVisible={setIsModalVisible}
       filters={destinationsFilters}
-      onPressFilter={text => {
-        setFilterText(text);
+      onPressFilter={filter => {
+        setFilterText(countryTextFilterHelper(filter));
       }}
     />
     <ImageBackground
@@ -50,6 +50,7 @@ const Filter = ({
     />
 
     <SearchBar
+      containerStyle={{ marginTop: 55 }}
       filterText={filterText}
       onPressFilter={() => {
         setIsModalVisible(true);
@@ -75,6 +76,9 @@ const Filter = ({
                 subtitle={path(['extra_fields', 'country'], destination)}
                 img={destination.img_preview}
                 favourite={destination.favourite}
+                onPress={() => {
+                  navigation.navigate('Destination', { destination });
+                }}
               />
             ))}
           </View>
@@ -84,27 +88,37 @@ const Filter = ({
   </View>
 );
 
+const countryTextFilterHelper = filter => {
+  let text = null;
+  if (filter.country) {
+    keys(filter.country).forEach(key => {
+      if (filter.country[key]) {
+        text = key;
+        return;
+      }
+    });
+  }
+  return text;
+};
+
 export default compose(
   withState('isModalVisible', 'setIsModalVisible', false),
   withState(
     'filterText',
     'setFilterText',
-    ({ navigation: { state: { params: { text } } } }) => text,
+    ({ navigation: { state: { params: { filter } } } }) => {
+      return countryTextFilterHelper(filter);
+    },
   ),
   connect(
     state => ({
       destinations: state.content.destinationsArray,
-      destinationsFilters: state.content.destinationsFilters,
+      destinationsFilters: getFiltersObject(state.content.destinationsFilters),
     }),
     {},
   ),
   withProps(({ destinations, filterText }) => ({
     filteredDestination: filter(destination => {
-      console.log(
-        'path  destination) ===',
-        path(['extra_fields', 'country'], destination, filterText),
-      );
-
       return path(['extra_fields', 'country'], destination) === filterText;
     }, destinations),
   })),

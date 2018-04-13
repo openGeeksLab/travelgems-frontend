@@ -4,19 +4,20 @@ const { StyleSheet, Dimensions, Platform } = React;
 
 export default StyleSheet.create({
   customHeader: {
-    flex: 0.1,
     flexDirection: 'row',
-    backgroundColor: 'blue',
-    height: 30,
-    width: Dimensions.get("window").width,
+    zIndex: 100,
+    height: 55,
     position: 'absolute',
-    flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#041DB2',
     justifyContent: 'space-between',
-    marginHorizontal: 10,
+    paddingTop: 20,
+    right: 0,
+    top: 0,
+    left: 0,
   },
   headerIcon1: {
-    marginRight: 40,
+    marginLeft: 20,
   },
   headerIcon2: {
     marginHorizontal: 18,

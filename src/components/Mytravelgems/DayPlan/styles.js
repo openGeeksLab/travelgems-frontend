@@ -3,7 +3,7 @@ const React = require("react-native");
 const { Dimensions, Platform } = React;
 export default StyleSheet.create({
     container: {
-        flex: 1,
+       
         backgroundColor: '#fff',
 
 
@@ -18,7 +18,7 @@ export default StyleSheet.create({
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height / 2.5,
     },
-
+    
     Arrowimage: {
         backgroundColor: 'transparent',
         position: 'absolute',
@@ -66,7 +66,6 @@ export default StyleSheet.create({
     parrentViewText: {
         width: Dimensions.get("window").width / 1.3,
         marginLeft: 35,
-        height: Dimensions.get("window").height,
         marginTop: 15,
 
 

@@ -15,27 +15,31 @@ const launchscreenBg = require('src/assets/images/launchscreen-bg.png');
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import Discover from '../../containers/Discover/Discover';
 import Activities from '../../containers/Activities/Activities';
-import Orders from '../../containers/Orders/Orders';
+import Orders from '../../containers/Myorder/Myorderplan/MyOrderPlan';
 import Profile from '../../containers/Profile/Profile';
 import Cart from '../../containers/Cart/Cart';
 import Filter from '../../containers/Discover/Filter';
+import Activity from '../../containers/Activity/Activity';
+import Destination from '../../containers/Destination/Destination';
 
 const DiscoverStack = StackNavigator(
   {
     Discover: {
       screen: Discover,
-      navigationOptions: {
-        tabBarLabel: 'Discover',
-        tabBarIcon: ({ tintColor }) => {
-          return <Icon name="place" type="home" color="#fff" />;
-        },
-      },
     },
     Filter: { screen: Filter },
+    Activity: { screen: Activity },
+    Destination: { screen: Destination },
   },
   {
     initialRouteName: 'Discover',
     headerMode: 'none',
+    navigationOptions: {
+      tabBarLabel: 'Discover',
+      tabBarIcon: ({ tintColor }) => {
+        return <Icon name="place" type="home" color="#fff" />;
+      },
+    },
   },
 );
 
@@ -43,17 +47,19 @@ const ActivitiesStack = StackNavigator(
   {
     Activities: {
       screen: Activities,
-      navigationOptions: {
-        tabBarLabel: 'Activities',
-        tabBarIcon: ({ tintColor }) => (
-          <Icon name="flash-on" type="home" color="#fff" />
-        ),
-      },
     },
+    Activity: { screen: Activity },
+    Destination: { screen: Destination },
   },
   {
     initialRouteName: 'Activities',
     headerMode: 'none',
+    navigationOptions: {
+      tabBarLabel: 'Activities',
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name="flash-on" type="home" color="#fff" />
+      ),
+    },
   },
 );
 
@@ -83,6 +89,6 @@ var Tabview = TabNavigator(
   },
 );
 Tabview.navigationOptions = {
-  title: 'tab example',
+  title: 'tab travelgems',
 };
 export default Tabview;

@@ -13,64 +13,45 @@ const datas = [
     icon: 'home',
     bg: '#C5F442',
   },
-  {
-    name: 'Activity',
-    route: 'Activity',
-    icon: '',
-    bg: '#00BFFF',
-    types: 5,
-  },
-  {
-    name: 'Destination',
-    route: 'Destination',
-    icon: '',
-    bg: '#00BFFF',
-    types: 5,
-  },
+
   {
     name: 'Questionnaire',
     route: 'Questionnaire',
     icon: '',
     bg: '#00BFFF',
   },
+  {
+    name: 'TravelGems',
+    route: 'Mytravelgems',
+    icon: '',
+    bg: '#00BFFF',
+  },
 ];
 
-class SideBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shadowOffsetWidth: 1,
-      shadowRadius: 4,
-    };
-  }
-
-  render() {
-    return (
-      <Container>
-        <Content bounces={true} style={styles.container}>
-          <List containerStyle={{ marginTop: 80 }}>
-            {datas.map((data, i) => (
-              <ListItem
-                roundAvatar
-                avatar={
-                  <Avatar
-                    small
-                    icon={{ name: data.icon, color: 'black' }}
-                    overlayContainerStyle={{ backgroundColor: 'transparent' }}
-                    activeOpacity={1}
-                    containerStyle={{}}
-                  />
-                }
-                key={i}
-                title={data.name}
-                onPress={() => this.props.navigation.navigate(data.route)}
+const SideBar = ({ navigation }) => (
+  <Container>
+    <Content bounces={true} style={styles.container}>
+      <List containerStyle={{ marginTop: 80 }}>
+        {datas.map((data, i) => (
+          <ListItem
+            roundAvatar
+            avatar={
+              <Avatar
+                small
+                icon={{ name: data.icon, color: 'black' }}
+                overlayContainerStyle={{ backgroundColor: 'transparent' }}
+                activeOpacity={1}
+                containerStyle={{}}
               />
-            ))}
-          </List>
-        </Content>
-      </Container>
-    );
-  }
-}
+            }
+            key={i}
+            title={data.name}
+            onPress={() => navigation.navigate(data.route)}
+          />
+        ))}
+      </List>
+    </Content>
+  </Container>
+);
 
 export default SideBar;
