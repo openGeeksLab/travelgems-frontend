@@ -3,17 +3,9 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import PropTypes from 'prop-types';
 import styles from './styles';
-import { COLOR_WHITE, COLOR_TURQUOISE } from '../../constants/Styles';
+import { COLOR_WHITE, COLOR_TURQUOISE } from '../../../constants/Styles';
 
-class MultiQuestionsField extends Component {
-  static defaultProps = {
-    text: this.props,
-    iconText: this.props,
-    renderIcon: this.props,
-    onToggle: this.props,
-    isChecked: false,
-  };
-
+class MultipleItem extends Component {
   constructor(props) {
     super(props);
 
@@ -70,7 +62,7 @@ class MultiQuestionsField extends Component {
   }
 }
 
-MultiQuestionsField.propTypes = {
+MultipleItem.propTypes = {
   text: PropTypes.string,
   iconText: PropTypes.string,
   isChecked: PropTypes.bool,
@@ -78,4 +70,4 @@ MultiQuestionsField.propTypes = {
   onToggle: PropTypes.func,
 };
 
-export default MultiQuestionsField;
+export default MultipleItem;

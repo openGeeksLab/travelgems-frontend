@@ -3,7 +3,7 @@ import {
   COLOR_TURQUOISE,
   COLOR_WHITE,
   COLOR_WHITE_OPACITY_20,
-} from '../../constants/Styles';
+} from '../../../constants/Styles';
 
 export default StyleSheet.create({
   container: {

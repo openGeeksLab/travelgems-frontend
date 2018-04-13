@@ -1,170 +1,29 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
+import R from 'ramda';
 import styles from './styles';
-import { questionnaireScreen, COLOR_TURQUOISE } from '../../constants/Styles';
-import QuestionsField from '../../components/QuestionsField/QuestionsField';
-import MultiQuestionsField from '../../components/MultiQuestionsField/MultiQuestionsField';
-import RadioQuestionsField from '../../components/RadioQuestionsField/RadioQuestionsField';
-import RulerElements from '../../components/RadioQuestionsField/RulerElements';
-import QCalendar from '../../components/QuestionnaireCalendar/Calendar';
-import QuestionnaireFooter from '../../components/QuestionnaireFooter/QuestionnaireFooter';
+import { questionnaireScreen } from '../../constants/Styles';
+import StepsItem from '../../components/Questionnaire/StepsItem/StepsItem';
+import AnswerItem from '../../components/Questionnaire/AnswerItem/AnswerItem';
+import QuestionItem from '../../components/Questionnaire/QuestionItem/QuestionItem';
+// import QCalendar from '../../components/Questionnaire/QuestionnaireCalendar/Calendar';
 
-class QuestionnaireFirst extends Component {
-  renderTitle = () => {
-    const { currentPage, questions } = this.props;
-
-    // switch (questions.type) {
-    //   case 'single':
-    //     return (
-    //       <View style={styles.titleContainer}>
-    //         <Text style={styles.titleNumber}>{currentPage}</Text>
-    //         <Icon
-    //           size={14}
-    //           name="md-arrow-round-forward"
-    //           color={COLOR_TURQUOISE}
-    //           style={styles.titleIcon}
-    //         />
-    //         <Text style={styles.titleText}>Key reason of your tip</Text>
-    //       </View>
-    //     );
-    //   case 'date':
-    //     return (
-    //       <View style={styles.titleContainer}>
-    //         <Text style={styles.titleNumber}>{currentPage}</Text>
-    //         <Icon
-    //           size={14}
-    //           name="md-arrow-round-forward"
-    //           color={COLOR_TURQUOISE}
-    //           style={styles.titleIcon}
-    //         />
-    //         <Text style={styles.titleText}>Arrival and departure dates:</Text>
-    //       </View>
-    //     );
-    //   case 'multiple':
-    //     return (
-    //       <View style={styles.titleContainer}>
-    //         <Text style={styles.titleNumber}>{currentPage}</Text>
-    //         <Icon
-    //           size={14}
-    //           name="md-arrow-round-forward"
-    //           color={COLOR_TURQUOISE}
-    //           style={styles.titleIcon}
-    //         />
-    //         <Text style={styles.titleText}>
-    //           Your favorite activities have to do with:
-    //         </Text>
-    //       </View>
-    //     );
-    //   case 'range':
-    //     return (
-    //       <View style={styles.titleContainer}>
-    //         <Text style={styles.titleNumber}>{currentPage}</Text>
-    //         <Icon
-    //           size={14}
-    //           name="md-arrow-round-forward"
-    //           color={COLOR_TURQUOISE}
-    //           style={styles.titleIcon}
-    //         />
-    //         <Text style={styles.titleText}>Your kind of beach is</Text>
-    //       </View>
-    //     );
-    //   default:
-    //     return null;
-    // }
-  };
-  renderContent = () => {
-    const {
-      onCheckedHandle,
-      currentPage,
-      onDateChangeHandle,
-      onCheckMultiHandle,
-      thirdAnswers,
-      fourthAnswer,
-      onRadioSelectHandle,
-      activeIndex,
-    } = this.props;
-
-    switch (currentPage) {
-      case 1:
-        return (
-          <View style={styles.questionsContainer}>
-            <QuestionsField
-              text="Lorem"
-              iconText="A"
-              onToggle={(value) => onCheckedHandle(value)}
-            />
-            <QuestionsField
-              text="Ipsum"
-              iconText="B"
-              onToggle={(value) => onCheckedHandle(value)}
-            />
-            <QuestionsField
-              text="Dolor"
-              iconText="C"
-              onToggle={(value) => onCheckedHandle(value)}
-            />
-            <QuestionsField
-              text="Elit"
-              iconText="D"
-              onToggle={(value) => onCheckedHandle(value)}
-            />
-          </View>
-        );
-      case 2:
-        return (
-          <View>
-            <QCalendar onDateChange={onDateChangeHandle} />
-          </View>
-        );
-      case 3:
-        return (
-          <View style={styles.questionsContainer}>
-            {thirdAnswers.map((item, index) => (
-              <MultiQuestionsField
-                text={item.value}
-                onToggle={() => onCheckMultiHandle(index)}
-              />
-            ))}
-          </View>
-        );
-      case 4:
-        return (
-          <View style={styles.questionsContainer}>
-            <RulerElements />
-            <View style={styles.fourthContainer}>
-              {fourthAnswer.map((item, index) => (
-                <RadioQuestionsField
-                  item={item}
-                  index={index}
-                  key={index}
-                  selected={index === activeIndex}
-                  onRadioSelect={() => onRadioSelectHandle(index)}
-                />
-              ))}
-            </View>
-            <View style={styles.containerRange}>
-              <Text style={styles.rangeText}>TextLeft</Text>
-              <Text style={styles.rangeText}>TextRight</Text>
-            </View>
-          </View>
-        );
-      default:
-        return <Text>The end</Text>;
-    }
-  };
-
+class Questionnaire extends Component {
   render() {
     const {
       onNextStepHandle,
       progress,
       onPrevStepHandle,
-      questions,
       currentPage,
-      answers,
-      aKey,
+      activeIndex,
+      onSingleChoice,
+      onMultipleChoice,
+      onSliderChoice,
+      onDateChoice,
+      sliderValue,
+      getGroupQAarray,
     } = this.props;
     return (
       <LinearGradient
@@ -178,27 +37,76 @@ class QuestionnaireFirst extends Component {
         style={{ flex: 1 }}
       >
         <View style={styles.container}>
-          {questions.map((q, index) => {
-            if (index + 1 === currentPage) {
-              return (
-                <View>
-                  <View style={styles.titleContainer}>
-                    <Text style={styles.titleNumber}>{currentPage}</Text>
-                    <Icon
-                      size={14}
-                      name="md-arrow-round-forward"
-                      color={COLOR_TURQUOISE}
-                      style={styles.titleIcon}
-                    />
-                    <Text style={styles.titleText}>{q.text}</Text>
+          {getGroupQAarray().map((item, i) => {
+            let index = i + 1;
+            if (index === currentPage) {
+              if (R.type(item) === 'Object') {
+                return (
+                  <View style={{ paddingHorizontal: 27.5 }}>
+                    <QuestionItem text={item.text} currentPage={currentPage} />
+                    <View style={styles.questionsContainer}>
+                      {item.answers.map((aItem, aIndex) => {
+                        return (
+                          <AnswerItem
+                            item={aItem}
+                            type={item.type}
+                            key={aIndex}
+                            currentPage={currentPage}
+                            activeIndex={activeIndex}
+                            sliderValue={sliderValue}
+                            itemIndex={aIndex}
+                            onSingleChoice={(text) =>
+                              onSingleChoice(text, aIndex, i)
+                            }
+                            onDateChoice={onDateChoice}
+                            onMultipleChoice={(text) =>
+                              onMultipleChoice(text, aIndex)
+                            }
+                            onSliderChoice={onSliderChoice}
+                          />
+                        );
+                      })}
+                    </View>
                   </View>
-                </View>
+                );
+              }
+
+              return (
+                <ScrollView style={styles.scrollView}>
+                  <View style={styles.groupContainer}>
+                    <QuestionItem
+                      text={item[0].group_name}
+                      currentPage={currentPage}
+                    />
+                    <View style={styles.questionsContainer}>
+                      {item.map((qItem, qIndex) => {
+                        return (
+                          <AnswerItem
+                            item={qItem.answers[0]}
+                            type={qItem.answers[0].type}
+                            key={qIndex}
+                            currentPage={currentPage}
+                            sliderValue={sliderValue}
+                            activeIndex={activeIndex}
+                            itemIndex={qIndex}
+                            onSingleChoice={(text) =>
+                              onSingleChoice(text, qIndex, i)
+                            }
+                            onDateChoice={onDateChoice}
+                            onMultipleChoice={(text) =>
+                              onMultipleChoice(text, aIndex)
+                            }
+                            onSliderChoice={onSliderChoice}
+                          />
+                        );
+                      })}
+                    </View>
+                  </View>
+                </ScrollView>
               );
             }
-            return <View />;
           })}
-          {this.renderContent()}
-          <QuestionnaireFooter
+          <StepsItem
             onNextStep={onNextStepHandle}
             onPrevStep={onPrevStepHandle}
             progress={progress}
@@ -209,20 +117,18 @@ class QuestionnaireFirst extends Component {
   }
 }
 
-QuestionnaireFirst.defaultProps = {
-  onCheckedHandle: () => {},
-  currentPage: 1,
-  onPrevStepHandle: () => {},
-  progress: 0,
-  onNextStepHandle: () => {},
-};
-
-QuestionnaireFirst.propTypes = {
-  onCheckedHandle: PropTypes.func,
+Questionnaire.propTypes = {
+  sliderValue: PropTypes.number,
   currentPage: PropTypes.number,
+  onSingleChoice: PropTypes.func,
+  onMultipleChoice: PropTypes.func,
+  onSliderChoice: PropTypes.func,
+  onDateChoice: PropTypes.func,
   progress: PropTypes.number,
+  getGroupQAarray: PropTypes.func,
   onNextStepHandle: PropTypes.func,
   onPrevStepHandle: PropTypes.func,
+  activeIndex: PropTypes.number,
 };
 
-export default QuestionnaireFirst;
+export default Questionnaire;

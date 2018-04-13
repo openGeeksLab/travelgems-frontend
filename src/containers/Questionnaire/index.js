@@ -5,55 +5,33 @@ import { compose } from 'recompose';
 import R from 'ramda';
 import PropTypes from 'prop-types';
 
-const thirdAnswers = [
-  { value: 'firstValue', isSelected: false },
-  { value: 'secondValue', isSelected: false },
-  { value: 'thirdValue', isSelected: false },
-  { value: 'fourthValue', isSelected: false },
-];
-
-const fourthAnswer = ['1', '2', '3', '4', '5'];
-
 class QuestionnaireContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       currentPage: 1,
-      allPages: R.length(props.questions),
+      allPages: R.length(this.getGroupQAarray()),
       selectedStartDate: null,
       selectedEndDate: null,
-      textVal: '',
-      thirdAnswers: thirdAnswers,
-      fourthAnswer: fourthAnswer,
+      sliderValue: 1,
       activeIndex: null,
       progress: 0,
+      allAnswers: {},
     };
   }
 
-  onCheckedHandle = (textVal) => {
+  onSingleChoice = (text, index, currentPage) => {
     this.setState({
-      textVal,
+      activeIndex: index,
     });
   };
 
-  onCheckMultiHandle = (index) => {
-    const data = this.state.thirdAnswers;
-
-    data.map((item, num) => {
-      if (index === num) {
-        item.isSelected = !item.isSelected;
-        return item;
-      }
-      return item;
-    });
-
-    this.setState({
-      thirdAnswers: data,
-    });
+  onMultipleChoice = (text, index) => {
+    // console.warn('text', text);
   };
 
-  onDateChangeHandle = (date, type) => {
+  onDateChoice = (date, type) => {
     if (type === 'END_DATE') {
       this.setState({
         selectedEndDate: date,
@@ -64,11 +42,14 @@ class QuestionnaireContainer extends Component {
         selectedEndDate: null,
       });
     }
+
+    // console.warn('selectedStartDate', this.state.selectedStartDate);
+    // console.warn('selectedEndDate', this.state.selectedEndDate);
   };
 
-  onRadioSelectHandle = (index) => {
+  onSliderChoice = (value) => {
     this.setState({
-      activeIndex: index,
+      sliderValue: value,
     });
   };
 
@@ -108,35 +89,55 @@ class QuestionnaireContainer extends Component {
     }
   };
 
-  aKey = () => {
-    return R.uniq(R.flatten(Object.values(this.props.qa_map)));
+  getGroupQAarray = () => {
+    const { questions, qa_map, answers } = this.props;
+
+    let groupQAarray = [];
+    const groupIndexes = {};
+
+    questions.map((q, i) => {
+      let index = i + 1;
+      const qAnswers = [];
+      R.uniq(qa_map[index]).map((key) => {
+        qAnswers.push(answers[key]);
+      });
+      if (q.group_id.length !== 0) {
+        if (groupIndexes[q.group_id] === undefined) {
+          groupQAarray[index] = [];
+          groupIndexes[q.group_id] = index;
+        }
+        const groupIndex = groupIndexes[q.group_id];
+        groupQAarray[groupIndex].push({
+          ...q,
+          answers: qAnswers,
+        });
+      } else {
+        groupQAarray[index] = { ...q, answers: qAnswers };
+      }
+    });
+
+    return groupQAarray.filter((u) => u && u);
   };
 
   render() {
     const {
       isChecked,
       currentPage,
-      thirdAnswers,
       progress,
-      fourthAnswer,
       activeIndex,
+      sliderValue,
     } = this.state;
-
-    const { questions, answers } = this.props;
 
     return (
       <Questionnaire
-        onCheckedHandle={this.onCheckedHandle}
-        questions={questions}
+        onSingleChoice={this.onSingleChoice}
+        onMultipleChoice={this.onMultipleChoice}
+        onDateChoice={this.onDateChoice}
+        onSliderChoice={this.onSliderChoice}
         isChecked={isChecked}
-        aKey={this.aKey}
-        answers={answers}
+        getGroupQAarray={this.getGroupQAarray}
         currentPage={currentPage}
-        onDateChangeHandle={this.onDateChangeHandle}
-        onCheckMultiHandle={this.onCheckMultiHandle}
-        onRadioSelectHandle={this.onRadioSelectHandle}
-        thirdAnswers={thirdAnswers}
-        fourthAnswer={fourthAnswer}
+        sliderValue={sliderValue}
         onNextStepHandle={this.onNextStepHandle}
         onPrevStepHandle={this.onPrevStepHandle}
         activeIndex={activeIndex}
@@ -145,12 +146,6 @@ class QuestionnaireContainer extends Component {
     );
   }
 }
-
-QuestionnaireContainer.defaultProps = {
-  questions: [],
-  qa_map: {},
-  answers: {},
-};
 
 QuestionnaireContainer.propTypes = {
   questions: PropTypes.array,
@@ -161,7 +156,6 @@ QuestionnaireContainer.propTypes = {
 export default compose(
   connect(
     (state) => ({
-      questionnaire: state.content.poll,
       questions: state.content.poll.questions,
       qa_map: state.content.poll.qa_map,
       answers: state.content.poll.answers,

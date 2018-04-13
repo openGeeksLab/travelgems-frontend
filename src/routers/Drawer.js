@@ -27,7 +27,8 @@ const MainDrawerRouter = DrawerNavigator(
    DayPlan: { screen: DayPlan },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Questionnaire',
+    // initialRouteName: 'Home',
     contentOptions: {
       activeTintColor: '#e91e63',
     },
