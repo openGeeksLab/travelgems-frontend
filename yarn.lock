@@ -3667,6 +3667,10 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+link@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/link/-/link-0.1.5.tgz#7fc7aa5bd3f6ac5a19c5255a23f4207d6852e92e"
+
 linked-list@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/linked-list/-/linked-list-0.1.0.tgz#798b0ff97d1b92a4fd08480f55aea4e9d49d37bf"
@@ -4805,6 +4809,10 @@ react-native-drawer@2.5.0:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
 
+react-native-easy-grid-view@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-easy-grid-view/-/react-native-easy-grid-view-0.1.1.tgz#3569deacae397917e978d21b1aca467068e0940a"
+
 react-native-easy-grid@0.1.17, react-native-easy-grid@^0.1.17:
   version "0.1.17"
   resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.1.17.tgz#fad8cb371d465828c1c71daa4d8b513d33253452"
@@ -4886,6 +4894,12 @@ react-native-snap-carousel@^3.6.0:
   dependencies:
     prop-types "^15.6.0"
     react-addons-shallow-compare "15.6.2"
+
+react-native-tab-view@0.0.77:
+  version "0.0.77"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.77.tgz#11ceb8e7c23100d07e628dc151b57797524d00d4"
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native-tab-view@^0.0.74:
   version "0.0.74"

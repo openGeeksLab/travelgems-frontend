@@ -14,7 +14,6 @@ import MyOrderPlan from '../containers/Myorder/Myorderplan/MyOrderPlan';
 import MyOrderTab from '../components/MyOrderTab/MyOrderTab';
 const MainDrawerRouter = DrawerNavigator(
   {
-    
     Home: { screen: Tabview },
     Webview: { screen: Webview },
     Activity: { screen: Activity },
@@ -24,15 +23,14 @@ const MainDrawerRouter = DrawerNavigator(
     MyOrderPlan: { screen: MyOrderPlan },
     MyOrderTab: { screen: MyOrderTab },
     Mytravelgems: { screen: Mytravelgems },
-   DayPlan: { screen: DayPlan },
+    DayPlan: { screen: DayPlan },
   },
   {
-    initialRouteName: 'Questionnaire',
-    // initialRouteName: 'Home',
+    initialRouteName: 'Home',
     contentOptions: {
       activeTintColor: '#e91e63',
     },
-    contentComponent: props => <SideBar {...props} />,
+    contentComponent: (props) => <SideBar {...props} />,
   },
 );
 
