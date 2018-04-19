@@ -18,6 +18,7 @@ class QuestionnaireContainer extends Component {
       activeIndex: null,
       progress: 0,
       allAnswers: {},
+      disabled: true,
     };
   }
 
@@ -60,11 +61,13 @@ class QuestionnaireContainer extends Component {
       this.setState({
         currentPage: this.state.currentPage + 1,
         progress: res,
+        disabled: false,
       });
     } else {
       this.setState({
         currentPage: 1,
         progress: 0,
+        disabled: true,
       });
     }
   };
@@ -80,11 +83,13 @@ class QuestionnaireContainer extends Component {
       this.setState({
         currentPage: page,
         progress: res,
+        disabled: false,
       });
     } else {
       this.setState({
         currentPage: 1,
-        progress: res,
+        progress: 0,
+        disabled: true,
       });
     }
   };
@@ -126,6 +131,7 @@ class QuestionnaireContainer extends Component {
       progress,
       activeIndex,
       sliderValue,
+      disabled,
     } = this.state;
 
     return (
@@ -137,6 +143,7 @@ class QuestionnaireContainer extends Component {
         isChecked={isChecked}
         getGroupQAarray={this.getGroupQAarray}
         currentPage={currentPage}
+        disabled={disabled}
         sliderValue={sliderValue}
         onNextStepHandle={this.onNextStepHandle}
         onPrevStepHandle={this.onPrevStepHandle}

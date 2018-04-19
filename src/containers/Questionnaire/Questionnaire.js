@@ -24,6 +24,7 @@ class Questionnaire extends Component {
       onDateChoice,
       sliderValue,
       getGroupQAarray,
+      disabled,
     } = this.props;
     return (
       <LinearGradient
@@ -110,6 +111,7 @@ class Questionnaire extends Component {
             onNextStep={onNextStepHandle}
             onPrevStep={onPrevStepHandle}
             progress={progress}
+            disabled={disabled}
           />
         </View>
       </LinearGradient>
@@ -119,6 +121,7 @@ class Questionnaire extends Component {
 
 Questionnaire.propTypes = {
   sliderValue: PropTypes.number,
+  disabled: PropTypes.bool,
   currentPage: PropTypes.number,
   onSingleChoice: PropTypes.func,
   onMultipleChoice: PropTypes.func,

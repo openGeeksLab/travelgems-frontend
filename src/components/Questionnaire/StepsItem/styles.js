@@ -35,4 +35,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: COLOR_WHITE,
   },
+  buttonStyleDisalbed: {
+    opacity: 0.5,
+  },
 });

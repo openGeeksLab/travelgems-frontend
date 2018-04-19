@@ -7,6 +7,7 @@ import styles from './styles';
 import {
   COLOR_TURQUOISE,
   COLOR_DARK_OPACITY_20,
+  COLOR_LIGHT_GRAY,
 } from '../../../constants/Styles';
 
 const { width } = Dimensions.get('window');
@@ -24,7 +25,7 @@ class StepsItem extends Component {
   };
 
   render() {
-    const { progress, onNextStep, onPrevStep } = this.props;
+    const { progress, onNextStep, onPrevStep, disabled } = this.props;
 
     return (
       <View style={styles.container}>
@@ -44,7 +45,12 @@ class StepsItem extends Component {
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
             onPress={onPrevStep}
-            style={[styles.buttonStyle, { marginRight: 8 }]}
+            disabled={disabled}
+            style={[
+              styles.buttonStyle,
+              { marginRight: 8 },
+              disabled && { backgroundColor: COLOR_LIGHT_GRAY },
+            ]}
           >
             <Icon size={14} name="ios-arrow-down" color={COLOR_TURQUOISE} />
           </TouchableOpacity>
@@ -61,6 +67,7 @@ StepsItem.propTypes = {
   progress: PropTypes.number,
   onNextStep: PropTypes.func,
   onPrevStep: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export default StepsItem;
